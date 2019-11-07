@@ -7,7 +7,7 @@
     )
 
     $wsdl = "https://api.five9.com/wsadmin/v11/AdminWebService?wsdl&user=$Username"
-    $proxy = New-WebServiceProxy -Uri $wsdl
+    $proxy = New-WebServiceProxy -Uri $wsdl -Namespace "PSFive9Admin"
     $proxy.Credentials = $(New-Object System.Net.NetworkCredential($Username, $Password))
 
     return $proxy
