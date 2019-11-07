@@ -33,7 +33,7 @@ function Get-Five9AdminClient
 
     # get soap client
     $wsdl = "https://api.five9.com/wsadmin/v11/AdminWebService?wsdl&user=$Username"
-    $proxy = New-WebServiceProxy -Uri $wsdl -Namespace "PSFive9Admin"
+    $proxy = New-WebServiceProxy -Uri $wsdl -Namespace "PSFive9Admin" -Class "PSFive9Admin"
     $proxy.Credentials = $(New-Object System.Net.NetworkCredential($Username, $Password))
 
 

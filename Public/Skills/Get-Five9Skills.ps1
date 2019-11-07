@@ -42,14 +42,21 @@ function Get-Five9Skills
     [CmdletBinding(DefaultParametersetName='AllSkills')] 
     param
     ( 
-        [Parameter(Mandatory=$true)][object]$Five9AdminClient,      
+        [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,      
         [Parameter(ParameterSetName='AllSkills',Mandatory=$true)][switch]$AllSkills,
         [Parameter(ParameterSetName='NamePattern',Mandatory=$true)][ValidateNotNullOrEmpty()][string]$NamePattern
     )
 
-    if ($PsCmdLet.ParameterSetName -eq "All")
+    if ($PsCmdLet.ParameterSetName -eq "AllSkills")
     {
-        $NamePattern = '.*'
+        if ($AllSkills -eq $true)
+        {
+            $NamePattern = '.*'
+        }
+        else
+        {
+            throw "If you do not want all Skills to be returned, use -NamePattern instead of -AllSkills"
+        }
     }
     
     return $Five9AdminClient.getSkills($NamePattern)
