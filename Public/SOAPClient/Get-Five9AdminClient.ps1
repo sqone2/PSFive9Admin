@@ -1,4 +1,29 @@
-﻿function Get-Five9AdminClient
+﻿<#
+.SYNOPSIS
+    
+    Function used to create SOAP Proxy with Five9 Web Admin Web Service API
+ 
+.DESCRIPTION
+ 
+    Function used to create SOAP Proxy with Five9 Web Admin Web Service API
+ 
+.PARAMETER Username
+ 
+    Mandatory parameter. Five9 Admin Username
+
+.PARAMETER Password
+ 
+    Mandatory parameter. Five9 Admin Password
+   
+.EXAMPLE
+    
+    $adminClient = Get-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
+    
+    # Returns SOAP Proxy with Five9 Web Admin Web Service API
+
+ 
+#>
+function Get-Five9AdminClient
 {
     param
     (
