@@ -11,9 +11,6 @@
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "Get-Five9AdminClient" to get SOAP client
 
-.PARAMETER AllSkills
- 
-    Returns all skills in Five9  domain using .* regex pattern
 
 .PARAMETER NamePattern
  
@@ -22,9 +19,9 @@
 .EXAMPLE
     
     $adminClient = Get-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    Get-Five9Skill -Five9AdminClient $adminClient -AllSkills: $true
+    Get-Five9Skill -Five9AdminClient $adminClient
     
-    # Returns all skills in Five9 domain
+    # Returns all skills
     
 .EXAMPLE
     
@@ -39,25 +36,11 @@
 
 function Get-Five9Skills
 {
-    [CmdletBinding(DefaultParametersetName='AllSkills')] 
     param
     ( 
-        [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,      
-        [Parameter(ParameterSetName='AllSkills',Mandatory=$true)][switch]$AllSkills,
-        [Parameter(ParameterSetName='NamePattern',Mandatory=$true)][ValidateNotNullOrEmpty()][string]$NamePattern
+        [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,
+        [Parameter(Mandatory=$false)][string]$NamePattern = '.*'
     )
-
-    if ($PsCmdLet.ParameterSetName -eq "AllSkills")
-    {
-        if ($AllSkills -eq $true)
-        {
-            $NamePattern = '.*'
-        }
-        else
-        {
-            throw "If you do not want all Skills to be returned, use -NamePattern instead of -AllSkills"
-        }
-    }
     
     return $Five9AdminClient.getSkills($NamePattern)
 
