@@ -34,7 +34,7 @@
  
 #>
 
-function Get-Five9Skills
+function Get-Five9Skill
 {
     param
     ( 
