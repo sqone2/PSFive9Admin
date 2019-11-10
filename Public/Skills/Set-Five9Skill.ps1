@@ -40,7 +40,7 @@ function Set-Five9Skill
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,
         [Parameter(Mandatory=$true)][string]$SkillName,
         [Parameter(Mandatory=$false)][string]$Description,
-        [Parameter(Mandatory=$false)][switch]$RouteVoiceMails
+        [Parameter(Mandatory=$false)][bool]$RouteVoiceMails
     )
 
     $skill = New-Object PSFive9Admin.skill
