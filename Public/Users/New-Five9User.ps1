@@ -147,7 +147,13 @@ function New-Five9User
         if ($PsCmdLet.ParameterSetName -eq "CopyRolesFrom")
         {
             $copyFrom = $null
-            $copyFrom = Get-Five9User -Five9AdminClient $Five9AdminClient -NamePattern $CopyRolesFromUsername
+            $copyFrom = $Five9AdminClient.getUsersInfo($CopyRolesFromUsername)
+
+            if ($copyFrom.Count -gt 1)
+            {
+                throw "Error copying roles from user ""$CopyRolesFromUsername"". Multiple matches were found in Five9 using that username."
+                return
+            }
 
             if ($copyFrom -eq $null)
             {
