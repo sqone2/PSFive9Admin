@@ -177,10 +177,6 @@ function New-Five9User
             if ($DefaultRole -eq "Agent")
             {
                 $agentRole = New-Object -TypeName PSFive9Admin.agentRole
-                $agentRole.alwaysRecorded
-                $agentRole.alwaysRecorded = $false
-                $agentRole.attachVmToEmail = $false
-                $agentRole.sendEmailOnVm = $false
                 $agentRole.permissions = @()
 
                 $userRoles.agent = $agentRole
