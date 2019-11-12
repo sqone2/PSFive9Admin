@@ -133,7 +133,14 @@ function Set-Five9User
     {
 
         $userToModify = $null
-        $userToModify = $Five9AdminClient.getUsersGeneralInfo($Identity)
+        try
+        {
+            $userToModify = $Five9AdminClient.getUsersGeneralInfo($Identity)
+        }
+        catch
+        {
+
+        }
 
         if ($userToModify.Count -gt 1)
         {

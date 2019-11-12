@@ -42,7 +42,9 @@ function Get-Five9User
         [Parameter(Mandatory=$false)][string]$NamePattern = '.*'
     )
     
-    return $Five9AdminClient.getUsersInfo($NamePattern)
+    $response = $Five9AdminClient.getUsersInfo($NamePattern)
+
+    return $response
 
 }
 

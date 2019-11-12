@@ -1,11 +1,11 @@
 ﻿<#
 .SYNOPSIS
     
-    Function used to modify a skill
+    Function used to add a new role to a user
  
 .DESCRIPTION
  
-    Function used to modify a skill
+    Function used to add a new role to a user
  
 .PARAMETER Five9AdminClient
  
@@ -41,7 +41,14 @@ function Add-Five9UserRole
 
 
     $userToModify = $null
-    $userToModify = $Five9AdminClient.getUserInfo($Username)
+    try
+    {
+        $userToModify = $Five9AdminClient.getUserInfo($Username)
+    }
+    catch
+    {
+
+    }
 
     if ($userToModify.Count -gt 1)
     {
@@ -54,6 +61,13 @@ function Add-Five9UserRole
         throw "Cannot find a Five9 user with username: ""$Username"". Remember that username is case sensitive."
         return
     }
+
+    if ($userToModify.roles.$RoleName -ne $null)
+    {
+        throw "$RoleName has already been added to this user. Please use Set-Five9User$($RoleName)Role to modify role permisisons."
+        return
+    }
+
 
     $userRoles = New-Object -TypeName PSFive9Admin.userRoles
 

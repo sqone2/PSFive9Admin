@@ -75,7 +75,14 @@ function Set-Five9UserAdminRole
 
 
     $userToModify = $null
-    $userToModify = $Five9AdminClient.getUserInfo($Username)
+    try
+    {
+        $userToModify = $Five9AdminClient.getUserInfo($Username)
+    }
+    catch
+    {
+    
+    }
 
     if ($userToModify.Count -gt 1)
     {
@@ -112,7 +119,7 @@ function Set-Five9UserAdminRole
         # get parameters passed that are part of the permissions array in the admin user role
         $permissionKeysPassed = @($PSBoundParameters.Keys | ? {$userToModify.roles.admin.type -contains $_ })
 
-        # if no parameters were passed that change the admin, end function
+        # if no parameters were passed that change the admin role, abort
         if ($permissionKeysPassed.Count -eq 0)
         {
             throw "No parameters were passed to modify admin role."

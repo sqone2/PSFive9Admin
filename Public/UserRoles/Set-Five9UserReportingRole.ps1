@@ -62,7 +62,14 @@ function Set-Five9UserReportingRole
     )
 
     $userToModify = $null
-    $userToModify = $Five9AdminClient.getUserInfo($Username)
+    try
+    {
+        $userToModify = $Five9AdminClient.getUserInfo($Username)
+    }
+    catch
+    {
+    
+    }
 
     if ($userToModify.Count -gt 1)
     {
@@ -78,7 +85,7 @@ function Set-Five9UserReportingRole
 
     if ($userToModify.roles.reporting -eq $null)
     {
-        throw "reporting role has not yet been added. Please use Add-Five9UserRole to add reporting role, and then try again."
+        throw "Reporting role has not yet been added. Please use Add-Five9UserRole to add reporting role, and then try again."
         return
     }
 

@@ -77,7 +77,14 @@ function Set-Five9UserSupervisorRole
     )
 
     $userToModify = $null
-    $userToModify = $Five9AdminClient.getUserInfo($Username)
+    try
+    {
+        $userToModify = $Five9AdminClient.getUserInfo($Username)
+    }
+    catch
+    {
+    
+    }
 
     if ($userToModify.Count -gt 1)
     {
