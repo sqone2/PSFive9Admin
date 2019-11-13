@@ -1,11 +1,11 @@
 ﻿<#
 .SYNOPSIS
     
-    Function used to get call variable(s) from Five9
+    Function used to get call variable group(s) from Five9
  
 .DESCRIPTION
  
-    Function used to get call variable(s) from Five9
+    Function used to get call variable group(s) from Five9
  
 .PARAMETER Five9AdminClient
  
