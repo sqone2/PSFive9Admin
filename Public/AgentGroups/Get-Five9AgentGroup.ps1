@@ -10,8 +10,6 @@
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "Get-Five9AdminClient" to get SOAP client
-
-
 .PARAMETER NamePattern
  
     Returns only agent groups matching a given regex string
@@ -30,10 +28,8 @@
     
     # Returns agent group matching the string "Team Joe"
     
-
  
 #>
-
 function Get-Five9AgentGroup
 {
     param
@@ -45,6 +41,3 @@ function Get-Five9AgentGroup
     return $Five9AdminClient.getAgentGroups($NamePattern)
 
 }
-
-
-
