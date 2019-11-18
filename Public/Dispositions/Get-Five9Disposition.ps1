@@ -1,11 +1,11 @@
 ﻿<#
 .SYNOPSIS
     
-    Function used to get agent group(s) from Five9
+    Function used to get disposition(s) from Five9
  
 .DESCRIPTION
  
-    Function used to get agent group(s) from Five9
+    Function used to get disposition(s) from Five9
  
 .PARAMETER Five9AdminClient
  
@@ -13,24 +13,24 @@
 
 .PARAMETER NamePattern
  
-    Returns only agent groups matching a given regex string
+    Optional parameter. Returns only dispositions matching a given regex string
    
 .EXAMPLE
     
     $adminClient = Get-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    Get-Five9AgentGroup -Five9AdminClient $adminClient
+    Get-Five9Disposition -Five9AdminClient $adminClient
     
-    # Returns all agent groups
+    # Returns all dispositions
     
 .EXAMPLE
     
-    Get-Five9AgentGroup -Five9AdminClient $adminClient -NamePattern "Team Joe"
+    Get-Five9Disposition -Five9AdminClient $adminClient -NamePattern "No Answer"
     
-    # Returns agent group matching the string "Team Joe"
+    # Returns disposition named "No Answer"
     
  
 #>
-function Get-Five9AgentGroup
+function Get-Five9Disposition
 {
     param
     ( 
@@ -38,6 +38,6 @@ function Get-Five9AgentGroup
         [Parameter(Mandatory=$false)][string]$NamePattern = '.*'
     )
     
-    return $Five9AdminClient.getAgentGroups($NamePattern)
+    return $Five9AdminClient.getDispositions($NamePattern)
 
 }

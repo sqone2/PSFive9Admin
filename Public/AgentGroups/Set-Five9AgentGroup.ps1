@@ -59,7 +59,7 @@ function Set-Five9AgentGroup
 
     if ($agentGroupToModify.Count -gt 1)
     {
-        throw "Multiple Agent Groups were found using query: ""$Name"". Please try using the exact username of the user you're trying to modify."
+        throw "Multiple Agent Groups were found using query: ""$Name"". Please try using the exact name of the agent group you're trying to modify."
         return
     }
 
