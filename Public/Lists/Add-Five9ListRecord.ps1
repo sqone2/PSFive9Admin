@@ -165,5 +165,3 @@ $(New-Object psobject -Property @{
 
 )
 
-
-Add-Five9ListRecord -Five9AdminClient $aacFive9AdminClient -ListName "Test-List" -InputObject $list -Key "number1" -CrmAddMode: ADD_NEW -CrmUpdateMode: UPDATE_FIRST -ListAddMode: ADD_FIRST -CleanListBeforeUpdate $true -FailOnFieldParseError $true -ReportEmail 'sq@contactaac.com'
