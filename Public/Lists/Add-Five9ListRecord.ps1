@@ -139,38 +139,3 @@ function Add-Five9ListRecord
 
 }
 
-<#
-$list =@(
-$(New-Object psobject -Property @{
-    number1 = "6156910079"
-    first_name = "Steve"
-    last_name = "Quirion"
-}),
-$(New-Object psobject -Property @{
-    number1 = "6157321501"
-    first_name = "Desk"
-    last_name = "Phone"
-})
-
-
-)
-
-
-$list =@(
-$(New-Object psobject -Property @{
-    number1 = "6157321501"
-    first_name = "Desk"
-    last_name = "Phone"
-})
-
-
-)
-
-<<<<<<< HEAD
-
-Add-Five9ListRecord -Five9AdminClient $aacFive9AdminClient -ListName "Test-List" -InputObject $list -Key "number1" -CrmAddMode: ADD_NEW -CrmUpdateMode: UPDATE_FIRST -ListAddMode: ADD_FIRST -CleanListBeforeUpdate $true -FailOnFieldParseError $true -ReportEmail 'sq@contactaac.com'
-
-
-#>
-=======
->>>>>>> 86036771a9bc1e89615bf4c47604085a955e8dd5
