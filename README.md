@@ -19,7 +19,7 @@ https://webapps.five9.com/assets/files/for_customers/documentation/apis/config-w
 ### Prerequisites
 
 1. Setup a user in your Five9 domain, and grant administrative rights as needed
-1. Create web service proxy object using `New-Five9AdminClient`. This proxy will be passed as a parameter to all other Five9 Admin functions.
+1. Create web service object using `New-Five9AdminClient`. This proxy will be passed as a parameter to all other Five9 Admin functions.
 
 		$adminClient = New-Five9AdminClient -Username "admin_user@domain.com" -Password "P@ssword!"
 
