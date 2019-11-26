@@ -12,7 +12,7 @@ https://webapps.five9.com/assets/files/for_customers/documentation/apis/config-w
 1. Copy to a valid module directory. i.e. `C:\Program Files\WindowsPowerShell\Modules\`
 1. From Powershell, import module
 
-    Import-Module PSFive9Admin
+       Import-Module PSFive9Admin
     
 &nbsp;
 &nbsp;
