@@ -35,43 +35,39 @@
     
  
 #>
-function Get-Five9Campaign
+function New-Five9Campaign
 {
     param
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,
-        [Parameter(Mandatory=$true)][ValidateSet('OUTBOUND', 'INBOUND', 'AUTODIAL')][string]$Type,
-        [Parameter(Mandatory=$false)][string]$NamePattern = '.*'
-        
+
+        [Parameter(Mandatory=$true)][string]$Name,
+        [Parameter(Mandatory=$true)][ValidateSet('INBOUND', 'OUTBOUND', 'AUTODIAL')][string]$Type
+
+
     )
 
 
-    $response = @($Five9AdminClient.getCampaigns($NamePattern, $Type, $true))
 
-    if ($response.Count -gt 1)
+    if ($Type -eq 'INBOUND')
     {
-        return $response | select -First 1
+
+        $inboundCampaign = New-Object PSFive9Admin.inboundCampaign
+
+        $inboundCampaign.name = $Name
+
+        $inboundCampaign.type = $Type
+        $inboundCampaign.typeSpecified = $true
+
+
+        $response = $Five9AdminClient.createInboundCampaign($inboundCampaign)
 
     }
-    elseif ($response.Count -eq 1)
-    {
-        $response = $response | select -First 1
 
-        if ($Type -eq "OUTBOUND")
-        {
-            $Five9AdminClient.getOutboundCampaign($response.name)
-        }
-        elseif ($Type -eq "INBOUND")
-        {
-            $Five9AdminClient.getInboundCampaign($response.name)
-        }
-        elseif ($Type -eq "AUTODIAL")
-        {
-            $Five9AdminClient.getAutodialCampaign($response.name)
-        }
-    }
 
+    
 
 
 }
 
+New-Five9Campaign -Five9AdminClient $aacFive9AdminClient -Name "__TEST2" -Type: INBOUND

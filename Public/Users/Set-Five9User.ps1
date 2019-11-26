@@ -9,7 +9,7 @@
  
 .PARAMETER Five9AdminClient
  
-    Mandatory parameter. SOAP Proxy Client Object. Use function "Get-Five9AdminClient" to get SOAP client
+    Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client
 
 .PARAMETER DefaultRole
  
@@ -85,7 +85,7 @@
 
 .EXAMPLE
     
-    $adminClient = Get-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
+    $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
     Set-Five9User -Five9AdminClient $adminClient -Identity 'jdoe@domain.com' -LastName "Davis"
 
     # Changes LastName value for user "jdoe@domain.com"

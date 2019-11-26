@@ -9,7 +9,7 @@
  
 .PARAMETER Five9AdminClient
  
-    Mandatory parameter. SOAP Proxy Client Object. Use function "Get-Five9AdminClient" to get SOAP client
+    Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client
 
 
 .PARAMETER Name
@@ -24,7 +24,7 @@
 
 .EXAMPLE
     
-    $adminClient = Get-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
+    $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
     Remove-Five9CallVariable -Five9AdminClient $adminClient -Name "SalesforceId" -Group "Salesforce"
     
     # Deletes existing call variable named "SalesforceId" which is in the "Salesforce" call variable group

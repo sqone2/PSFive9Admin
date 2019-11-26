@@ -9,7 +9,7 @@
  
 .PARAMETER Five9AdminClient
  
-    Mandatory parameter. SOAP Proxy Client Object. Use function "Get-Five9AdminClient" to get SOAP client
+    Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client
 
 
 .PARAMETER SkillName
@@ -19,7 +19,7 @@
    
 .EXAMPLE
     
-    $adminClient = Get-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
+    $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
     Get-Five9SkillMember -Five9AdminClient $adminClient -SkillName "MultiMedia"
     
     # Gets members of skill MultiMedia

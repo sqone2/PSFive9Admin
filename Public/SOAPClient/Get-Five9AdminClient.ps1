@@ -17,13 +17,13 @@
    
 .EXAMPLE
     
-    $adminClient = Get-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
+    $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
     
     # Returns SOAP Proxy with Five9 Web Admin Web Service API
 
  
 #>
-function Get-Five9AdminClient
+function New-Five9AdminClient
 {
     param
     (

@@ -5,7 +5,7 @@
  
 .PARAMETER Five9AdminClient
  
-    Mandatory parameter. SOAP Proxy Client Object. Use function "Get-Five9AdminClient" to get SOAP client
+    Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client
 
 .PARAMETER CampaignName
  
@@ -22,7 +22,7 @@
 
 .EXAMPLE
     
-    $adminClient = Get-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
+    $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
     Add-Five9CampaignDisposition -Five9AdminClient $aacFive9AdminClient -CampaignName 'MultiMedia' -DispositionName 'Wrong Number'
 
     # adds a single disposition to a campaign
