@@ -70,4 +70,4 @@ function New-Five9Campaign
 
 }
 
-New-Five9Campaign -Five9AdminClient $aacFive9AdminClient -Name "__TEST2" -Type: INBOUND
+#New-Five9Campaign -Five9AdminClient $aacFive9AdminClient -Name "__TEST2" -Type: INBOUND
