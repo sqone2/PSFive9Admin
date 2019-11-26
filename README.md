@@ -1,13 +1,15 @@
 # PSFive9Admin
 Powershell functions for working with the Five9 Admin Web Service API
 
-Five9 API documentation: https://webapps.five9.com/assets/files/for_customers/documentation/apis/config-webservices-api-reference-guide.pdf
+Five9 API documentation: 
+https://webapps.five9.com/assets/files/for_customers/documentation/apis/config-webservices-api-reference-guide.pdf
 
 &nbsp;
 &nbsp;
 ### Installation
 
-1. Download or clone source and copy to a valid module directory. i.e. `C:\Program Files\WindowsPowerShell\Modules\`
+1. Download or clone source
+2. Copy to a valid module directory. i.e. `C:\Program Files\WindowsPowerShell\Modules\`
 2. From Powershell, import module
 
     Import-Module PSFive9Admin
