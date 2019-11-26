@@ -17,7 +17,8 @@ Five9 API documentation: https://webapps.five9.com/assets/files/for_customers/do
 ### Prerequisites
 
 1. Setup a user in your Five9 domain which has full Administrative rights
-2. All Powershell functions require a mandatory parameter called `-Five9AdminClient`. Use `New-Five9AdminClient` to create a SOAP proxy which will be reused in all functions.
+2. Create SOAP proxy object using `New-Five9AdminClient`. This SOAP proxy will be passed as a parameter to all other Five9 Admin functions.
+
 
 		$adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
 
