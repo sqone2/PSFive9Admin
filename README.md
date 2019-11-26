@@ -18,15 +18,9 @@ From Powershell, import module
 ### Prerequisites
 
 1. Setup a user in your Five9 domain which has full Administrative rights
-2. Import module
+2. All Powershell functions require a mandatory parameter called `-Five9AdminClient`. Use `New-Five9AdminClient` to create a SOAP proxy which will be reused in all functions.
 
-    Import-Module PSFive9Admin
-   
-    
-3. All Powershell functions require a mandatory parameter called `-Five9AdminClient`. Use `New-Five9AdminClient` to create a SOAP proxy which will be reused in all functions.
-
-
-    $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
+		$adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
 
     
   
