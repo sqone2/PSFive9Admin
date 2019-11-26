@@ -18,10 +18,10 @@ https://webapps.five9.com/assets/files/for_customers/documentation/apis/config-w
 &nbsp;
 ### Prerequisites
 
-1. Setup a user in your Five9 domain which has full Administrative rights
+1. Setup a user in your Five9 domain, and grant administrative rights as needed
 1. Create SOAP proxy object using `New-Five9AdminClient`. This SOAP proxy will be passed as a parameter to all other Five9 Admin functions.
 
-		$adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
+		$adminClient = New-Five9AdminClient -Username "admin_user@domain.com" -Password "P@ssword!"
 
 &nbsp;
 &nbsp;
