@@ -39,7 +39,7 @@ Creating a new user:
 
     New-Five9User -Five9AdminClient $adminClient -DefaultRole Agent -UserProfileName "Agent_Profile" -FirstName "Susan" -LastName "Davis" -UserName sdavis@domain.com -Email sdavis@domain.com -Password Temp1234!
 
-    # Creates a new user Susan Davis
+    # Creates a new user with name "Susan Davis"
 
 &nbsp;
 Create a new skill:
