@@ -7,9 +7,8 @@ Five9 API documentation: https://webapps.five9.com/assets/files/for_customers/do
 &nbsp;
 ### Installation
 
-Download or clone source and copy to a valid module directory. i.e. `C:\Program Files\WindowsPowerShell\Modules\`
-
-From Powershell, import module
+1. Download or clone source and copy to a valid module directory. i.e. `C:\Program Files\WindowsPowerShell\Modules\`
+2. From Powershell, import module
 
     Import-Module PSFive9Admin
     
@@ -35,21 +34,21 @@ Get existing user(s):
      
      # Returns user who matches the string "jdoe@domain.com"
 
-
+&nbsp;
 Creating a new user:
 
     New-Five9User -Five9AdminClient $adminClient -DefaultRole Agent -UserProfileName "Agent_Profile" -FirstName "Susan" -LastName "Davis" -UserName sdavis@domain.com -Email sdavis@domain.com -Password Temp1234!
 
     # Creates a new user Susan Davis. Default Agent role and permissions will be assigned, but roles from User Profile "Agent_Profile" will override this role
 
-
+&nbsp;
 Create a new skill:
 
     New-Five9Skill -Five9AdminClient $adminClient -SkillName "MultiMedia"
     
     # Creates a new skill named MultiMedia
     
-    
+&nbsp;  
 Add new user to new skill:
 
     Add-Five9SkillMember -Five9AdminClient $adminClient -Username "sdavis@domain.com" -SkillName "Multimedia"
