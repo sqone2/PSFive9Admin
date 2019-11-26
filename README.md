@@ -32,14 +32,14 @@ Get existing user(s):
 
      Get-Five9User -Five9AdminClient $adminClient -NamePattern "jdoe@domain.com"
      
-     # Returns user who matches the string "jdoe@domain.com"
+     # Returns user matching username "jdoe@domain.com"
 
 &nbsp;
 Creating a new user:
 
     New-Five9User -Five9AdminClient $adminClient -DefaultRole Agent -UserProfileName "Agent_Profile" -FirstName "Susan" -LastName "Davis" -UserName sdavis@domain.com -Email sdavis@domain.com -Password Temp1234!
 
-    # Creates a new user Susan Davis. Default Agent role and permissions will be assigned, but roles from User Profile "Agent_Profile" will override this role
+    # Creates a new user Susan Davis
 
 &nbsp;
 Create a new skill:
