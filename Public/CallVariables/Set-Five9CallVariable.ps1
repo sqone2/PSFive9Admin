@@ -68,7 +68,7 @@ function Set-Five9CallVariable
     $callVariableToModify = $null
     try
     {
-        $callVariableToModify = $Five9AdminClient.getCallVariables($Name, $Group) | select -First 1
+        $callVariableToModify = $Five9AdminClient.getCallVariables($Name, $Group)
     }
     catch
     {
@@ -82,6 +82,7 @@ function Set-Five9CallVariable
         return
     }
 
+    $callVariableToModify = $callVariableToModify | select -First 1
 
 
     if ($PSBoundParameters.Keys -contains "Description")

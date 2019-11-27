@@ -131,7 +131,7 @@ function Set-Five9Disposition
     $dispositionToModify = $null
     try
     {
-        $dispositionToModify = $Five9AdminClient.getDispositions($Name) | select -First 1
+        $dispositionToModify = $Five9AdminClient.getDispositions($Name)
     }
     catch
     {
@@ -149,6 +149,8 @@ function Set-Five9Disposition
         throw "Cannot find a Disposition with name: ""$Name"". Remember that Name is case sensitive."
         return
     }
+
+     $dispositionToModify = $dispositionToModify | select -First 1
 
     if ($PSBoundParameters.Keys -contains "Description")
     {

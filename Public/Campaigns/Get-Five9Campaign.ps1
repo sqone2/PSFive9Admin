@@ -50,7 +50,7 @@ function Get-Five9Campaign
 
     if ($response.Count -gt 1)
     {
-        return $response | select -First 1
+        return $response
 
     }
     elseif ($response.Count -eq 1)
