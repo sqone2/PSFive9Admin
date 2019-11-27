@@ -232,12 +232,6 @@ function New-Five9InboundCampaign
 
     if ($CallWrapupEnabled -eq $true)
     {
-
-
-
-
-
-
         $inboundCampaign.callWrapup = New-Object PSFive9Admin.campaignCallWrapup
         $inboundCampaign.callWrapup.enabled = $true
         $inboundCampaign.callWrapup.enabledSpecified = $true
@@ -276,7 +270,6 @@ function New-Five9InboundCampaign
         }
 
     }
-
 
     if ($PSBoundParameters.Keys -contains 'AutoRecord')
     {
