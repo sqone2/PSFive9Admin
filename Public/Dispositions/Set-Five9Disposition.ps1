@@ -215,7 +215,7 @@ function Set-Five9Disposition
 
                 if ($RedialTimerDays -lt 1 -and $RedialTimerHours -lt 1 -and $RedialTimerMinutes -lt 1)
                 {
-                    throw "When -UseRedialTimer is set to True, the total -RedailTimer<unit> values must be set to at least 1 minute. For example, to redial a record after 8.5 hours, use -RedialTimerHours 8 -RedialTimerMinutes -30"
+                    throw "When -UseRedialTimer is set to True, the total -RedailTimer<unit> values must be set to at least 1 minute. For example, to redial a record after 8.5 hours, use -RedialTimerHours 8 -RedialTimerMinutes 30"
                     return
                 }
 

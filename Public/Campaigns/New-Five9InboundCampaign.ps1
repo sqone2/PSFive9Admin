@@ -1,38 +1,143 @@
 ﻿<#
 .SYNOPSIS
     
-    Function used to get campaign(s) from Five9
+    Function used to create a new inbound campaign in Five9
  
- 
-.PARAMETER Five9AdminClient
- 
-    Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client
+.PARAMETER Name
 
-.PARAMETER Type
- 
-    Campaign Type. Options are: INBOUND, OUTBOUND, AUTODIAL
+    Name of new campaign
 
-.PARAMETER NamePattern
- 
-    Optional parameter. Returns only dispositions matching a given regex string
+.PARAMETER Description
 
-.NOTES
+     Description of new campaign
 
-    Returning a single campaign also returns additional details that are NOT returned when multiple campaigns are returned.
-   
+.PARAMETER State
+
+    State of new campaign. 
+    Options are: 
+        • NOT_RUNNING - Campaign not currently active
+        • STARTING - Campaign being initialized
+        • RUNNING - Campaign currently active
+        • STOPPING - Campaign currently stopping
+        • RESETTING - Temporary state of an outbound campaign that is returning to its initial state. All dialing results of the outbound campaign are cleared so that all records can be redialed
+
+
+.PARAMETER Mode
+
+    Mode of new campaign. If not specified, default set to BASIC.
+    Options are:
+        • BASIC (Default) -  Campaign with default settings, without a campaign profile
+        • ADVANCED - Campaign with a campaign profile specified in the profileName parameter
+
+
+.PARAMETER IvrScriptName
+
+    Name of IVR script to be used on new campaign
+
+
+.PARAMETER MaxNumOfLines
+
+    Maximum number of simultaneous calls. Cannot exceed the number of provisioned inbound lines for the domain.
+
+
+.PARAMETER TrainingMode
+
+    Whether the campaign is in training mode
+
+.PARAMETER AutoRecord
+
+    Whether to record all calls of the campaign
+
+.PARAMETER UseFtp
+
+    Whether to use FTP to transfer recordings.
+    NOTE: SFTP must be enabled in the Java Admin console
+
+.PARAMETER RecordingNameAsSid
+
+    For FTP transfer, whether to use the session ID as the recording name
+
+.PARAMETER FtpHost
+
+    Host name of the FTP server
+
+.PARAMETER FtpUser
+
+    Username of the FTP server
+
+.PARAMETER FtpPassword
+
+    Password of the FTP server
+
+.PARAMETER ProfileName
+
+    Campaign profile name. Applies only to the advanced campaign mode
+
+
+.PARAMETER CallWrapupEnabled
+
+    Enables the "After Call Work Time Limit" setting on the campaign
+
+
+.PARAMETER WrapupAgentNotReady
+
+    Whether to automatically place agents who reach a call timeout in a Not Ready state
+    Options are:
+        • True: Set agents to Not Ready state
+        • False: Do not set agents to Not Ready state
+
+
+.PARAMETER WrapupDispostionName
+
+    Name of disposition automatically set for the call if the timeout is reached
+
+.PARAMETER WrapupReasonCodeName
+    
+    Not Ready reason code for agents who are automatically placed in Not Ready state after reaching the timeout
+
+.PARAMETER UseWrapupTimer
+
+    Enables time limit for agents in wrap-up mode
+
+.PARAMETER UseWrapupTimer
+
+    Whether this disposition uses a Wrapup timer
+
+.PARAMETER WrapupTimerDays
+
+    Number of Days
+    Only used when -UseWrapupTimer is set to "True"
+
+.PARAMETER WrapupTimerHours
+
+    Number of Hours
+    Only used when -UseWrapupTimer is set to "True"
+
+.PARAMETER WrapupTimerMinutes
+
+    Number of Minutes
+    Only used when -UseWrapupTimer is set to "True"
+
+.PARAMETER WrapupTimerSeconds
+    
+    Number of Seconds
+    Only used when -UseWrapupTimer is set to "True"
+
+
 .EXAMPLE
     
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    Get-Five9Campaign -Five9AdminClient $adminClient -Type OUTBOUND
+    New-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Cold-Calls" -State: RUNNING -IvrScriptName "Cold-Calls-IVR" -MaxNumOfLines 10
     
-    # Returns basic info on all outbound campaigns
-    
+    # Creates new inbound campaign with minimum number of required parameters
+
 .EXAMPLE
     
-    Get-Five9Campaign -Five9AdminClient $adminClient -Type OUTBOUND -NamePattern 'MultiMedia' 
-
-    # Returns basic and additional info for outbound campaign with name "MultiMedia"
+    New-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Cold-Calls" -State RUNNING -Mode: ADVANCED -ProfileName "Cold-Calls-Profile" -IvrScriptName "Cold-Calls-IVR" -MaxNumOfLines 50 -CallWrapupEnabled $true -WrapupAgentNotReady $true -UseWrapupTimer $true -WrapupTimerMinutes 2 -WrapupTimerSeconds 30
     
+    # Creates new inbound campaign in advanced mode, and enabled call wrap up timer
+
+
  
 #>
 function New-Five9InboundCampaign
@@ -44,23 +149,29 @@ function New-Five9InboundCampaign
         [Parameter(Mandatory=$true)][string]$Name,
         [Parameter(Mandatory=$false)][string]$Description,
         [Parameter(Mandatory=$true)][ValidateSet('NOT_RUNNING', 'STARTING', 'RUNNING', 'STOPPING', 'RESETTING')][string]$State,
-
         [Parameter(Mandatory=$false)][ValidateSet('BASIC', 'ADVANCED')][string]$Mode = 'BASIC',
         [Parameter(Mandatory=$false)][string]$ProfileName,
-
-        [Parameter(Mandatory=$false)][bool]$AutoRecord,
-        [Parameter(Mandatory=$false)][bool]$RecordingNameAsSid,
-        [Parameter(Mandatory=$false)][int]$MaxNumOfLines,
-
-        [Parameter(Mandatory=$false)][string]$IvrScriptName,
-        [Parameter(Mandatory=$false)][string]$CallWrapup,
+        [Parameter(Mandatory=$true)][string]$IvrScriptName,
+        [Parameter(Mandatory=$true)][int]$MaxNumOfLines,
 
         [Parameter(Mandatory=$false)][bool]$TrainingMode,
 
+        [Parameter(Mandatory=$false)][bool]$AutoRecord,
         [Parameter(Mandatory=$false)][bool]$UseFtp,
+        [Parameter(Mandatory=$false)][bool]$RecordingNameAsSid,
         [Parameter(Mandatory=$false)][string]$FtpHost,
         [Parameter(Mandatory=$false)][string]$FtpUser,
-        [Parameter(Mandatory=$false)][string]$FtpPassword
+        [Parameter(Mandatory=$false)][string]$FtpPassword,
+
+        [Parameter(Mandatory=$false)][bool]$CallWrapupEnabled,
+        [Parameter(Mandatory=$false)][bool]$WrapupAgentNotReady,
+        [Parameter(Mandatory=$false)][string]$WrapupDispostionName,
+        [Parameter(Mandatory=$false)][string]$WrapupReasonCodeName,
+        [Parameter(Mandatory=$false)][bool]$UseWrapupTimer,
+        [Parameter(Mandatory=$false)][ValidateRange(0,59)][int]$WrapupTimerDays,
+        [Parameter(Mandatory=$false)][ValidateRange(0,23)][int]$WrapupTimerHours,
+        [Parameter(Mandatory=$false)][ValidateRange(0,59)][int]$WrapupTimerMinutes,
+        [Parameter(Mandatory=$false)][ValidateRange(0,59)][int]$WrapupTimerSeconds
 
     )
 
@@ -77,12 +188,18 @@ function New-Five9InboundCampaign
     $inboundCampaign.mode = $Mode
     $inboundCampaign.modeSpecified = $true
 
-    if ($Type -eq 'ADVANCED')
+
+    $inboundCampaign.defaultIvrSchedule = New-Object PSFive9Admin.inboundIvrScriptSchedule
+    $inboundCampaign.defaultIvrSchedule.ivrSchedule = New-Object PSFive9Admin.ivrScriptSchedule
+    $inboundCampaign.defaultIvrSchedule.ivrSchedule.scriptName = $IvrScriptName
+
+
+    if ($Mode -eq 'ADVANCED')
     {
         # if type is advanced, must also provide a campaign profile name
-        if ($PSBoundParameters -notcontains 'ProfileName')
+        if ($PSBoundParameters.Keys -notcontains 'ProfileName')
         {
-            throw "Campaign Type set as ""ADVANCED"", but no profile name was provided. Try again including the -ProfileName parameter."
+            throw "Campaign Mode set as ""ADVANCED"", but no profile name was provided. Try again including the -ProfileName parameter."
             return
         }
 
@@ -108,29 +225,96 @@ function New-Five9InboundCampaign
         $inboundCampaign.maxNumOfLinesSpecified = $true
     }
 
-    if ($PSBoundParameters.Keys -contains 'asda')
+    if ($PSBoundParameters.Keys -contains 'Description')
+    {
+        $inboundCampaign.description = $Description
+    }
+
+    if ($CallWrapupEnabled -eq $true)
+    {
+
+
+
+
+
+
+        $inboundCampaign.callWrapup = New-Object PSFive9Admin.campaignCallWrapup
+        $inboundCampaign.callWrapup.enabled = $true
+        $inboundCampaign.callWrapup.enabledSpecified = $true
+
+        if ($WrapupAgentNotReady -eq $true)
+        {
+            $inboundCampaign.callWrapup.agentNotReady = $true
+            $inboundCampaign.callWrapup.agentNotReadySpecified = $true
+        }
+
+        if ($PSBoundParameters.Keys -contains 'WrapupDispostionName')
+        {
+            $inboundCampaign.callWrapup.dispostionName = $WrapupDispostionName
+        }
+
+        if ($PSBoundParameters.Keys -contains 'WrapupReasonCodeName')
+        {
+            $inboundCampaign.callWrapup.reasonCodeName = $WrapupReasonCodeName
+        }
+
+        if ($UseWrapupTimer -eq $true)
+        {
+
+            if ($WrapupTimerDays -lt 1 -and $WrapupTimerHours -lt 1 -and $WrapupTimerMinutes -lt 1)
+            {
+                throw "When -UseWrapupTimer is set to True, the total -WrapupTimer<unit> values must be set to at least 1 minute. For example, to set wrapup to 2.5 minutes, use: -WrapupTimerHours 2 -WrapupTimerSeconds 30"
+                return
+            }
+
+            $inboundCampaign.callWrapup.timeout = New-Object PSFive9Admin.timer
+            $inboundCampaign.callWrapup.timeout.days = $WrapupTimerDays
+            $inboundCampaign.callWrapup.timeout.hours = $WrapupTimerHours
+            $inboundCampaign.callWrapup.timeout.minutes = $WrapupTimerMinutes
+            $inboundCampaign.callWrapup.timeout.seconds = $WrapupTimerSeconds
+
+        }
+
+    }
+
+
+    if ($PSBoundParameters.Keys -contains 'AutoRecord')
     {
         $inboundCampaign.autoRecord = $AutoRecord
         $inboundCampaign.autoRecordSpecified = $true
     }
 
-    if ($PSBoundParameters.Keys -contains 'asd')
+    if ($PSBoundParameters.Keys -contains 'TrainingMode')
     {
-        $inboundCampaign.autoRecord = $AutoRecord
-        $inboundCampaign.autoRecordSpecified = $true
+        $inboundCampaign.trainingMode = $TrainingMode
+        $inboundCampaign.trainingModeSpecified = $true
     }
 
-    if ($PSBoundParameters.Keys -contains 'adsas')
+    if ($PSBoundParameters.Keys -contains 'UseFtp')
     {
-        $inboundCampaign.autoRecord = $AutoRecord
-        $inboundCampaign.autoRecordSpecified = $true
+        $inboundCampaign.useFtp = $UseFtp
+        $inboundCampaign.useFtpSpecified = $true
     }
 
+    if ($PSBoundParameters.Keys -contains 'FtpHost')
+    {
+        $inboundCampaign.FtpHost = $FtpHost
+    }
     
+    if ($PSBoundParameters.Keys -contains 'FtpUser')
+    {
+        $inboundCampaign.ftpUser = $FtpUser
+    }
+
+    if ($PSBoundParameters.Keys -contains 'FtpPassword')
+    {
+        $inboundCampaign.ftpPassword = $FtpPassword
+    }
 
 
-    
+    $response = $Five9AdminClient.createInboundCampaign($inboundCampaign)
 
+    return $response
 
 }
 
