@@ -133,7 +133,8 @@
 
 .EXAMPLE
     
-    New-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Cold-Calls" -State RUNNING -Mode: ADVANCED -ProfileName "Cold-Calls-Profile" -IvrScriptName "Cold-Calls-IVR" -MaxNumOfLines 50 -CallWrapupEnabled $true -WrapupAgentNotReady $true -UseWrapupTimer $true -WrapupTimerMinutes 2 -WrapupTimerSeconds 30
+    New-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Cold-Calls" -State RUNNING -Mode: ADVANCED -ProfileName "Cold-Calls-Profile" -IvrScriptName "Cold-Calls-IVR" -MaxNumOfLines 50 `
+                             -CallWrapupEnabled $true -WrapupAgentNotReady $true -UseWrapupTimer $true -WrapupTimerMinutes 2 -WrapupTimerSeconds 30
     
     # Creates new inbound campaign in advanced mode, and enabled call wrap up timer
 
