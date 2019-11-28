@@ -11,16 +11,6 @@
 
      Description of new campaign
 
-.PARAMETER State
-
-    State of new campaign. 
-    Options are: 
-        • NOT_RUNNING - Campaign not currently active
-        • STARTING - Campaign being initialized
-        • RUNNING - Campaign currently active
-        • STOPPING - Campaign currently stopping
-        • RESETTING - Temporary state of an outbound campaign that is returning to its initial state. All dialing results of the outbound campaign are cleared so that all records can be redialed
-
 
 .PARAMETER Mode
 
@@ -95,48 +85,36 @@
     
     Not Ready reason code for agents who are automatically placed in Not Ready state after reaching the timeout
 
-.PARAMETER UseWrapupTimer
-
-    Enables time limit for agents in wrap-up mode
-
-.PARAMETER UseWrapupTimer
-
-    Whether this disposition uses a Wrapup timer
-
 .PARAMETER WrapupTimerDays
 
-    Number of Days
-    Only used when -UseWrapupTimer is set to "True"
+    Number of Days used on wrap up timer
 
 .PARAMETER WrapupTimerHours
 
-    Number of Hours
-    Only used when -UseWrapupTimer is set to "True"
+    Number of Hours used on wrap up timer
 
 .PARAMETER WrapupTimerMinutes
 
-    Number of Minutes
-    Only used when -UseWrapupTimer is set to "True"
+    Number of Minutes used on wrap up timer
 
 .PARAMETER WrapupTimerSeconds
     
-    Number of Seconds
-    Only used when -UseWrapupTimer is set to "True"
+    Number of Seconds used on wrap up timer
 
 
 .EXAMPLE
     
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    New-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Cold-Calls" -State: RUNNING -IvrScriptName "Cold-Calls-IVR" -MaxNumOfLines 10
+    New-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Cold-Calls" -IvrScriptName "Cold-Calls-IVR" -MaxNumOfLines 10
     
     # Creates new inbound campaign with minimum number of required parameters
 
 .EXAMPLE
     
-    New-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Cold-Calls" -State RUNNING -Mode: ADVANCED -ProfileName "Cold-Calls-Profile" -IvrScriptName "Cold-Calls-IVR" -MaxNumOfLines 50 `
-                             -CallWrapupEnabled $true -WrapupAgentNotReady $true -UseWrapupTimer $true -WrapupTimerMinutes 2 -WrapupTimerSeconds 30
+    New-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Cold-Calls" -Mode: ADVANCED -ProfileName "Cold-Calls-Profile" -IvrScriptName "Cold-Calls-IVR" -MaxNumOfLines 50 `
+                             -CallWrapupEnabled $true -WrapupAgentNotReady $true -WrapupTimerMinutes 2 -WrapupTimerSeconds 30
     
-    # Creates new inbound campaign in advanced mode, and enabled call wrap up timer
+    # Creates new inbound campaign in advanced mode, and enables call wrap up timer
 
 
  
@@ -149,7 +127,6 @@ function New-Five9InboundCampaign
 
         [Parameter(Mandatory=$true)][string]$Name,
         [Parameter(Mandatory=$false)][string]$Description,
-        [Parameter(Mandatory=$true)][ValidateSet('NOT_RUNNING', 'STARTING', 'RUNNING', 'STOPPING', 'RESETTING')][string]$State,
         [Parameter(Mandatory=$false)][ValidateSet('BASIC', 'ADVANCED')][string]$Mode = 'BASIC',
         [Parameter(Mandatory=$false)][string]$ProfileName,
         [Parameter(Mandatory=$true)][string]$IvrScriptName,
@@ -168,7 +145,6 @@ function New-Five9InboundCampaign
         [Parameter(Mandatory=$false)][bool]$WrapupAgentNotReady,
         [Parameter(Mandatory=$false)][string]$WrapupDispostionName,
         [Parameter(Mandatory=$false)][string]$WrapupReasonCodeName,
-        [Parameter(Mandatory=$false)][bool]$UseWrapupTimer,
         [Parameter(Mandatory=$false)][ValidateRange(0,59)][int]$WrapupTimerDays,
         [Parameter(Mandatory=$false)][ValidateRange(0,23)][int]$WrapupTimerHours,
         [Parameter(Mandatory=$false)][ValidateRange(0,59)][int]$WrapupTimerMinutes,
@@ -182,9 +158,6 @@ function New-Five9InboundCampaign
     $inboundCampaign.typeSpecified = $true
 
     $inboundCampaign.name = $Name
-
-    $inboundCampaign.state = $State
-    $inboundCampaign.stateSpecified = $true
 
     $inboundCampaign.mode = $Mode
     $inboundCampaign.modeSpecified = $true
@@ -253,22 +226,11 @@ function New-Five9InboundCampaign
             $inboundCampaign.callWrapup.reasonCodeName = $WrapupReasonCodeName
         }
 
-        if ($UseWrapupTimer -eq $true)
-        {
-
-            if ($WrapupTimerDays -lt 1 -and $WrapupTimerHours -lt 1 -and $WrapupTimerMinutes -lt 1)
-            {
-                throw "When -UseWrapupTimer is set to True, the total -WrapupTimer<unit> values must be set to at least 1 minute. For example, to set wrapup to 2.5 minutes, use: -WrapupTimerHours 2 -WrapupTimerSeconds 30"
-                return
-            }
-
-            $inboundCampaign.callWrapup.timeout = New-Object PSFive9Admin.timer
-            $inboundCampaign.callWrapup.timeout.days = $WrapupTimerDays
-            $inboundCampaign.callWrapup.timeout.hours = $WrapupTimerHours
-            $inboundCampaign.callWrapup.timeout.minutes = $WrapupTimerMinutes
-            $inboundCampaign.callWrapup.timeout.seconds = $WrapupTimerSeconds
-
-        }
+        $inboundCampaign.callWrapup.timeout = New-Object PSFive9Admin.timer
+        $inboundCampaign.callWrapup.timeout.days = $WrapupTimerDays
+        $inboundCampaign.callWrapup.timeout.hours = $WrapupTimerHours
+        $inboundCampaign.callWrapup.timeout.minutes = $WrapupTimerMinutes
+        $inboundCampaign.callWrapup.timeout.seconds = $WrapupTimerSeconds
 
     }
 
@@ -306,7 +268,9 @@ function New-Five9InboundCampaign
     }
 
 
+
     $response = $Five9AdminClient.createInboundCampaign($inboundCampaign)
+
 
     return $response
 

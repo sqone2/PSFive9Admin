@@ -1,30 +1,24 @@
 ﻿<#
 .SYNOPSIS
     
-    Function used to create a new inbound campaign in Five9
+    Function used to modify an existing inbound campaign in Five9
  
 .PARAMETER Name
 
-    Name of new campaign
+    Name of existing campaign
+
+.PARAMETER NewName
+
+    Optional. Will rename campaign to this new name
 
 .PARAMETER Description
 
-     Description of new campaign
-
-.PARAMETER State
-
-    State of new campaign. 
-    Options are: 
-        • NOT_RUNNING - Campaign not currently active
-        • STARTING - Campaign being initialized
-        • RUNNING - Campaign currently active
-        • STOPPING - Campaign currently stopping
-        • RESETTING - Temporary state of an outbound campaign that is returning to its initial state. All dialing results of the outbound campaign are cleared so that all records can be redialed
+     Description of campaign
 
 
 .PARAMETER Mode
 
-    Mode of new campaign. If not specified, default set to BASIC.
+    Mode that existing campaign will be set to. If not specified, default set to BASIC.
     Options are:
         • BASIC (Default) -  Campaign with default settings, without a campaign profile
         • ADVANCED - Campaign with a campaign profile specified in the profileName parameter
@@ -32,7 +26,7 @@
 
 .PARAMETER IvrScriptName
 
-    Name of IVR script to be used on new campaign
+    Name of IVR script
 
 
 .PARAMETER MaxNumOfLines
@@ -95,48 +89,40 @@
     
     Not Ready reason code for agents who are automatically placed in Not Ready state after reaching the timeout
 
-.PARAMETER UseWrapupTimer
-
-    Enables time limit for agents in wrap-up mode
-
-.PARAMETER UseWrapupTimer
-
-    Whether this disposition uses a Wrapup timer
 
 .PARAMETER WrapupTimerDays
 
-    Number of Days
-    Only used when -UseWrapupTimer is set to "True"
+    Number of Days used on wrap up timer
+
 
 .PARAMETER WrapupTimerHours
 
-    Number of Hours
-    Only used when -UseWrapupTimer is set to "True"
+    Number of Hours used on wrap up timer
+
 
 .PARAMETER WrapupTimerMinutes
 
-    Number of Minutes
-    Only used when -UseWrapupTimer is set to "True"
+    Number of Minutes used on wrap up timer
+
 
 .PARAMETER WrapupTimerSeconds
     
-    Number of Seconds
-    Only used when -UseWrapupTimer is set to "True"
+    Number of Seconds used on wrap up timer
+
 
 
 .EXAMPLE
     
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    New-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Cold-Calls" -State: RUNNING -IvrScriptName "Cold-Calls-IVR" -MaxNumOfLines 10
+    Set-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Cold-Calls" -NewName "Warm-Calls" -IvrScriptName "Warm-Calls-IVR"
     
-    # Creates new inbound campaign with minimum number of required parameters
+    # Changes name of existing campaign and changes IVR script
 
 .EXAMPLE
     
-    New-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Cold-Calls" -State RUNNING -Mode: ADVANCED -ProfileName "Cold-Calls-Profile" -IvrScriptName "Cold-Calls-IVR" -MaxNumOfLines 50 `
-                             -CallWrapupEnabled $true -WrapupAgentNotReady $true -UseWrapupTimer $true -WrapupTimerMinutes 2 -WrapupTimerSeconds 30
+    Set-Five9InboundCampaign -Five9AdminClient $adminClient -Name "Warm-Calls" -AutoRecord $true -RecordingNameAsSid $true -UseFtp $true -FtpHost '192.168.1.50' -FtpUser 'admin' -FtpPassword 'P@ssword!'
     
-    # Creates new inbound campaign in advanced mode, and enabled call wrap up timer
+    # Modified recording values on existing campaign
 
 
  
@@ -148,13 +134,13 @@ function Set-Five9InboundCampaign
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,
 
         [Parameter(Mandatory=$true)][string]$Name,
+
         [Parameter(Mandatory=$false)][string]$NewName,
         [Parameter(Mandatory=$false)][string]$Description,
-        [Parameter(Mandatory=$true)][ValidateSet('NOT_RUNNING', 'STARTING', 'RUNNING', 'STOPPING', 'RESETTING')][string]$State,
         [Parameter(Mandatory=$false)][ValidateSet('BASIC', 'ADVANCED')][string]$Mode = 'BASIC',
         [Parameter(Mandatory=$false)][string]$ProfileName,
-        [Parameter(Mandatory=$true)][string]$IvrScriptName,
-        [Parameter(Mandatory=$true)][int]$MaxNumOfLines,
+        [Parameter(Mandatory=$false)][string]$IvrScriptName,
+        [Parameter(Mandatory=$false)][int]$MaxNumOfLines,
 
         [Parameter(Mandatory=$false)][bool]$TrainingMode,
 
@@ -169,7 +155,6 @@ function Set-Five9InboundCampaign
         [Parameter(Mandatory=$false)][bool]$WrapupAgentNotReady,
         [Parameter(Mandatory=$false)][string]$WrapupDispostionName,
         [Parameter(Mandatory=$false)][string]$WrapupReasonCodeName,
-        [Parameter(Mandatory=$false)][bool]$UseWrapupTimer,
         [Parameter(Mandatory=$false)][ValidateRange(0,59)][int]$WrapupTimerDays,
         [Parameter(Mandatory=$false)][ValidateRange(0,23)][int]$WrapupTimerHours,
         [Parameter(Mandatory=$false)][ValidateRange(0,59)][int]$WrapupTimerMinutes,
@@ -177,61 +162,81 @@ function Set-Five9InboundCampaign
 
     )
 
-    $campaignToModify = $null
+    $existingCampaign = $null
     try
     {
-        $campaignToModify = $Five9AdminClient.getInboundCampaign($Name) 
+        $existingCampaign = $Five9AdminClient.getInboundCampaign($Name)
     }
     catch
     {
 
     }
     
-    if ($campaignToModify.Count -gt 1)
+    if ($existingCampaign.Count -gt 1)
     {
         throw "Multiple campaigns were found using query: ""$Name"". Please try using the exact name of the campaign you're trying to modify."
         return
     }
 
-    if ($campaignToModify -eq $null)
+    if ($existingCampaign -eq $null)
     {
         throw "Cannot find a campaign with name: ""$Name"". Remember that Name is case sensitive."
         return
     }
 
-    $campaignToModify = $campaignToModify | select -First 1
+    $existingCampaign = $existingCampaign | select -First 1
+
 
     $campaignToModify = New-Object PSFive9Admin.inboundCampaign
-
-    $campaignToModify.type = "INBOUND"
-    $campaignToModify.typeSpecified = $true
-
-    $campaignToModify.name = $Name
-
-    $campaignToModify.state = $State
-    $campaignToModify.stateSpecified = $true
-
-    $campaignToModify.mode = $Mode
-    $campaignToModify.modeSpecified = $true
+    $campaignToModify.name = $existingCampaign.name
 
 
-    $campaignToModify.defaultIvrSchedule = New-Object PSFive9Admin.inboundIvrScriptSchedule
-    $campaignToModify.defaultIvrSchedule.ivrSchedule = New-Object PSFive9Admin.ivrScriptSchedule
-    $campaignToModify.defaultIvrSchedule.ivrSchedule.scriptName = $IvrScriptName
-
-
-    if ($Mode -eq 'ADVANCED')
+    if ($PSBoundParameters.Keys -contains 'Description')
     {
-        # if type is advanced, must also provide a campaign profile name
-        if ($PSBoundParameters.Keys -notcontains 'ProfileName')
+        $campaignToModify.description = $Description
+    }
+
+
+    if ($PSBoundParameters.Keys -contains 'IvrScriptName')
+    {
+        $campaignToModify.defaultIvrSchedule = New-Object PSFive9Admin.inboundIvrScriptSchedule
+        $campaignToModify.defaultIvrSchedule.ivrSchedule = New-Object PSFive9Admin.ivrScriptSchedule
+        $campaignToModify.defaultIvrSchedule.ivrSchedule.scriptName = $IvrScriptName
+    }
+
+
+    if ($PSBoundParameters.Keys -contains 'Mode')
+    {
+        # if change is from basic to advanced, make sure that theres a profile being set as well
+        if ($existingCampaign.mode -eq "BASIC" -and $Mode -eq 'ADVANCED')
         {
-            throw "Campaign Mode set as ""ADVANCED"", but no profile name was provided. Try again including the -ProfileName parameter."
-            return
+            # if type is advanced, must also provide a campaign profile name
+            if ($PSBoundParameters.Keys -notcontains 'ProfileName' -and $existingCampaign.profileName.Length -lt 1)
+            {
+                throw "Campaign Mode set as ""ADVANCED"", but no profile name was provided. Try again including the -ProfileName parameter."
+                return
+            }
+
         }
 
-        $campaignToModify.profileName = $ProfileName
 
+        $campaignToModify.mode = $Mode
+        $campaignToModify.modeSpecified = $true
+        
     }
+
+
+    if ($PSBoundParameters.Keys -contains 'ProfileName')
+    {
+        $campaignToModify.profileName = $ProfileName
+    }
+
+    if ($PSBoundParameters.Keys -contains 'MaxNumOfLines')
+    {
+        $campaignToModify.MaxNumOfLines = $MaxNumOfLines
+        $campaignToModify.maxNumOfLinesSpecified = $true
+    }
+
 
     if ($PSBoundParameters.Keys -contains 'AutoRecord')
     {
@@ -245,69 +250,12 @@ function Set-Five9InboundCampaign
         $campaignToModify.recordingNameAsSidSpecified = $true
     }
 
-    if ($PSBoundParameters.Keys -contains 'MaxNumOfLines')
-    {
-        $campaignToModify.MaxNumOfLines = $MaxNumOfLines
-        $campaignToModify.maxNumOfLinesSpecified = $true
-    }
-
-    if ($PSBoundParameters.Keys -contains 'Description')
-    {
-        $campaignToModify.description = $Description
-    }
-
-    if ($CallWrapupEnabled -eq $true)
-    {
-        $campaignToModify.callWrapup = New-Object PSFive9Admin.campaignCallWrapup
-        $campaignToModify.callWrapup.enabled = $true
-        $campaignToModify.callWrapup.enabledSpecified = $true
-
-        if ($WrapupAgentNotReady -eq $true)
-        {
-            $campaignToModify.callWrapup.agentNotReady = $true
-            $campaignToModify.callWrapup.agentNotReadySpecified = $true
-        }
-
-        if ($PSBoundParameters.Keys -contains 'WrapupDispostionName')
-        {
-            $campaignToModify.callWrapup.dispostionName = $WrapupDispostionName
-        }
-
-        if ($PSBoundParameters.Keys -contains 'WrapupReasonCodeName')
-        {
-            $campaignToModify.callWrapup.reasonCodeName = $WrapupReasonCodeName
-        }
-
-        if ($UseWrapupTimer -eq $true)
-        {
-
-            if ($WrapupTimerDays -lt 1 -and $WrapupTimerHours -lt 1 -and $WrapupTimerMinutes -lt 1)
-            {
-                throw "When -UseWrapupTimer is set to True, the total -WrapupTimer<unit> values must be set to at least 1 minute. For example, to set wrapup to 2.5 minutes, use: -WrapupTimerHours 2 -WrapupTimerSeconds 30"
-                return
-            }
-
-            $campaignToModify.callWrapup.timeout = New-Object PSFive9Admin.timer
-            $campaignToModify.callWrapup.timeout.days = $WrapupTimerDays
-            $campaignToModify.callWrapup.timeout.hours = $WrapupTimerHours
-            $campaignToModify.callWrapup.timeout.minutes = $WrapupTimerMinutes
-            $campaignToModify.callWrapup.timeout.seconds = $WrapupTimerSeconds
-
-        }
-
-    }
-
-    if ($PSBoundParameters.Keys -contains 'AutoRecord')
-    {
-        $campaignToModify.autoRecord = $AutoRecord
-        $campaignToModify.autoRecordSpecified = $true
-    }
-
     if ($PSBoundParameters.Keys -contains 'TrainingMode')
     {
         $campaignToModify.trainingMode = $TrainingMode
         $campaignToModify.trainingModeSpecified = $true
     }
+
 
     if ($PSBoundParameters.Keys -contains 'UseFtp')
     {
@@ -315,11 +263,12 @@ function Set-Five9InboundCampaign
         $campaignToModify.useFtpSpecified = $true
     }
 
+
     if ($PSBoundParameters.Keys -contains 'FtpHost')
     {
-        $campaignToModify.FtpHost = $FtpHost
+        $campaignToModify.ftpHost = $FtpHost
     }
-    
+
     if ($PSBoundParameters.Keys -contains 'FtpUser')
     {
         $campaignToModify.ftpUser = $FtpUser
@@ -331,9 +280,86 @@ function Set-Five9InboundCampaign
     }
 
 
-    $response = $Five9AdminClient.createInboundCampaign($campaignToModify)
+    $campaignToModify.callWrapup = $existingCampaign.callWrapup
 
-    return $response
+    if ($PSBoundParameters.Keys -contains 'CallWrapupEnabled')
+    {
+        $campaignToModify.callWrapup.enabled = $CallWrapupEnabled
+        $campaignToModify.callWrapup.enabledSpecified = $true
+    }
+
+    if ($PSBoundParameters.Keys -contains 'WrapupAgentNotReady')
+    {
+        $campaignToModify.callWrapup.agentNotReady = $WrapupAgentNotReady
+        $campaignToModify.callWrapup.agentNotReadySpecified = $true
+    }
+
+    if ($PSBoundParameters.Keys -contains 'WrapupDispostionName')
+    {
+        $campaignToModify.callWrapup.dispostionName = $WrapupDispostionName
+    }
+
+    if ($PSBoundParameters.Keys -contains 'WrapupReasonCodeName')
+    {
+        $campaignToModify.callWrapup.reasonCodeName = $WrapupReasonCodeName
+    }
+
+
+    if ($CallWrapupEnabled -eq $true -and $existingCampaign.callWrapup.timeout -eq $null)
+    {
+        $campaignToModify.callWrapup.timeout = New-Object PSFive9Admin.timer
+    }
+
+    if ($PSBoundParameters.Keys -contains 'WrapupTimerDays')
+    {
+        $campaignToModify.callWrapup.timeout.days = $WrapupTimerDays
+    }
+
+    if ($PSBoundParameters.Keys -contains 'WrapupTimerHours')
+    {
+        $campaignToModify.callWrapup.timeout.hours = $WrapupTimerHours
+    }
+
+    if ($PSBoundParameters.Keys -contains 'WrapupTimerMinutes')
+    {
+        $campaignToModify.callWrapup.timeout.minutes = $WrapupTimerMinutes
+    }
+
+    if ($PSBoundParameters.Keys -contains 'WrapupTimerSeconds')
+    {
+        $campaignToModify.callWrapup.timeout.seconds = $WrapupTimerSeconds
+    }
+
+
+
+
+    try
+    {
+
+        $response = $Five9AdminClient.modifyInboundCampaign($campaignToModify)
+
+
+        if ($PSBoundParameters.Keys -contains 'NewName')
+        {
+            try
+            {
+                $Five9AdminClient.renameCampaign($existingCampaign.name, $NewName)
+            }
+            catch
+            {
+                throw $_
+                return
+            }
+        }
+
+
+    }
+    catch
+    {
+        throw $_
+        return
+    }
+
 
 }
 
