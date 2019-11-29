@@ -187,11 +187,6 @@ function New-Five9InboundCampaign
         $inboundCampaign.autoRecordSpecified = $true
     }
 
-    if ($PSBoundParameters.Keys -contains 'RecordingNameAsSid')
-    {
-        $inboundCampaign.recordingNameAsSid = $RecordingNameAsSid
-        $inboundCampaign.recordingNameAsSidSpecified = $true
-    }
 
     if ($PSBoundParameters.Keys -contains 'MaxNumOfLines')
     {
@@ -234,17 +229,26 @@ function New-Five9InboundCampaign
 
     }
 
+    if ($PSBoundParameters.Keys -contains 'TrainingMode')
+    {
+        $inboundCampaign.trainingMode = $TrainingMode
+        $inboundCampaign.trainingModeSpecified = $true
+    }
+
     if ($PSBoundParameters.Keys -contains 'AutoRecord')
     {
         $inboundCampaign.autoRecord = $AutoRecord
         $inboundCampaign.autoRecordSpecified = $true
     }
 
-    if ($PSBoundParameters.Keys -contains 'TrainingMode')
+    if ($PSBoundParameters.Keys -contains 'RecordingNameAsSid')
     {
-        $inboundCampaign.trainingMode = $TrainingMode
-        $inboundCampaign.trainingModeSpecified = $true
+        $inboundCampaign.recordingNameAsSid = $RecordingNameAsSid
+        $inboundCampaign.recordingNameAsSidSpecified = $true
     }
+
+
+
 
     if ($PSBoundParameters.Keys -contains 'UseFtp')
     {
@@ -254,7 +258,7 @@ function New-Five9InboundCampaign
 
     if ($PSBoundParameters.Keys -contains 'FtpHost')
     {
-        $inboundCampaign.FtpHost = $FtpHost
+        $inboundCampaign.ftpHost = $FtpHost
     }
     
     if ($PSBoundParameters.Keys -contains 'FtpUser')
