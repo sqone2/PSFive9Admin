@@ -219,7 +219,6 @@ function Set-Five9InboundCampaign
 
         }
 
-
         $campaignToModify.mode = $Mode
         $campaignToModify.modeSpecified = $true
         
