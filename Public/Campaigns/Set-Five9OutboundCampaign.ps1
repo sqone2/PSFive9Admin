@@ -401,16 +401,7 @@ function Set-Five9OutboundCampaign
         $campaignToModify.maxQueueTime.seconds = $MaxQueueTimeSeconds
     }
 
-    <#
-    # this property HAS to be set no matter what the dialing mode is set to
-    $campaignToModify.actionOnQueueExpiration = New-Object PSFive9Admin.campaignDialingAction
-    $campaignToModify.actionOnQueueExpiration.actionType = "DROP_CALL"
-    $campaignToModify.actionOnQueueExpiration.actionTypeSpecified = $true
 
-    $campaignToModify.actionOnAnswerMachine = New-Object PSFive9Admin.campaignDialingAction
-    $campaignToModify.actionOnAnswerMachine.actionType = "DROP_CALL"
-    $campaignToModify.actionOnAnswerMachine.actionTypeSpecified = $true
-    #>
 
     if ($PSBoundParameters.Keys -contains 'DialingMode')
     {
@@ -655,6 +646,11 @@ function Set-Five9OutboundCampaign
 
 
 
+
+    $campaignToModify.actionOnAnswerMachine = $existingCampaign.actionOnAnswerMachine
+    $campaignToModify.actionOnQueueExpiration = $existingCampaign.actionOnQueueExpiration
+
+
     if ($PSBoundParameters.Keys -contains 'AnswerMachineAction')
     {
      
@@ -694,11 +690,6 @@ function Set-Five9OutboundCampaign
     }
 
 
-
-
-
-
-
     if ($PSBoundParameters.Keys -contains 'QueueExpirationAction')
     {
         if ($QueueExpirationAction -eq 'PLAY_PROMPT' -and $PSBoundParameters.Keys -notcontains 'QueueExpirationPromptName')
@@ -735,10 +726,42 @@ function Set-Five9OutboundCampaign
     }
 
 
-    $response = $Five9AdminClient.createOutboundCampaign($campaignToModify)
+
+    # can't allow prompt to be null
+    if ($campaignToModify.actionOnQueueExpiration.actionType -eq 'PLAY_PROMPT' -and $campaignToModify.actionOnQueueExpiration.actionArgument.Length -lt 1)
+    {
+        $campaignToModify.actionOnQueueExpiration.actionType = "DROP_CALL"
+        $campaignToModify.actionOnQueueExpiration.actionTypeSpecified = $true
+    }
 
 
-    return $response
+
+    try
+    {
+
+        $response = $Five9AdminClient.modifyOutboundCampaign($campaignToModify)
+
+
+        if ($PSBoundParameters.Keys -contains 'NewName')
+        {
+            try
+            {
+                $Five9AdminClient.renameCampaign($existingCampaign.name, $NewName)
+            }
+            catch
+            {
+                throw $_
+                return
+            }
+        }
+
+
+    }
+    catch
+    {
+        throw $_
+        return
+    }
 
 }
 
