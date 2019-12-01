@@ -39,8 +39,6 @@
 
     # enables list dialing ratios on a campaign, and adds list to campaign
 
-    
- 
 #>
 function Add-Five9CampaignList
 {
