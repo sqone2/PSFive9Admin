@@ -84,10 +84,12 @@
 .PARAMETER WrapupDispostionName
 
     Name of disposition automatically set for the call if the timeout is reached
+    Note: Disposition must FIRST be added to campaign's list of dispositions using the GUI or "Add-Five9CampaignDisposition"
 
 .PARAMETER WrapupReasonCodeName
     
     Not Ready reason code for agents who are automatically placed in Not Ready state after reaching the timeout
+    Note: Reason codes must first be enabled globally: Actions > Configure > Other > Enable Reason Codes
 
 
 .PARAMETER WrapupTimerDays
@@ -211,7 +213,7 @@ function Set-Five9InboundCampaign
         if ($existingCampaign.mode -eq "BASIC" -and $Mode -eq 'ADVANCED')
         {
             # if type is advanced, must also provide a campaign profile name
-            if ($PSBoundParameters.Keys -notcontains 'ProfileName' -and $existingCampaign.profileName.Length -lt 1)
+            if ($PSBoundParameters.Keys -notcontains 'ProfileName')
             {
                 throw "Campaign Mode set as ""ADVANCED"", but no profile name was provided. Try again including the -ProfileName parameter."
                 return

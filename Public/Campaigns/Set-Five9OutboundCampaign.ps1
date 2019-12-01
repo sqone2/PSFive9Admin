@@ -92,10 +92,12 @@
 .PARAMETER WrapupDispostionName
 
     Name of disposition automatically set for the call if the timeout is reached
+    Note: Disposition must FIRST be added to campaign's list of dispositions using the GUI or "Add-Five9CampaignDisposition"
 
 .PARAMETER WrapupReasonCodeName
     
     Not Ready reason code for agents who are automatically placed in Not Ready state after reaching the timeout
+    Note: Reason codes must first be enabled globally: Actions > Configure > Other > Enable Reason Codes
 
 .PARAMETER WrapupTimerDays
 
@@ -261,22 +263,26 @@
 .EXAMPLE
     
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    New-Five9OutboundCampaign -Five9AdminClient $adminClient -Name "Hot-Leads"
+    Set-Five9OutboundCampaign -Five9AdminClient $adminClient -Name "Hot-Leads"
 
     #Creates a new outbound campaign using all default values
 
 .EXAMPLE
-    New-Five9OutboundCampaign -Five9AdminClient $adminClient -Name "Hot-Leads" -DialingMode: PREVIEW -PreviewMode: Limited_Preview_Time -MaxPreviewTimeAction: Dial_Number -MaxPreviewTimeMinutes 1 -MaxPreviewTimeSeconds 30
+    Set-Five9OutboundCampaign -Five9AdminClient $adminClient -Name "Hot-Leads" -DialingMode: PREVIEW -PreviewMode: Limited_Preview_Time -MaxPreviewTimeAction: Dial_Number -MaxPreviewTimeMinutes 1 -MaxPreviewTimeSeconds 30
 
     #Creates a new outbound campaign using in preview mode where calls are made after previewing for 1 minute and 30 seconds
 
 .EXAMPLE
-    New-Five9OutboundCampaign -Five9AdminClient $adminClient -Name "Hot-Leads" -UseTelemarketingMaxQueTime $true -DialingMode: POWER -CallsAgentRatio 2 -QueueExpirationAction: DROP_CALL
+    Set-Five9OutboundCampaign -Five9AdminClient $adminClient -Name "Hot-Leads" -UseTelemarketingMaxQueTime $true -DialingMode: POWER -CallsAgentRatio 2 -QueueExpirationAction: DROP_CALL
 
     #Creates a new outbound campaign in "Power" using a 2:1 agent ratio
 
 .EXAMPLE
-    New-Five9OutboundCampaign -Five9AdminClient $adminClient -Name "Hot-Leads" -UseTelemarketingMaxQueTime $true -DialingMode: PROGRESSIVE -CallsAgentRatio 5 -AnswerMachineAction: START_IVR_SCRIPT -AnswerMachineIVRScriptName "Answering-Machine-IVR" -QueueExpirationAction: START_IVR_SCRIPT -QueueExpirationIVRScriptName "Abandon-Call-IVR"
+
+    Set-Five9OutboundCampaign -Five9AdminClient $adminClient -Name "Hot-Leads" -UseTelemarketingMaxQueTime $true -DialingMode: PROGRESSIVE `
+                              -CallsAgentRatio 5 -CallAnalysisMode: FAX_AND_ANSWERING_MACHINE -VoiceDetectionLevel 3.5 `
+                              -AnswerMachineAction: START_IVR_SCRIPT -AnswerMachineIVRScriptName "Answer-Machine-IVR" `
+                              -QueueExpirationAction: START_IVR_SCRIPT -QueueExpirationIVRScriptName "Abandon-Call-IVR"
 
     #Creates a new outbound campaign in "Progressive" using a 5:1 agent ratio. Also enables answering machine detection 
 #>
@@ -439,7 +445,7 @@ function Set-Five9OutboundCampaign
         if ($existingCampaign.mode -eq "BASIC" -and $Mode -eq 'ADVANCED')
         {
             # if type is advanced, must also provide a campaign profile name
-            if ($PSBoundParameters.Keys -notcontains 'ProfileName' -and $existingCampaign.profileName.Length -lt 1)
+            if ($PSBoundParameters.Keys -notcontains 'ProfileName')
             {
                 throw "Campaign Mode set as ""ADVANCED"", but no profile name was provided. Try again including the -ProfileName parameter."
                 return
@@ -450,6 +456,11 @@ function Set-Five9OutboundCampaign
         $campaignToModify.mode = $Mode
         $campaignToModify.modeSpecified = $true
         
+    }
+
+    if ($PSBoundParameters.Keys -contains 'ProfileName')
+    {
+        $campaignToModify.profileName = $ProfileName
     }
 
 

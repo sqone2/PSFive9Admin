@@ -274,7 +274,11 @@
     #Creates a new outbound campaign in "Power" using a 2:1 agent ratio
 
 .EXAMPLE
-    New-Five9OutboundCampaign -Five9AdminClient $adminClient -Name "Hot-Leads" -UseTelemarketingMaxQueTime $true -DialingMode: PROGRESSIVE -CallsAgentRatio 5 -AnswerMachineAction: START_IVR_SCRIPT -AnswerMachineIVRScriptName "Answering-Machine-IVR" -QueueExpirationAction: START_IVR_SCRIPT -QueueExpirationIVRScriptName "Abandon-Call-IVR"
+
+    New-Five9OutboundCampaign -Five9AdminClient $adminClient -Name "Hot-Leads" -UseTelemarketingMaxQueTime $true -DialingMode: PROGRESSIVE `
+                              -CallsAgentRatio 5 -CallAnalysisMode: FAX_AND_ANSWERING_MACHINE -VoiceDetectionLevel 3.5 `
+                              -AnswerMachineAction: START_IVR_SCRIPT -AnswerMachineIVRScriptName "Answer-Machine-IVR" `
+                              -QueueExpirationAction: START_IVR_SCRIPT -QueueExpirationIVRScriptName "Abandon-Call-IVR"
 
     #Creates a new outbound campaign in "Progressive" using a 5:1 agent ratio. Also enables answering machine detection 
 #>
