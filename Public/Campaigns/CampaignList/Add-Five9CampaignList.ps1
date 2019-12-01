@@ -68,5 +68,3 @@ function Add-Five9CampaignList
 
 }
 
-
-Add-Five9CampaignList -Five9AdminClient $demoFive9AdminClient -CampaignName 'TEST-OUT-2' -ListName 'List1' -Priority 5 -Ratio 2
