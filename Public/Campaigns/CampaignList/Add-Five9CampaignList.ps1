@@ -47,8 +47,8 @@ function Add-Five9CampaignList
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,
         [Parameter(Mandatory=$true)][string]$CampaignName,
         [Parameter(Mandatory=$true)][string]$ListName,
-        [Parameter(Mandatory=$false)][int]$Priority = 1,
-        [Parameter(Mandatory=$false)][int]$Ratio = 1
+        [Parameter(Mandatory=$false)][ValidateRange(0,10)][int]$Priority = 1,
+        [Parameter(Mandatory=$false)][ValidateRange(1,10)][int]$Ratio = 1
     )
 
     $listState = New-Object PSFive9Admin.listState
