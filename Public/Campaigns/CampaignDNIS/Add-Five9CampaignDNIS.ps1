@@ -1,7 +1,7 @@
 ﻿<#
 .SYNOPSIS
     
-    Function add a single 10 digit DNIS, or multiple DNISes to be added to a Five9 inbound campaign
+    Function to add a single 10 digit DNIS, or multiple DNISes to a Five9 inbound campaign
  
 .PARAMETER Five9AdminClient
  
@@ -13,7 +13,7 @@
 
 .PARAMETER DNIS
  
-    Single 10 digit DNIS, or multiple DNISes to be added to a campaign
+    Single 10 digit DNIS, or array of multiple DNISes to be added to an inbound campaign
 
 
 .EXAMPLE
@@ -38,7 +38,7 @@ function Add-Five9CampaignDNIS
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,
         [Parameter(Mandatory=$true)][string]$CampaignName,
-        [Parameter(Mandatory=$true)][string[]]$DNIS
+        [Parameter(Mandatory=$true)][ValidatePattern('^\d{10}$')][string[]]$DNIS
     )
 
     return $Five9AdminClient.addDNISToCampaign($CampaignName, $DNIS)
