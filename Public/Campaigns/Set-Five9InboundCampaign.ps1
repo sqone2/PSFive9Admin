@@ -332,13 +332,9 @@ function Set-Five9InboundCampaign
     }
 
 
-
-
     try
     {
-
         $response = $Five9AdminClient.modifyInboundCampaign($campaignToModify)
-
 
         if ($PSBoundParameters.Keys -contains 'NewName')
         {
