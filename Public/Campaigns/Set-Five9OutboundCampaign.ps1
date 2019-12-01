@@ -259,6 +259,10 @@
     Name of prompt to be played when max queue time expires
     Only used when QueueExpirationAction is PLAY_PROMPT
 
+.PARAMETER EnableListDialingRatios
+
+    Whether to use list dialing ratios, which enable multiple lists to be dialed at specified frequencies
+
 
 .EXAMPLE
     
@@ -356,7 +360,10 @@ function Set-Five9OutboundCampaign
 
         [Parameter(Mandatory=$false)][ValidateSet('DROP_CALL', 'PLAY_PROMPT', 'START_IVR_SCRIPT')][string]$QueueExpirationAction,
         [Parameter(Mandatory=$false)][string]$QueueExpirationIVRScriptName, #only used when QueueExpirationAction is START_IVR_SCRIPT
-        [Parameter(Mandatory=$false)][string]$QueueExpirationPromptName #only used when QueueExpirationAction is PLAY_PROMPT
+        [Parameter(Mandatory=$false)][string]$QueueExpirationPromptName, #only used when QueueExpirationAction is PLAY_PROMPT
+
+        # Lists
+        [Parameter(Mandatory=$false)][bool]$EnableListDialingRatios
 
     )
 
@@ -737,14 +744,19 @@ function Set-Five9OutboundCampaign
     }
 
 
-
     # can't allow prompt to be null
     if ($campaignToModify.actionOnQueueExpiration.actionType -eq 'PLAY_PROMPT' -and $campaignToModify.actionOnQueueExpiration.actionArgument.Length -lt 1)
     {
-        $campaignToModify.actionOnQueueExpiration.actionType = "DROP_CALL"
-        $campaignToModify.actionOnQueueExpiration.actionTypeSpecified = $true
+        throw "Campaign being modified is set ""PLAY_PROMPT"" on QueueExpirationAction, but no prompt is set. Please try again including -QueueExpirationPromptName"
+        return
     }
 
+
+    if ($PSBoundParameters.Keys -contains 'EnableListDialingRatios')
+    {
+        $campaignToModify.enableListDialingRatios = $EnableListDialingRatios
+        $campaignToModify.enableListDialingRatiosSpecified = $true
+    }
 
 
     try

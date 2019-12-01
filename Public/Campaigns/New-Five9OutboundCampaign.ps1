@@ -255,6 +255,10 @@
     Name of prompt to be played when max queue time expires
     Only used when QueueExpirationAction is PLAY_PROMPT
 
+.PARAMETER EnableListDialingRatios
+
+    Whether to use list dialing ratios, which enable multiple lists to be dialed at specified frequencies
+
 
 .EXAMPLE
     
@@ -351,7 +355,11 @@ function New-Five9OutboundCampaign
 
         [Parameter(Mandatory=$false)][ValidateSet('DROP_CALL', 'PLAY_PROMPT', 'START_IVR_SCRIPT')][string]$QueueExpirationAction,
         [Parameter(Mandatory=$false)][string]$QueueExpirationIVRScriptName, #only used when QueueExpirationAction is START_IVR_SCRIPT
-        [Parameter(Mandatory=$false)][string]$QueueExpirationPromptName #only used when QueueExpirationAction is PLAY_PROMPT
+        [Parameter(Mandatory=$false)][string]$QueueExpirationPromptName, #only used when QueueExpirationAction is PLAY_PROMPT
+
+        # Lists
+        [Parameter(Mandatory=$false)][bool]$EnableListDialingRatios
+
 
     )
 
@@ -654,6 +662,14 @@ function New-Five9OutboundCampaign
         }
 
     }
+
+
+    if ($PSBoundParameters.Keys -contains 'EnableListDialingRatios')
+    {
+        $outboundCampaign.enableListDialingRatios = $EnableListDialingRatios
+        $outboundCampaign.enableListDialingRatiosSpecified = $true
+    }
+
 
     $response = $Five9AdminClient.createOutboundCampaign($outboundCampaign)
 

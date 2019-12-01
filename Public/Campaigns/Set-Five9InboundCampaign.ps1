@@ -199,11 +199,21 @@ function Set-Five9InboundCampaign
     }
 
 
-    if ($PSBoundParameters.Keys -contains 'IvrScriptName')
+    if ($existingCampaign.defaultIvrSchedule -eq $null)
     {
-        $campaignToModify.defaultIvrSchedule = New-Object PSFive9Admin.inboundIvrScriptSchedule
-        $campaignToModify.defaultIvrSchedule.ivrSchedule = New-Object PSFive9Admin.ivrScriptSchedule
-        $campaignToModify.defaultIvrSchedule.ivrSchedule.scriptName = $IvrScriptName
+
+        if ($PSBoundParameters.Keys -contains 'IvrScriptName')
+        {
+            $campaignToModify.defaultIvrSchedule = New-Object PSFive9Admin.inboundIvrScriptSchedule
+            $campaignToModify.defaultIvrSchedule.ivrSchedule = New-Object PSFive9Admin.ivrScriptSchedule
+            $campaignToModify.defaultIvrSchedule.ivrSchedule.scriptName = $IvrScriptName
+        }
+        else
+        {
+            throw "The campaign being modified is not configured with an IVR Script. Please try again including the -IvrScriptName parameter."
+            return
+        }
+
     }
 
 
@@ -232,10 +242,18 @@ function Set-Five9InboundCampaign
         $campaignToModify.profileName = $ProfileName
     }
 
-    if ($PSBoundParameters.Keys -contains 'MaxNumOfLines')
+    if ($existingCampaign.maxNumOfLines -lt 1)
     {
-        $campaignToModify.MaxNumOfLines = $MaxNumOfLines
-        $campaignToModify.maxNumOfLinesSpecified = $true
+        if ($PSBoundParameters.Keys -contains 'MaxNumOfLines')
+        {
+            $campaignToModify.MaxNumOfLines = $MaxNumOfLines
+            $campaignToModify.maxNumOfLinesSpecified = $true
+        }
+        else
+        {
+            throw "The campaign being modified has zero voice lines. Please try again including the -MaxNumOfLines parameter."
+            return
+        }
     }
 
 
