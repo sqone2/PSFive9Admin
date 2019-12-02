@@ -1,7 +1,7 @@
 ﻿<#
 .SYNOPSIS
     
-    Function removes disposition(s) from a Five9 campaign
+    Function to remove disposition(s) from a Five9 campaign
  
 .PARAMETER Five9AdminClient
  
@@ -9,11 +9,11 @@
 
 .PARAMETER CampaignName
  
-    Campaign that disposition(s) will be removed from
+    Campaign name that disposition(s) will be removed from
 
 .PARAMETER DispositionName
  
-    Single disposition name, or multiple disposition names to be added removed from a campaign
+    Single disposition name, or array multiple disposition names to be removed from a campaign
 
 
 .EXAMPLE
@@ -41,7 +41,6 @@ function Remove-Five9CampaignDisposition
         [Parameter(Mandatory=$true)][string[]]$DispositionName
     )
 
-    return $Five9AdminClient.removeDispositionsFromCampaign($CampaignName, $DispositionName)
+    return $Five9AdminClient.removeDispositionsFromCampaign($CampaignName,$DispositionName)
 
 }
-

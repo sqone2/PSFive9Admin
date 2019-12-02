@@ -1,7 +1,7 @@
 ﻿<#
 .SYNOPSIS
     
-    Function add disposition(s) to a Five9 campaign
+    Function to add disposition(s) to a Five9 campaign
  
 .PARAMETER Five9AdminClient
  
@@ -9,7 +9,7 @@
 
 .PARAMETER CampaignName
  
-    Campaign that disposition(s) will be added to
+    Campaign name that disposition(s) will be added to
 
 .PARAMETER DispositionName
  
@@ -23,14 +23,14 @@
 .EXAMPLE
     
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    Add-Five9CampaignDisposition -Five9AdminClient $aacFive9AdminClient -CampaignName 'MultiMedia' -DispositionName 'Wrong Number'
+    Add-Five9CampaignDisposition -Five9AdminClient $adminClient -CampaignName 'MultiMedia' -DispositionName 'Wrong Number'
 
     # adds a single disposition to a campaign
 
 .EXAMPLE
 
     $dispositionsToBeAdded = @('Dead Air', 'Wrong Number')
-    Add-Five9CampaignDisposition -Five9AdminClient $aacFive9AdminClient -CampaignName 'MultiMedia' -DispositionName $dispositionsToBeAdded
+    Add-Five9CampaignDisposition -Five9AdminClient $adminClient -CampaignName 'MultiMedia' -DispositionName $dispositionsToBeAdded
     
     # adds multiple dispositions to a campaign
     

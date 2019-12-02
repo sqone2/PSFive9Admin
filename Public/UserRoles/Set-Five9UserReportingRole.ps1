@@ -29,7 +29,7 @@
 
 .EXAMPLE
     
-    Set-Five9UserReportingRole -Five9AdminClient $aacFive9AdminClient -Username 'jdoe@domain.com' -CanViewSocialReports $false -CanViewCannedReports $true
+    Set-Five9UserReportingRole -Five9AdminClient $adminClient -Username 'jdoe@domain.com' -CanViewSocialReports $false -CanViewCannedReports $true
     
     # Modifies reporting rights for user 'jdoe@domain.com'
     
