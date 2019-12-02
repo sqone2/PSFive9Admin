@@ -41,6 +41,6 @@ function Remove-Five9CampaignDisposition
         [Parameter(Mandatory=$true)][string[]]$DispositionName
     )
 
-    return $Five9AdminClient.removeDispositionsFromCampaign($CampaignName,$DispositionName)
+    return $Five9AdminClient.removeDispositionsFromCampaign($CampaignName, $DispositionName)
 
 }
