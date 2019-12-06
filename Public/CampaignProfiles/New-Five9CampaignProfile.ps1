@@ -54,8 +54,12 @@
 
 .EXAMPLE
     
-    New-Five9CampaignProfile -Five9AdminClient $adminClient -Name "Cold-Calls-Profile" -InitialCallPriority 90 -NumberOfAttempts 10 -ANI '5991230001'
-    
+    New-Five9CampaignProfile -Five9AdminClient $adminClient -Name "Cold-Calls-Profile" -InitialCallPriority 90 -NumberOfAttempts 10 -ANI '5991230001' `
+                             -IncludeNumber1 $true -IncludeNumber2: $false -IncludeNumber3 $false `
+                             -Number1StartTime 9am -Number1StopTime 10am -Number2StartTime 9am -Number2StopTime 10pm -Number3StartTime 10am -Number3StopTime 11pm `
+                             -DialingOrder 'Number3', 'Number1', 'number2' -DialASAPTimeout 9 -DialASAPTimeoutPeriod: Minute -DialASAPSortOrder: ContactFields
+
+
     # Creates new campaign profile including additional parameters
 
 
@@ -236,7 +240,3 @@ function New-Five9CampaignProfile
     return $response
 
 }
-
-
-
-New-Five9CampaignProfile -Five9AdminClient $demoFive9AdminClient -Name 'TEST-2' -Description "Test" -InitialCallPriority 9 -MaxCharges 9 -DialingTimeout 10 -NumberOfAttempts 9 -ANI 6156910079 -IncludeNumber1 $true -IncludeNumber2: $false -IncludeNumber3 $false -Number1StartTime 9am -Number1StopTime 10am -Number2StartTime 9am -Number2StopTime 10pm -Number3StartTime 10am -Number3StopTime 11pm -DialingOrder 'Number3', 'Number1', 'number2' -DialASAPTimeout 9 -DialASAPTimeoutPeriod: Minute -DialASAPSortOrder: ContactFields
