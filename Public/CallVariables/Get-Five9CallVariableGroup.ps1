@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to get call variable group(s) from Five9
- 
-.DESCRIPTION
- 
-    Function used to get call variable group(s) from Five9
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

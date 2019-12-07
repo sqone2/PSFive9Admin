@@ -2,21 +2,15 @@
 .SYNOPSIS
     
     Function used to create an agent group
- 
-.DESCRIPTION
- 
-    Function used to create an agent group
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client
-
 
 .PARAMETER Name
  
     Name for new agent group
    
-
 .PARAMETER Description
  
     Description for new agent group
@@ -28,10 +22,6 @@
     
     # Creates new group named "Team Joe"
     
-
-    
-
- 
 #>
 
 function New-Five9AgentGroup

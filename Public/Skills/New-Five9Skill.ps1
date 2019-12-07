@@ -3,10 +3,6 @@
     
     Function used to create a new skill
  
-.DESCRIPTION
- 
-    Function used to create a new skill
- 
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

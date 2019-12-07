@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to add a member to an existing skill
- 
-.DESCRIPTION
- 
-    Function used to add a member to an existing skill
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

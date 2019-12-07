@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to modify an existing agent group
- 
-.DESCRIPTION
- 
-    Function used to modify an existing agent group
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

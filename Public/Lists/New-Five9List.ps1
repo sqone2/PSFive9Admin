@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to create a new Five9 list
- 
-.DESCRIPTION
- 
-    Function used to create a new Five9 list
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

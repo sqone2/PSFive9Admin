@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to remove an existing call variable
- 
-.DESCRIPTION
- 
-    Function used to remove an existing call variable
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

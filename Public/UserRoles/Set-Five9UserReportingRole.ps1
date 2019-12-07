@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to modify a user's reporting role
- 
-.DESCRIPTION
- 
-    Function used to modify a user's reporting role
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

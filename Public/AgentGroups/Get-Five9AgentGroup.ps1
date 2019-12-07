@@ -3,10 +3,6 @@
     
     Function used to get agent group(s) from Five9
  
-.DESCRIPTION
- 
-    Function used to get agent group(s) from Five9
- 
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

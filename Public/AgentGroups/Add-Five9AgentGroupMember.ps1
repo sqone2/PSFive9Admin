@@ -3,10 +3,6 @@
     
     Function used to add member(s) to an agent group
  
-.DESCRIPTION
- 
-    Function used to add member(s) to an agent group
- 
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client
@@ -22,7 +18,6 @@
     Username of single member, or array of multiple usernames to be added to agent group
 
 
-   
 .EXAMPLE
     
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"

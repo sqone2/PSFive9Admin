@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to create SOAP Proxy with Five9 Web Admin Web Service API
- 
-.DESCRIPTION
- 
-    Function used to create SOAP Proxy with Five9 Web Admin Web Service API
- 
+
 .PARAMETER Username
  
     Mandatory parameter. Five9 Admin Username

@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to add a new role to a user
- 
-.DESCRIPTION
- 
-    Function used to add a new role to a user
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

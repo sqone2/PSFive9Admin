@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to modify a user's supervisor role
- 
-.DESCRIPTION
- 
-    Function used to modify a user's supervisor role
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

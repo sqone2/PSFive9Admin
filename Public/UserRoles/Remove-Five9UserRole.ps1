@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to remove a user role
- 
-.DESCRIPTION
- 
-    Function used to remove a user role
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

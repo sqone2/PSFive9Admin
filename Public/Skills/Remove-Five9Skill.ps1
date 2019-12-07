@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to delete a skill
- 
-.DESCRIPTION
- 
-    Function used to delete a skill
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

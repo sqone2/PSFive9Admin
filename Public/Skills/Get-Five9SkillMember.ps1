@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to get the members of a given skill
- 
-.DESCRIPTION
- 
-    Function used to get the members of a given skill
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

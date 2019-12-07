@@ -3,10 +3,6 @@
     
     Function used to create a new user
  
-.DESCRIPTION
- 
-    Function used to create a new user
- 
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

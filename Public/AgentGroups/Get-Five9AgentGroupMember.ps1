@@ -3,14 +3,9 @@
     
     Function used to get agent group members
  
-.DESCRIPTION
- 
-    Function used to get agent group members
- 
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client
-
 
 .PARAMETER Name
  
@@ -22,10 +17,6 @@
     Get-Five9AgentGroupMember -Five9AdminClient $adminClient -Name "Team Joe"
     
     # Returns members of agent group "Team Joe"
-    
-    
-
- 
 #>
 
 function Get-Five9AgentGroupMember

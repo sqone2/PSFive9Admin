@@ -3,10 +3,6 @@
     
     Function used to delete a user
  
-.DESCRIPTION
- 
-    Function used to delete a user
- 
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client

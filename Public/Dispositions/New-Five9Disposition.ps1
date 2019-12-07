@@ -2,11 +2,7 @@
 .SYNOPSIS
     
     Function used to create a new Five9 disposition
- 
-.DESCRIPTION
- 
-    Function used to create a new Five9 disposition
- 
+
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client
