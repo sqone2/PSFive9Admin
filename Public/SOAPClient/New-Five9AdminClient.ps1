@@ -39,7 +39,6 @@ function New-Five9AdminClient
         throw "Error creating web service proxy to Five9 web service. $($_.Exception.Message)"
     }
     
-
     # test credentails
     try
     {
