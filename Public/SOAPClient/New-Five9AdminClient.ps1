@@ -28,9 +28,17 @@ function New-Five9AdminClient
     )
 
     # get soap client
-    $wsdl = "https://api.five9.com/wsadmin/v11/AdminWebService?wsdl&user=$Username"
-    $proxy = New-WebServiceProxy -Uri $wsdl -Namespace "PSFive9Admin" -Class "PSFive9Admin"
-    $proxy.Credentials = $(New-Object System.Net.NetworkCredential($Username, $Password))
+    try
+    {
+        $wsdl = "https://api.five9.com/wsadmin/v11/AdminWebService?wsdl&user=$Username"
+        $proxy = New-WebServiceProxy -Uri $wsdl -Namespace "PSFive9Admin" -Class "PSFive9Admin"
+        $proxy.Credentials = $(New-Object System.Net.NetworkCredential($Username, $Password))
+    }
+    catch
+    {
+        throw "Unknown error trying to create web service proxy to Five9 web service. $($_.Exception.Message)"
+    }
+    
 
 
     # test credentails
@@ -40,7 +48,7 @@ function New-Five9AdminClient
     }
     catch
     {
-        throw "Error connecting to Five9 Web Service. Please check your credentials and try again. $($_.Exception.Message)"
+        throw "Error connecting to Five9 web service. Please check your credentials and try again. $($_.Exception.Message)"
     }
 
     return $proxy
