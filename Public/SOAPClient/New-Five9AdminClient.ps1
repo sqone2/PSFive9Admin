@@ -36,10 +36,9 @@ function New-Five9AdminClient
     }
     catch
     {
-        throw "Unknown error trying to create web service proxy to Five9 web service. $($_.Exception.Message)"
+        throw "Error creating web service proxy to Five9 web service. $($_.Exception.Message)"
     }
     
-
 
     # test credentails
     try
