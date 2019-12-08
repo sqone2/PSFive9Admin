@@ -221,6 +221,3 @@ function Add-Five9ListRecord
 
 }
 
-
-
-Add-Five9ListRecord -Five9AdminClient $demoFive9AdminClient -ListName "_Preview_Test" -CsvPath C:\Users\squirion\scripts\Working\list-import-test.csv -CrmAddMode: ADD_NEW -CrmUpdateMode: UPDATE_ALL -ListAddMode: ADD_ALL -Key @('number1', 'first_name') -CleanListBeforeUpdate: $true -FailOnFieldParseError $true -ReportEmail 'squirion@five9.com'
