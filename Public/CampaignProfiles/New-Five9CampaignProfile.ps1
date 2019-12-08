@@ -40,11 +40,70 @@
 
     ANI to send with outbound call
 
+. PARAMETER IncludeNumber1
 
-. NOTES
+    Whether to call number1 in the campaign associated with the profile
 
-    Dialing Schedule can be set using Set-Five9CampaignProfileSchedule
+. PARAMETER IncludeNumber2
 
+    Whether to call number2 in the campaign associated with the profile
+
+. PARAMETER IncludeNumber3
+
+    Whether to call number3 in the campaign associated with the profile
+
+. PARAMETER Number1StartTime
+
+    When, in local time, to start dialing number1 numbers for an outbound campaign. i.e. '8am' or '8:30am'
+
+. PARAMETER Number1StopTime
+
+    When, in local time, to stop dialing number1 numbers. i.e. '7pm' or '7:30pm'
+
+. PARAMETER Number2StartTime
+
+    When, in local time, to start dialing number2 numbers for an outbound campaign. i.e. '8am' or '8:30am'
+
+. PARAMETER Number2StopTime
+
+    When, in local time, to stop dialing number2 numbers. i.e. '7pm' or '7:30pm'
+
+
+. PARAMETER Number3StartTime
+
+    When, in local time, to start dialing number3 numbers for an outbound campaign. i.e. '8am' or '8:30am'
+
+. PARAMETER Number3StopTime
+
+    When, in local time, to stop dialing number3 numbers. i.e. '7pm' or '7:30pm'
+
+
+. PARAMETER DialingOrder
+
+    Contains the dialing order of phone numbers when contact records have multiple phone numbers. i.e. -DialingOrder 'Number1', 'Number2', 'Number3'
+
+. PARAMETER DialASAPTimeout
+
+    Duration before records that are not dialed are removed from the ASAP queue and are treated as normal records
+
+. PARAMETER DialASAPTimeoutPeriod
+
+    Unit that specifies the dial ASAP timeout
+    Options are:
+        • Second 
+        • Minute
+        • Hour
+        • Day
+
+. PARAMETER DialASAPSortOrder
+    
+    Order for dialing numbers in the ASAP queue
+    Options are:
+    • FIFO (Default) - First in, first out: oldest added are called first
+    • LIFO - Last in, first out: newest added called first
+    • ContactFields - Sort order of the campaign profile
+
+        
 .EXAMPLE
     
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
