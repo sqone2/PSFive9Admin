@@ -14,7 +14,7 @@
 .EXAMPLE
     
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    Add-Five9ContactRecord -Five9AdminClient $adminClient -CsvPath 'c:\files\contacts.csv'
+    $importId = Add-Five9ContactRecord -Five9AdminClient $adminClient -CsvPath 'c:\files\contacts.csv'
 
     #
     #    Add-Five9ContactRecord will return:
@@ -24,7 +24,7 @@
     #    4833baab-9ded-4ade-b131-5263b269bdb9
     #
 
-    Get-Five9ContactImportResult -Five9AdminClient $adminClient -Identifier '4833baab-9ded-4ade-b131-5263b269bdb9'
+    Get-Five9ContactImportResult -Five9AdminClient $adminClient -Identifier $importId
 
     # Returns the result of the contact records import process
 
@@ -38,11 +38,20 @@ function Get-Five9ContactImportResult
     param
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,
-        [Parameter(Mandatory=$true)][guid]$Identifier
+        [Parameter(Mandatory=$true)][object]$Identifier
     )
 
     $importIdentifier = New-Object PSFive9Admin.importIdentifier
-    $importIdentifier.identifier = $Identifier
+
+    # check to see if importIdentifier object was passed, or string
+    if ($($Identifier.GetType().Name) -eq 'importIdentifier')
+    {
+        $importIdentifier.identifier = $Identifier.identifier
+    }
+    else
+    {
+        $importIdentifier.identifier = $Identifier
+    }
 
     return $Five9AdminClient.getCrmImportResult($importIdentifier)
 

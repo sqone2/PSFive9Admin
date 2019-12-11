@@ -1,7 +1,12 @@
 ﻿<#
 .SYNOPSIS
     
-    Function used to add a single record, or an array of objects an outbound dialing list.
+    Function used to add new or existing contact record(s) to an outbound dialing list
+
+    Using the function you are able to add records to a list 3 ways:
+        1. Specifying a single object using -InputObject
+        2. Specifying an arrary of objects using -InputObject
+        3. Specifying the path of a local CSV file using -CsvPath
  
 .PARAMETER Five9AdminClient
  

@@ -1,19 +1,20 @@
 ﻿<#
 .SYNOPSIS
     
-    Function used to add a single record, or an array of objects an outbound dialing list.
+    Function used to add a record(s) to the Five9 contact record database
+
+    Using the function you are able to add records 3 ways:
+        1. Specifying a single object using -InputObject
+        2. Specifying an arrary of objects using -InputObject
+        3. Specifying the path of a local CSV file using -CsvPath
  
 .PARAMETER Five9AdminClient
  
     Mandatory parameter. SOAP Proxy Client Object. Use function "New-Five9AdminClient" to get SOAP client
 
-.PARAMETER ListName
-
-    Name of list that records will be added to
-
 .PARAMETER InputObject
 
-    Single object or array of objects to be added to list. Note: Parameter not needed when specifying a CsvPath
+    Single object or array of objects to be added to contact record database. Note: Parameter not needed when specifying a CsvPath
 
 .PARAMETER CsvPath
     
@@ -21,45 +22,32 @@
 
 .PARAMETER CrmAddMode
 
-    Specifies whether a contact record is added to the contact database when a new record is added to a dialing list.
+    Specifies whether a contact record is added to the contact database
 
     Options are:
-        • ADD_NEW (Default) - Contact records are created in the contact database and are added to the dialing list
-        • DONT_ADD - Records are added to the dialing list but no records are created in the contact database
+        • ADD_NEW (Default) - New contact records are created in the contact database
+        • DONT_ADD - New contact records are not created in the contact database
 
 .PARAMETER CrmUpdateMode
 
-    Specifies how contact records should be updated when records are added to a dialing list.
+    Specifies how contact records should be updated
 
     Options are:
         • UPDATE_SOLE_MATCHES (Default) - Update only if one matched record is found
         • UPDATE_FIRST - Update the first matched record
         • UPDATE_ALL - Update all matched records
         • DONT_UPDATE - Do not update any record
-
-.PARAMETER ListAddMode
-
-    Specifies how to add records to a list
-
-    Options are:
-        • ADD_IF_SOLE_CRM_MATCH (Default) - Add record if only one match exists in the database
-        • ADD_FIRST - Adds the first record when multiple matches exist
-        • ADD_ALL - Add all records
         
-
 .PARAMETER Key
 
     Single string, or array of strings which designate key(s). Used when a record needs to be updated, it is used to find the record to update in the contact database.
     If omitted, 'number1' will be used
 
-.PARAMETER CleanListBeforeUpdate
-
-    Whether to remove all records in the list before adding new records. If set to True, all existing records will be removed from list before being udpated
 
 .PARAMETER FailOnFieldParseError
 
     Whether to stop the import if incorrect data is found
-    For example, if set to True and you have a column named hair_color in your data, but that field has not been created as a contact field, the list import will fail
+    For example, if set to True and you have a column named hair_color in your data, but that field has not been created as a contact field, the import will fail
 
     Options are:
     • True: The record is rejected when at least one field fails validation
@@ -73,23 +61,23 @@
 .EXAMPLE
     
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    Add-Five9ListRecord -Five9AdminClient $adminClient -ListName "Hot-Leads" -InputObject $dataToBeImported
+    Add-Five9ContactRecord -Five9AdminClient $adminClient -InputObject $dataToBeImported
 
-    # Records in $dataToBeImported will be imported into Five9 list named "Hot-Leads" using default values
-
-.EXAMPLE
-
-    Add-Five9ListRecord -Five9AdminClient $adminClient -ListName "Hot-Leads" -CsvPath C:\files\list-data.csv
-
-    # Records in CSV file "C:\files\list-data.csv"  will be imported into Five9 list named "Hot-Leads" using default values
+    # Records in $dataToBeImported will be imported into the contact record database
 
 .EXAMPLE
 
-    Add-Five9ListRecord -Five9AdminClient $adminClient -ListName "Hot-Leads" -CsvPath C:\files\list-data.csv `
-                        -CrmAddMode: ADD_NEW -CrmUpdateMode: UPDATE_ALL -ListAddMode: ADD_ALL -Key @('number1', 'first_name') `
-                        -CleanListBeforeUpdate: $true -FailOnFieldParseError $true -ReportEmail 'jdoe@domain.com'
+    Add-Five9ContactRecord -Five9AdminClient $adminClient -CsvPath 'C:\files\contact-records.csv'
 
-    # Importing CSV file to list, specifying additional optional parameters
+    # Records in CSV file 'C:\files\contact-records.csv'  will be imported into the contact record database
+
+.EXAMPLE
+
+    Add-Five9ContactRecord -Five9AdminClient $adminClient -CsvPath 'C:\files\contact-records.csv' `
+                           -CrmAddMode: ADD_NEW -CrmUpdateMode: UPDATE_ALL -Key @('number1', 'first_name') `
+                           -FailOnFieldParseError $true -ReportEmail 'jdoe@domain.com'
+
+    # Importing CSV file to contact record database, specifying additional optional parameters
 
 
 #>
@@ -205,13 +193,3 @@ function Add-Five9ContactRecord
 
 
 }
-
-$data = @'
-number1,first_name,last_name,eye_color
-6151112221,Jimmy,Dean,Hazel
-6151112222,Jad,Kirk,Brown
-6151112223,Ethan,Fromme,Green
-6151112224,Jaron,Kamin,Blue
-'@
-
-Add-Five9ContactRecord -Five9AdminClient $demoFive9AdminClient -InputObject $($data | ConvertFrom-Csv) -FailOnFieldParseError $true
