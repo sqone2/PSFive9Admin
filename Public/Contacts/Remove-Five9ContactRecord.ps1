@@ -1,7 +1,7 @@
 ﻿<#
 .SYNOPSIS
     
-    Function used to add a record(s) to the Five9 contact record database
+    Function used to remove record(s) from the Five9 contact record database
 
     Using the function you are able to add records 3 ways:
         1. Specifying a single object using -InputObject
@@ -14,29 +14,20 @@
 
 .PARAMETER InputObject
 
-    Single object or array of objects to be added to contact record database. Note: Parameter not needed when specifying a CsvPath
+    Single object or array of objects to be removed from the contact record database. Note: Parameter not needed when specifying a CsvPath
 
 .PARAMETER CsvPath
     
-    Local file path to CSV file containing records to be added to contact record database. Note: Parameter not needed when specifying an InputObject
+    Local file path to CSV file containing records to be removed from contact record database. Note: Parameter not needed when specifying an InputObject
 
-.PARAMETER CrmAddMode
-
-    Specifies whether a contact record is added to the contact database
-
-    Options are:
-        • ADD_NEW (Default) - New contact records are created in the contact database
-        • DONT_ADD - New contact records are not created in the contact database
-
-.PARAMETER CrmUpdateMode
+.PARAMETER CrmDeleteMode
 
     Specifies how contact records should be updated
 
     Options are:
-        • UPDATE_FIRST (Default) - Update the first matched record
-        • UPDATE_SOLE_MATCHES - Update only if one matched record is found
-        • UPDATE_ALL - Update all matched records
-        • DONT_UPDATE - Do not update any record
+        • DELETE_ALL (Default) - Delete all specified records
+        • DELETE_SOLE_MATCHES - Delete only single matches
+        • DELETE_EXCEPT_FIRST - Delete all records except the first matching record
         
 .PARAMETER Key
 
@@ -74,14 +65,14 @@
 .EXAMPLE
 
     Add-Five9ContactRecord -Five9AdminClient $adminClient -CsvPath 'C:\files\contact-records.csv' `
-                           -CrmAddMode: ADD_NEW -CrmUpdateMode: UPDATE_FIRST -Key @('number1', 'first_name') `
+                           -CrmAddMode: ADD_NEW -CrmUpdateMode: UPDATE_ALL -Key @('number1', 'first_name') `
                            -FailOnFieldParseError $true -ReportEmail 'jdoe@domain.com'
 
     # Importing CSV file to contact record database, specifying additional optional parameters
 
 
 #>
-function Add-Five9ContactRecord
+function Remove-Five9ContactRecord
 {
     [CmdletBinding(DefaultParametersetName='InputObject', PositionalBinding=$false)]
     param
@@ -89,8 +80,7 @@ function Add-Five9ContactRecord
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,
         [Parameter(ParameterSetName='InputObject', Mandatory=$true)][psobject[]]$InputObject,
         [Parameter(ParameterSetName='CsvPath', Mandatory=$true)][string]$CsvPath,
-        [Parameter(Mandatory=$false)][string][ValidateSet("ADD_NEW", "DONT_ADD")]$CrmAddMode = "ADD_NEW",
-        [Parameter(Mandatory=$false)][string][ValidateSet("UPDATE_FIRST", "UPDATE_ALL", "UPDATE_SOLE_MATCHES", "DONT_UPDATE")]$CrmUpdateMode = "UPDATE_FIRST",
+        [Parameter(Mandatory=$false)][string][ValidateSet("DELETE_ALL", "DELETE_SOLE_MATCHES", "DELETE_EXCEPT_FIRST")]$CrmDeleteMode = "DELETE_ALL",
         [Parameter(Mandatory=$false)][string[]]$Key = @("number1"),
         [Parameter(Mandatory=$false)][bool]$FailOnFieldParseError,
         [Parameter(Mandatory=$false)][string]$ReportEmail
@@ -132,8 +122,7 @@ function Add-Five9ContactRecord
         }
     }
 
-
-    $crmUpdateSettings = New-Object PSFive9Admin.crmUpdateSettings
+    $crmDeleteSettings = New-Object PSFive9Admin.crmDeleteSettings
 
     # prepare "fieldMapping" per Five9's documentation
     $counter = 1
@@ -145,7 +134,7 @@ function Add-Five9ContactRecord
             $isKey = $true
         }
 
-        $crmUpdateSettings.fieldsMapping += @{
+        $crmDeleteSettings.fieldsMapping += @{
             columnNumber = $counter
             fieldName = $header
             key = $isKey
@@ -155,25 +144,22 @@ function Add-Five9ContactRecord
 
     }
 
-
     $csvData = ($csv | select -Skip 1) | Out-String
 
 
-    $crmUpdateSettings.crmAddModeSpecified = $true
-    $crmUpdateSettings.crmAddMode = $CrmAddMode
     
-    $crmUpdateSettings.crmUpdateModeSpecified = $true
-    $crmUpdateSettings.crmUpdateMode = $CrmUpdateMode
+    $crmDeleteSettings.crmDeleteModeSpecified = $true
+    $crmDeleteSettings.crmDeleteMode = $CrmDeleteMode
     
     if ($PSBoundParameters.Keys -contains "FailOnFieldParseError")
     {
-        $crmUpdateSettings.failOnFieldParseErrorSpecified = $true
-        $crmUpdateSettings.failOnFieldParseError = $FailOnFieldParseError
+        $crmDeleteSettings.failOnFieldParseErrorSpecified = $true
+        $crmDeleteSettings.failOnFieldParseError = $FailOnFieldParseError
     }
 
     if ($PSBoundParameters.Keys -contains "ReportEmail")
     {
-        $crmUpdateSettings.reportEmail = $ReportEmail
+        $crmDeleteSettings.reportEmail = $ReportEmail
     }
     
 
@@ -181,13 +167,12 @@ function Add-Five9ContactRecord
     if ($InputObject.Count -eq 1)
     {
         $data = $csvData -replace '"' -split ','
-        $response = $Five9AdminClient.updateContacts($crmUpdateSettings, $data)   
+        $response = $Five9AdminClient.deleteFromContacts($crmDeleteSettings, $data)  
     }
     else
     {
-        $response = $Five9AdminClient.updateContactsCsv($crmUpdateSettings, $csvData)
+        $response = $Five9AdminClient.deleteFromContactsCsv($crmDeleteSettings, $csvData)
     }
 
     return $response
-
 }

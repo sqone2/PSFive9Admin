@@ -22,7 +22,7 @@
 
 .PARAMETER CsvPath
     
-    Local file path to CSV file. Note: Parameter not needed when specifying an InputObject
+    Local file path to CSV file containing records to be added to list. Note: Parameter not needed when specifying an InputObject
 
 .PARAMETER CrmAddMode
 
@@ -37,8 +37,8 @@
     Specifies how contact records should be updated when records are added to a dialing list.
 
     Options are:
-        • UPDATE_SOLE_MATCHES (Default) - Update only if one matched record is found
-        • UPDATE_FIRST - Update the first matched record
+        • UPDATE_FIRST (Default) - Update the first matched record
+        • UPDATE_SOLE_MATCHES - Update only if one matched record is found
         • UPDATE_ALL - Update all matched records
         • DONT_UPDATE - Do not update any record
 
@@ -47,8 +47,8 @@
     Specifies how to add records to a list
 
     Options are:
-        • ADD_IF_SOLE_CRM_MATCH (Default) - Add record if only one match exists in the database
-        • ADD_FIRST - Adds the first record when multiple matches exist
+        • ADD_FIRST (Default) - Adds the first record when multiple matches exist
+        • ADD_IF_SOLE_CRM_MATCH - Add record if only one match exists in the database
         • ADD_ALL - Add all records
         
 
@@ -108,8 +108,8 @@ function Add-Five9ListRecord
         [Parameter(ParameterSetName='InputObject', Mandatory=$true)][psobject[]]$InputObject,
         [Parameter(ParameterSetName='CsvPath', Mandatory=$true)][string]$CsvPath,
         [Parameter(Mandatory=$false)][string][ValidateSet("ADD_NEW", "DONT_ADD")]$CrmAddMode = "ADD_NEW",
-        [Parameter(Mandatory=$false)][string][ValidateSet("UPDATE_FIRST", "UPDATE_ALL", "UPDATE_SOLE_MATCHES", "DONT_UPDATE")]$CrmUpdateMode = "UPDATE_SOLE_MATCHES",
-        [Parameter(Mandatory=$false)][string][ValidateSet("ADD_FIRST", "ADD_ALL", "ADD_IF_SOLE_CRM_MATCH")]$ListAddMode = "ADD_IF_SOLE_CRM_MATCH",
+        [Parameter(Mandatory=$false)][string][ValidateSet("UPDATE_FIRST", "UPDATE_ALL", "UPDATE_SOLE_MATCHES", "DONT_UPDATE")]$CrmUpdateMode = "UPDATE_FIRST",
+        [Parameter(Mandatory=$false)][string][ValidateSet("ADD_FIRST", "ADD_ALL", "ADD_IF_SOLE_CRM_MATCH")]$ListAddMode = "ADD_FIRST",
         [Parameter(Mandatory=$false)][string[]]$Key = @("number1"),
         [Parameter(Mandatory=$false)][bool]$CleanListBeforeUpdate,
         [Parameter(Mandatory=$false)][bool]$FailOnFieldParseError,
@@ -214,14 +214,13 @@ function Add-Five9ListRecord
     {
         $data = $csvData -replace '"' -split ','
         $response = $Five9AdminClient.addRecordToList($ListName, $listUpdateSettings, $data)
-        return $response
-                
     }
     else
     {
         $response = $Five9AdminClient.addToListCsv($ListName, $listUpdateSettings, $csvData)
-        return $response
     }
+
+    return $response
 
 
 }

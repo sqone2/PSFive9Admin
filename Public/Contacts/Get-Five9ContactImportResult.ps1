@@ -1,7 +1,7 @@
 ﻿<#
 .SYNOPSIS
     
-    Function used to get the detailed outcome of using the Add-Five9ContactRecord cmdlet
+    Function used to get the detailed outcome of using the Add-Five9ContactRecord or Remove-Five9ContactRecord cmdlets
  
 .PARAMETER Five9AdminClient
  
