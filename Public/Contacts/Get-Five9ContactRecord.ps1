@@ -1,12 +1,7 @@
 ﻿<#
 .SYNOPSIS
     
-    Function used to add a record(s) to the Five9 contact record database
-
-    Using the function you are able to add records 3 ways:
-        1. Specifying a single object using -InputObject
-        2. Specifying an arrary of objects using -InputObject
-        3. Specifying the path of a local CSV file using -CsvPath
+    Function used to return up to 1000 records from the contact database based on lookup criteria
  
 .PARAMETER Five9AdminClient
  
@@ -17,6 +12,10 @@
     Hashtable containing the criteria used to find matching records in the contact database
     Note: Hashtable values can use the % symbol for a wildcard. i.e. -LookupCriteria @{number1 = "925%"}
 
+.NOTES
+
+    Returns a maximum of 1000 records per call
+
 .EXAMPLE
     
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
@@ -25,7 +24,7 @@
         number1 = "615%"
     }
 
-    Get-Five9ContactRecord -Five9AdminClient $demoFive9AdminClient -LookupCriteria $hashtable
+    Get-Five9ContactRecord -Five9AdminClient $adminClient -LookupCriteria $hashtable
 
     # Returns all records from the contact database where number1 starts with "615"
 
@@ -36,7 +35,7 @@
         city = "Dallas"
     }
 
-    Get-Five9ContactRecord -Five9AdminClient $demoFive9AdminClient -LookupCriteria $hashtable
+    Get-Five9ContactRecord -Five9AdminClient $adminClient -LookupCriteria $hashtable
 
     # Returns all records from the contact database where first_name equals "Steve" and city equals "Dallas"
 
