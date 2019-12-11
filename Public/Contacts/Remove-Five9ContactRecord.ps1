@@ -3,7 +3,7 @@
     
     Function used to remove record(s) from the Five9 contact record database
 
-    Using the function you are able to add records 3 ways:
+    Using the function you are able to remove records 3 ways:
         1. Specifying a single object using -InputObject
         2. Specifying an arrary of objects using -InputObject
         3. Specifying the path of a local CSV file using -CsvPath
@@ -22,7 +22,7 @@
 
 .PARAMETER CrmDeleteMode
 
-    Specifies how contact records should be updated
+    Specifies the modes used for deleting data from the contact database
 
     Options are:
         • DELETE_ALL (Default) - Delete all specified records
@@ -31,14 +31,13 @@
         
 .PARAMETER Key
 
-    Single string, or array of strings which designate key(s). Used when a record needs to be updated, it is used to find the record to update in the contact database.
+    Single string, or array of strings which designate key(s). It is used to find matching reocrds in the database to remove.
     If omitted, 'number1' will be used
-
 
 .PARAMETER FailOnFieldParseError
 
-    Whether to stop the import if incorrect data is found
-    For example, if set to True and you have a column named hair_color in your data, but that field has not been created as a contact field, the import will fail
+    Whether to stop the removal if incorrect data is found
+    For example, if set to True and you have a column named hair_color in your data, but that field has not been created as a contact field, the function will fail
 
     Options are:
     • True: The record is rejected when at least one field fails validation
@@ -47,28 +46,28 @@
 
 .PARAMETER ReportEmail
 
-    Notification about import results is sent to the email addresses that you set for your application
+    Notification about results is sent to the email addresses that you set for your application
    
 .EXAMPLE
     
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    Add-Five9ContactRecord -Five9AdminClient $adminClient -InputObject $dataToBeImported
+    Remove-Five9ContactRecord -Five9AdminClient $adminClient -InputObject $dataToBeRemoved
 
-    # Records in $dataToBeImported will be imported into the contact record database
-
-.EXAMPLE
-
-    Add-Five9ContactRecord -Five9AdminClient $adminClient -CsvPath 'C:\files\contact-records.csv'
-
-    # Records in CSV file 'C:\files\contact-records.csv'  will be imported into the contact record database
+    # Records in $dataToBeRemoved will be removed from the contact record database
 
 .EXAMPLE
 
-    Add-Five9ContactRecord -Five9AdminClient $adminClient -CsvPath 'C:\files\contact-records.csv' `
-                           -CrmAddMode: ADD_NEW -CrmUpdateMode: UPDATE_ALL -Key @('number1', 'first_name') `
-                           -FailOnFieldParseError $true -ReportEmail 'jdoe@domain.com'
+    Remove-Five9ContactRecord -Five9AdminClient $adminClient -CsvPath 'C:\files\contact-records.csv'
 
-    # Importing CSV file to contact record database, specifying additional optional parameters
+    # Records in CSV file 'C:\files\contact-records.csv'  will be removed from the contact record database
+
+.EXAMPLE
+
+    Remove-Five9ContactRecord -Five9AdminClient $adminClient -CsvPath 'C:\files\contact-records.csv' `
+                              -CrmDeleteMode: DELETE_ALL -Key @('number1', 'first_name') `
+                              -FailOnFieldParseError $true -ReportEmail 'jdoe@domain.com'
+
+    # Removes records in CSV file from contact record database, specifying additional optional parameters
 
 
 #>

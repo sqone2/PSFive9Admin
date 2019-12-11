@@ -84,17 +84,17 @@
 
 .EXAMPLE
 
-    Add-Five9ListRecord -Five9AdminClient $adminClient -ListName "Hot-Leads" -CsvPath C:\files\list-data.csv
+    Add-Five9ListRecord -Five9AdminClient $adminClient -ListName "Hot-Leads" -CsvPath 'C:\files\list-data.csv'
 
     # Records in CSV file "C:\files\list-data.csv"  will be imported into Five9 list named "Hot-Leads" using default values
 
 .EXAMPLE
 
-    Add-Five9ListRecord -Five9AdminClient $adminClient -ListName "Hot-Leads" -CsvPath C:\files\list-data.csv `
+    Add-Five9ListRecord -Five9AdminClient $adminClient -ListName "Hot-Leads" -CsvPath 'C:\files\list-data.csv' `
                         -CrmAddMode: ADD_NEW -CrmUpdateMode: UPDATE_ALL -ListAddMode: ADD_ALL -Key @('number1', 'first_name') `
                         -CleanListBeforeUpdate: $true -FailOnFieldParseError $true -ReportEmail 'jdoe@domain.com'
 
-    # Importing CSV file to list, specifying additional optional parameters
+    # Imports records from CSV file to list, specifying additional optional parameters
 
 
 #>

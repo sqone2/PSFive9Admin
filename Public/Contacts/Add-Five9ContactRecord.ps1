@@ -77,7 +77,7 @@
                            -CrmAddMode: ADD_NEW -CrmUpdateMode: UPDATE_FIRST -Key @('number1', 'first_name') `
                            -FailOnFieldParseError $true -ReportEmail 'jdoe@domain.com'
 
-    # Importing CSV file to contact record database, specifying additional optional parameters
+    # Imports records from CSV file to contact record database, specifying additional optional parameters
 
 
 #>
