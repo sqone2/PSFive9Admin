@@ -33,77 +33,16 @@
         • Long - Full line
         • Invisible - Not represented
 
-.PARAMETER Required
+. NOTES
 
-    Whether the field must contain a value
-
-.PARAMETER PredefinedList
-
-    Single string, or array of multiple strings which are the only possible values for this field to be set to
-
-.PARAMETER CanSelectMultiple
-
-    Whether multiple values from PredefinedList can be selected as value
-
-.PARAMETER MinValue
-
-    Minimum value
-
-.PARAMETER MaxValue
-
-    Maximum value
-
-.PARAMETER Regexp
-    
-    Regular expression that field value must match
-
-.PARAMETER DigitsBeforeDecimal
-
-    Digits before decimal point
-
-.PARAMETER DigitsAfterDecimal
-
-    Digits after decimal point
-
-.PARAMETER TimeFormat
-
-    Time format string. i.e. yyyy-MM-dd
-
-.PARAMETER DateFormat
-
-    Time format string. i.e. HH:mm:ss.SSS
-
-.PARAMETER TimePeriodFormat
-
-    Time format string. i.e. hh:mm:ss.SSS
-
-.PARAMETER CurrencyType
-
-    Type of currency
-    Options are:
-        • Dollar
-        • Euro
-        • Pound
+    • All campaigns must be stopped before modifying a contact field
 
 
 .EXAMPLE
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    New-Five9ContactField -Five9AdminClient $demoFive9AdminClient -Name 'hair_color'
+    Set-Five9ContactField -Five9AdminClient $demoFive9AdminClient -Name 'hair_color' -DisplayAs Long
 
-    # Creates new contact field using default values
-
-.EXAMPLE
-
-    $preDefinedList = @('Brown', 'Blue', 'Green')
-    New-Five9ContactField -Five9AdminClient $demoFive9AdminClient -Name 'eye_color' -PredefinedList $preDefinedList -CanSelectMultiple: $false
-
-    # Creates new contact field including a list of predefined items
-
-.EXAMPLE
-
-    New-Five9ContactField -Five9AdminClient $demoFive9AdminClient -Name 'date_of_hire' -DateFormat -Type: DATE -DateFormat 'yyyy-MM-dd' -TimeFormat 'HH:mm:ss.SSS'
-
-    # Creates new contact field as date type
+    # Modifies DisplayAs property on contact field 'hair_color'
 
 #>
 function Set-Five9ContactField
@@ -113,10 +52,7 @@ function Set-Five9ContactField
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,
         [Parameter(Mandatory=$true)][string]$Name,
         [Parameter(Mandatory=$false)][ValidateSet('None','LastDisposition','LastSystemDisposition','LastAgentDisposition','LastDispositionDateTime','LastSystemDispositionDateTime','LastAgentDispositionDateTime','LastAttemptedNumber','LastAttemptedNumberN1N2N3','LastCampaign','AttemptsForLastCampaign','LastList','CreatedDateTime','LastModifiedDateTime')][string]$MapTo,
-        [Parameter(Mandatory=$false)][ValidateSet('Short', 'Long', 'Invisible')][string]$DisplayAs,
-
-        # Restrictions
-        [Parameter(Mandatory=$false)][string[]]$PredefinedListAddition
+        [Parameter(Mandatory=$false)][ValidateSet('Short', 'Long', 'Invisible')][string]$DisplayAs
     )
 
     $contactFieldToModify = $null
@@ -156,29 +92,6 @@ function Set-Five9ContactField
         $contactFieldToModify.displayAsSpecified = $true
     }
 
-    if ($PSBoundParameters.Keys -contains 'PredefinedListAddition')
-    {
-        foreach ($item in $PredefinedListAddition)
-        {
-            $restriction = New-Object PSFive9Admin.contactFieldRestriction
-            $restriction.typeSpecified = $true
-            $restriction.value = $item
-
-            if ($contactFieldToModify.restrictions.type -contains 'Multiset')
-            {
-                $restriction.type = 'Multiset'
-            }
-            else
-            {
-                $restriction.type = 'Set'
-            }
-
-            $contactFieldToModify.restrictions += $restriction
-        }
-    }
-
-
- 
     return $Five9AdminClient.modifyContactField($contactFieldToModify)
 
 }

@@ -9,7 +9,7 @@
 
 .NOTES
 
-    Contact fields cannot be removed while any campaigns are in a running state
+    • All campaigns must be stopped before removing a contact field
 
 .EXAMPLE
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
