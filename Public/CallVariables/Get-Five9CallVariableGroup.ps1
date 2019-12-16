@@ -31,6 +31,7 @@
 
 function Get-Five9CallVariableGroup
 {
+    [CmdletBinding(PositionalBinding=$false)]
     param
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,

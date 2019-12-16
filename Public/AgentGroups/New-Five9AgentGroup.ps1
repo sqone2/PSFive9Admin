@@ -26,6 +26,7 @@
 
 function New-Five9AgentGroup
 {
+    [CmdletBinding(PositionalBinding=$false)]
     param
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,

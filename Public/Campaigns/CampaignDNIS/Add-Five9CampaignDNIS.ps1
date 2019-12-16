@@ -34,6 +34,7 @@
 #>
 function Add-Five9CampaignDNIS
 {
+    [CmdletBinding(PositionalBinding=$false)]
     param
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,

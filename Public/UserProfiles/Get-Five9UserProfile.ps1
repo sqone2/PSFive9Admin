@@ -32,6 +32,7 @@
 
 function Get-Five9UserProfile
 {
+    [CmdletBinding(PositionalBinding=$false)]
     param
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,

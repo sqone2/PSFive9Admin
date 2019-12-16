@@ -21,6 +21,7 @@
 #>
 function New-Five9AdminClient
 {
+    [CmdletBinding(PositionalBinding=$false)]
     param
     (
         [Parameter(Mandatory=$true)][string]$Username,

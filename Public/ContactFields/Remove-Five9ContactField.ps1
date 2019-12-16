@@ -13,7 +13,7 @@
 
 .EXAMPLE
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    Remove-Five9ContactField -Five9AdminClient $demoFive9AdminClient -Name 'hair_color'
+    Remove-Five9ContactField -Five9AdminClient $adminClient -Name 'hair_color'
 
     # Removes contact field named "hair_color"
 
@@ -22,6 +22,7 @@
 #>
 function Remove-Five9ContactField
 {
+    [CmdletBinding(PositionalBinding=$false)]
     param
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,

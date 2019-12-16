@@ -38,6 +38,7 @@
 
 function Add-Five9AgentGroupMember
 {
+    [CmdletBinding(PositionalBinding=$false)]
     param
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,

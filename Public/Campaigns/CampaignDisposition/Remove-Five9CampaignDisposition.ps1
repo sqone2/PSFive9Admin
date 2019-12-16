@@ -34,6 +34,7 @@
 #>
 function Remove-Five9CampaignDisposition
 {
+    [CmdletBinding(PositionalBinding=$false)]
     param
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,

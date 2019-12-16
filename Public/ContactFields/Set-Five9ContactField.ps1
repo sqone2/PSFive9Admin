@@ -40,13 +40,14 @@
 
 .EXAMPLE
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    Set-Five9ContactField -Five9AdminClient $demoFive9AdminClient -Name 'hair_color' -DisplayAs Long
+    Set-Five9ContactField -Five9AdminClient $adminClient -Name 'hair_color' -DisplayAs Long
 
     # Modifies DisplayAs property on contact field 'hair_color'
 
 #>
 function Set-Five9ContactField
 {
+    [CmdletBinding(PositionalBinding=$false)]
     param
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,

@@ -3,7 +3,6 @@
     
     Function used to create a new contact field
  
-
 .PARAMETER Name
 
     Name of new contact field
@@ -105,26 +104,27 @@
 
 .EXAMPLE
     $adminClient = New-Five9AdminClient -Username "user@domain.com" -Password "P@ssword!"
-    New-Five9ContactField -Five9AdminClient $demoFive9AdminClient -Name 'hair_color'
+    New-Five9ContactField -Five9AdminClient $adminClient -Name 'hair_color'
 
     # Creates new contact field using default values
 
 .EXAMPLE
 
     $preDefinedList = @('Brown', 'Blue', 'Green')
-    New-Five9ContactField -Five9AdminClient $demoFive9AdminClient -Name 'eye_color' -PredefinedList $preDefinedList -CanSelectMultiple: $false
+    New-Five9ContactField -Five9AdminClient $adminClient -Name 'eye_color' -PredefinedList $preDefinedList -CanSelectMultiple: $false
 
     # Creates new contact field including a list of predefined items
 
 .EXAMPLE
 
-    New-Five9ContactField -Five9AdminClient $demoFive9AdminClient -Name 'date_of_hire' -DateFormat -Type: DATE -DateFormat 'yyyy-MM-dd' -TimeFormat 'HH:mm:ss.SSS'
+    New-Five9ContactField -Five9AdminClient $adminClient -Name 'date_of_hire' -DateFormat -Type: DATE -DateFormat 'yyyy-MM-dd' -TimeFormat 'HH:mm:ss.SSS'
 
     # Creates new contact field as date type
 
 #>
 function New-Five9ContactField
 {
+    [CmdletBinding(PositionalBinding=$false)]
     param
     ( 
         [Parameter(Mandatory=$true)][PSFive9Admin.WsAdminService]$Five9AdminClient,
