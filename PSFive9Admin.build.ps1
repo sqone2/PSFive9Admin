@@ -49,10 +49,9 @@ task Test {
         EnableExit = $false
     }
 
-    <#
     # Publish Test Results as NUnitXml
     $testResults = Invoke-Pester @invokePesterParams;
-
+    <#
     $numberFails = $testResults.FailedCount
     assert($numberFails -eq 0) ('Failed "{0}" unit tests.' -f $numberFails)
     #>
