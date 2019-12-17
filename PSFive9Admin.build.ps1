@@ -17,13 +17,12 @@ Get-ChildItem -Path $buildroot\BuildTasks\*.Task.ps1 |
     
 #>
 
-task . InstallDependencies,Test
-
-
+<#
 task InstallDependencies {
     Install-Module Pester -Force
     Install-Module PSScriptAnalyzer -Force
 }
+#>
 
 task Analyze {
     $scriptAnalyzerParams = @{
@@ -50,9 +49,11 @@ task Test {
         EnableExit = $false
     }
 
+    <#
     # Publish Test Results as NUnitXml
     $testResults = Invoke-Pester @invokePesterParams;
 
     $numberFails = $testResults.FailedCount
     assert($numberFails -eq 0) ('Failed "{0}" unit tests.' -f $numberFails)
+    #>
 }

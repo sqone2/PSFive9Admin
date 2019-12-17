@@ -1,10 +1,30 @@
 ﻿
-Invoke-Build -Task Test -Result result
+if ($(Get-InstalledModule PSDepend -EA SilentlyContinue) -eq $null)
+{
+    Install-Module PSDepend -Force
+}
+
+Import-Module PSDepend
+
+$modulesToInstall = @{
+    PSDeploy = 'latest'
+    InvokeBuild = 'latest'
+    Pester = 'latest'
+}
+
+
+Invoke-PSDepend -InputObject $modulesToInstall -Install -Import -Force
+
+
+Invoke-Build -Task Test -Result result -ErrorAction: SilentlyContinue
+
 if ($result.Error)
 {
-    exit 1
+    Write-Host -ForegroundColor Cyan 'exit 1'
+    #exit 1
 }
 else 
 {
-    exit 0
+    Write-Host -ForegroundColor Cyan 'exit 0'    
+    #exit 0
 }

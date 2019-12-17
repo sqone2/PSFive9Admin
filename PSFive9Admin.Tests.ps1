@@ -8,7 +8,7 @@ write-host -ForegroundColor White $PSScriptRoot
 
 
 Describe "Module: $module" -Tag Unit {
-
+<#
     It "Can get admin client" {
 
         . "$here\Public\SOAPClient\New-Five9AdminClient.ps1"
@@ -17,7 +17,7 @@ Describe "Module: $module" -Tag Unit {
         $adminClient.GetType().Name | Should -Be "WsAdminService"
 
     }
-
+    #>
     Context "Module Configuration" {
 
         It "Has a root module file ($module.psm1)" {
