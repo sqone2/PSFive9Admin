@@ -21,10 +21,10 @@ Invoke-Build -Task Test -Result result -ErrorAction: SilentlyContinue
 if ($result.Error)
 {
     Write-Host -ForegroundColor Cyan 'exit 1'
-    #exit 1
+    exit 1
 }
 else 
 {
     Write-Host -ForegroundColor Cyan 'exit 0'    
-    #exit 0
+    exit 0
 }
