@@ -1,4 +1,6 @@
-﻿
+﻿write-host -ForegroundColor Cyan $env:Five9Username
+
+
 if ($(Get-InstalledModule PSDepend -EA SilentlyContinue) -eq $null)
 {
     Install-Module PSDepend -Force
