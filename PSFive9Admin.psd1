@@ -12,7 +12,7 @@
 RootModule = 'PSFive9Admin.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.24'
+ModuleVersion = '1.0.25'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -33,7 +33,7 @@ Copyright = '(c) 2019 sqone2. All rights reserved.'
 Description = 'Functions for working with the Five9 Admin Web Service API'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '3.1.0.24'
+PowerShellVersion = '3.1.0.25'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
