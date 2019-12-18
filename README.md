@@ -18,7 +18,7 @@ https://webapps.five9.com/assets/files/for_customers/documentation/apis/config-w
 
 Install and Import module from PowerShell Gallery
        
-       Install-Module PSFive9Admin -Force -SkipPublisherCheck
+       Install-Module PSFive9Admin -Force
        
        Import-Module PSFive9Admin
     
