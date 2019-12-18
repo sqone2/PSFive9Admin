@@ -22,7 +22,7 @@ task Clean {
     else 
     {
         "$($Settings.BuildOutput) is not present, nothing to clean up."
-        $null = New-Item -ItemType Directory -Path $Settings.BuildOutput
+        New-Item -ItemType Directory -Path $Settings.BuildOutput -Verbose
     }
 
 }
@@ -108,7 +108,7 @@ task Push_Build_Changes_To_Repo {
 
 task Copy_Source_To_Build_Output {
     "Copying the source folder [$($Settings.SourceFolder)] into the build output folder : [$($Settings.BuildOutput)]"
-    Copy-Item -Path $Settings.SourceFolder -Destination $Settings.BuildOutput -Recurse
+    Copy-Item -Path $Settings.SourceFolder -Destination $Settings.BuildOutput
 }
 
 task Publish_Module_To_PSGallery {
@@ -130,5 +130,5 @@ task . Clean,
        #Fail_If_Analyze_Findings,
        Set_Module_Version,
        Push_Build_Changes_To_Repo,
-       Copy_Source_To_Build_Output,
+       #Copy_Source_To_Build_Output,
        Publish_Module_To_PSGallery
