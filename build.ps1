@@ -1,32 +1,14 @@
-﻿write-host -ForegroundColor Cyan $env:Five9Username
+﻿Write-Host "Build version :`  $env:APPVEYOR_BUILD_VERSION"
+Write-Host "Branch        :`  $env:APPVEYOR_REPO_BRANCH"
 
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
-if ($(Get-InstalledModule PSDepend -EA SilentlyContinue) -eq $null)
-{
-    Install-Module PSDepend -Force
-}
+Write-Host -ForegroundColor Green "Installing module: InvokeBuild"
+Install-Module InvokeBuild -Force -SkipPublisherCheck
+Import-Module InvokeBuild
 
+Write-Host -ForegroundColor Green "Installing module: PSDepend"
+Install-Module PSDepend -Force -SkipPublisherCheck
 Import-Module PSDepend
 
-$modulesToInstall = @{
-    PSDeploy = 'latest'
-    InvokeBuild = 'latest'
-    Pester = 'latest'
-}
-
-
-Invoke-PSDepend -InputObject $modulesToInstall -Install -Import -Force
-
-
-Invoke-Build -Task Test -Result result -ErrorAction: SilentlyContinue
-
-if ($result.Error)
-{
-    Write-Host -ForegroundColor Cyan 'exit 1'
-    exit 1
-}
-else 
-{
-    Write-Host -ForegroundColor Cyan 'exit 0'    
-    exit 0
-}
+Invoke-Build # -Task Test -Result result -ErrorAction: SilentlyContinue

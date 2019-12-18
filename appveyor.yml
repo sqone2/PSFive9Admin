@@ -3,7 +3,7 @@
 #Publish to PowerShell Gallery with this key
 environment:
   NuGetApiKey:
-    secure: oqMFzG8F65K5l572V7VzlZIWU7xnSYDLtSXECJAAURrXe8M2+BAp9vHLT+1h1lR0
+    secure: null
 
 # Allow WMF5 (i.e. PowerShellGallery functionality)
 #os: WMF 5
@@ -11,7 +11,7 @@ environment:
 # Skip on updates to the readme.
 # We can force this by adding [skip ci] or [ci skip] anywhere in commit message 
 skip_commits:
-  message: /updated readme.*|update readme.*s/
+  message: /Update README.md/
 
 build: false
 

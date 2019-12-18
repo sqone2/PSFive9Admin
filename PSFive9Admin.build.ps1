@@ -1,58 +1,134 @@
-<#
-$Script:ModuleName = Get-ChildItem .\*\*.psm1 | Select-object -ExpandProperty BaseName
-$Script:CodeCoveragePercent = 0.0 # 0 to 1
-. $psscriptroot\BuildTasks\InvokeBuildInit.ps1
+﻿
+#Requires -Modules 'InvokeBuild'
 
-task Default Build, Helpify, Test, UpdateSource
-task Build Copy, Compile, BuildModule, BuildManifest, SetVersion
-task Helpify GenerateMarkdown, GenerateHelp
-task Test Build, ImportModule, Pester
-task Publish Build, PublishVersion, Helpify, Test, PublishModule
-task TFS Clean, Build, PublishVersion, Helpify, Test
-task DevTest ImportDevModule, Pester
-
-Write-Host 'Import common tasks'
-Get-ChildItem -Path $buildroot\BuildTasks\*.Task.ps1 |
-    ForEach-Object {Write-Host $_.FullName;. $_.FullName}
-    
-#>
+# Importing all build settings into the current scope
+. "$PSScriptRoot\$(Split-Path -Leaf $PSScriptRoot).BuildSettings.ps1"
 
 <#
-task InstallDependencies {
-    Install-Module Pester -Force
-    Install-Module PSScriptAnalyzer -Force
+Set-BuildHeader {
+    Param($Path)
+    Write-Build Cyan "Task $Path"
+    "`n" + ('-' * 79) + "`n" + "`t`t`t $($Task.Name.ToUpper()) `n" + ('-' * 79) + "`n"
 }
 #>
 
-task Analyze {
-    $scriptAnalyzerParams = @{
-        Path = $BuildRoot
-        Severity = @('Error', 'Warning')
-        Recurse = $true
-        Verbose = $false
-        ExcludeRule = 'PSUseDeclaredVarsMoreThanAssignments'
+task Clean {
+
+    if (Test-Path -Path $Settings.BuildOutput) 
+    {
+        "Removing existing files and folders in $($Settings.BuildOutput)\"
+        Get-ChildItem $Settings.BuildOutput | Remove-Item -Force -Recurse
+    }
+    else 
+    {
+        "$($Settings.BuildOutput) is not present, nothing to clean up."
+        $null = New-Item -ItemType Directory -Path $Settings.BuildOutput
     }
 
-    $saResults = Invoke-ScriptAnalyzer @scriptAnalyzerParams
+}
 
-    if ($saResults) {
-        $saResults | Format-Table
-        throw "One or more PSScriptAnalyzer errors/warnings where found."
-    }
+task Install_Dependencies {
+    # PSDpend gets installed in main build script
+    $PSDependParams = $Settings.PSDependParams
+    Invoke-PSDepend @PSDependParams
 }
 
 task Test {
-    $invokePesterParams = @{
-        Strict = $true
-        PassThru = $true
-        Verbose = $false
-        EnableExit = $false
+    $PesterParams = $Settings.PesterParams
+    $Script:TestsResult = Invoke-Pester @PesterParams
+}
+
+task Fail_If_Failed_Unit_Test {
+    $FailureMessage = "$($UnitTestsResult.FailedCount) Unit test(s) failed. Aborting build."
+    assert ($UnitTestsResult.FailedCount -eq 0) $FailureMessage
+}
+
+task Upload_Test_Results_To_AppVeyor {
+
+    $TestResultFiles = (Get-ChildItem -Path $Settings.BuildOutput -Filter '*TestsResult.xml').FullName
+
+    foreach ( $TestResultFile in $TestResultFiles ) 
+    {
+        "Uploading test result file : $TestResultFile"
+        (New-Object 'System.Net.WebClient').UploadFile($Settings.TestUploadUrl, $TestResultFile)
     }
 
-    # Publish Test Results as NUnitXml
-    $testResults = Invoke-Pester @invokePesterParams;
-    
-    $numberFails = $testResults.FailedCount
-    assert($numberFails -eq 0) ('Failed "{0}" unit tests.' -f $numberFails)
-    
 }
+
+task Analyze {
+    Add-AppveyorTest -Name 'Code Analysis' -Outcome Running
+    $AnalyzeSettings = $Settings.AnalyzeParams
+    $Script:AnalyzeFindings = Invoke-ScriptAnalyzer @AnalyzeSettings
+
+    if ($AnalyzeFindings) 
+    {
+        $FindingsString = $AnalyzeFindings | Out-String
+        Write-Warning $FindingsString
+        Update-AppveyorTest -Name 'Code Analysis' -Outcome Failed -ErrorMessage $FindingsString
+    }
+    else 
+    {
+        Update-AppveyorTest -Name 'Code Analysis' -Outcome Passed
+    }
+}
+
+task Fail_If_Analyze_Findings {
+    $FailureMessage = 'PSScriptAnalyzer found {0} issues. Aborting build' -f $AnalyzeFindings.Count
+    assert ( -not($AnalyzeFindings) ) $FailureMessage
+}
+
+task Set_Module_Version {
+    $ManifestContent = Get-Content -Path $Settings.ManifestPath
+    $CurrentVersion = $Settings.VersionRegex.Match($ManifestContent).Groups['ModuleVersion'].Value
+    "Current module version in the manifest : $CurrentVersion"
+
+    $ManifestContent -replace $CurrentVersion,$Settings.Version | Set-Content -Path $Settings.ManifestPath -Force
+    $NewManifestContent = Get-Content -Path $Settings.ManifestPath
+    $NewVersion = $Settings.VersionRegex.Match($NewManifestContent).Groups['ModuleVersion'].Value
+    "Updated module version in the manifest : $NewVersion"
+
+    if ($NewVersion -ne $Settings.Version) 
+    {
+        throw "Module version was not updated correctly to $($Settings.Version) in the manifest."
+    }
+}
+
+task Push_Build_Changes_To_Repo {
+    cmd /c "git config --global credential.helper store 2>&1"    
+    Add-Content "$env:USERPROFILE\.git-credentials" "https://$($Settings.GitHubKey):x-oauth-basic@github.com`n"
+    cmd /c "git config --global user.email ""$($Settings.GitHubEmail)"" 2>&1"
+    cmd /c "git config --global user.name ""$($Settings.GitHubUsername)"" 2>&1"
+    cmd /c "git config --global core.autocrlf true 2>&1"
+    cmd /c "git checkout $($Settings.Branch) 2>&1"
+    cmd /c "git add -A 2>&1"
+    cmd /c "git commit -m ""Commit build changes [ci skip]"" 2>&1"
+    cmd /c "git status 2>&1"
+    cmd /c "git push origin $($Settings.Branch) 2>&1"
+}
+
+task Copy_Source_To_Build_Output {
+    "Copying the source folder [$($Settings.SourceFolder)] into the build output folder : [$($Settings.BuildOutput)]"
+    Copy-Item -Path $Settings.SourceFolder -Destination $Settings.BuildOutput -Recurse
+}
+
+task Publish_Module_To_PSGallery {
+    Remove-Module -Name $($Settings.ModuleName) -Force -ErrorAction SilentlyContinue
+
+    Write-Host "OutputModulePath : $($Settings.OutputModulePath)"
+    Write-Host "PSGalleryKey : $($($Settings.PSGalleryKey).Substring(0,4))**********"
+    Get-PackageProvider -ListAvailable
+    Publish-Module -Path $Settings.OutputModulePath -NuGetApiKey $Settings.PSGalleryKey -Verbose
+}
+
+# Default task :
+task . Clean,
+       Install_Dependencies,
+       Test,
+       Fail_If_Failed_Unit_Test,
+       Upload_Test_Results_To_AppVeyor,
+       Analyze,
+       Fail_If_Analyze_Findings,
+       Set_Module_Version,
+       Push_Build_Changes_To_Repo,
+       Copy_Source_To_Build_Output,
+       Publish_Module_To_PSGallery

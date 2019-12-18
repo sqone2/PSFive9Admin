@@ -1,2 +1,3 @@
 *.txt
 /Public/_not_used/
+BuildOutput/
