@@ -114,10 +114,10 @@ task Copy_Source_To_Build_Output {
 task Publish_Module_To_PSGallery {
     Remove-Module -Name $($Settings.ModuleName) -Force -ErrorAction SilentlyContinue
 
-    Write-Host "OutputModulePath : $($Settings.OutputModulePath)"
+    Write-Host "OutputModulePath : $($Settings.SourceFolder)"
     Write-Host "PSGalleryKey : $($($Settings.PSGalleryKey).Substring(0,4))**********"
     Get-PackageProvider -ListAvailable
-    Publish-Module -Path $Settings.OutputModulePath -NuGetApiKey $Settings.PSGalleryKey -Verbose
+    Publish-Module -Path $Settings.SourceFolder -NuGetApiKey $Settings.PSGalleryKey -Verbose
 }
 
 # Default task :
