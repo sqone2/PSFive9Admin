@@ -39,8 +39,8 @@ task Test {
 }
 
 task Fail_If_Failed_Unit_Test {
-    $FailureMessage = "$($UnitTestsResult.FailedCount) Unit test(s) failed. Aborting build."
-    assert ($UnitTestsResult.FailedCount -eq 0) $FailureMessage
+    $FailureMessage = "$($TestsResult.FailedCount) Unit test(s) failed. Aborting build."
+    assert ($TestsResult.FailedCount -eq 0) $FailureMessage
 }
 
 task Upload_Test_Results_To_AppVeyor {
