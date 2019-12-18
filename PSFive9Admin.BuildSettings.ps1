@@ -25,12 +25,13 @@ $Settings = @{
         InputObject = @{
             PSDeploy = 'latest'
             Pester = 'latest'
+            PSScriptAnalyzer = 'latest'
         }
 
          Install = $true 
          Import = $true
          Force = $true 
-         Verbose = $true
+         #Verbose = $true
          ErrorAction = "Stop"
 
     }
