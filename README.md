@@ -1,11 +1,12 @@
-﻿# PSFive9Admin
+[![Build status](https://ci.appveyor.com/api/projects/status/kjkrr2mo550j57mq?svg=true)](https://ci.appveyor.com/project/sqone2/psfive9admin)
+&nbsp;
+
+ 
+ # PSFive9Admin
 Powershell functions for working with the Five9 Admin Web Service API
 &nbsp;
 &nbsp;
 
-
-[![Build status](https://ci.appveyor.com/api/projects/status/kjkrr2mo550j57mq?svg=true)](https://ci.appveyor.com/project/sqone2/psfive9admin)
-&nbsp;
 
 Five9 API documentation: 
 https://webapps.five9.com/assets/files/for_customers/documentation/apis/config-webservices-api-reference-guide.pdf
