@@ -7,11 +7,6 @@ Powershell functions for working with the Five9 Admin Web Service API
 &nbsp;
 &nbsp;
 
-
-Five9 API documentation: 
-
-https://webapps.five9.com/assets/files/for_customers/documentation/apis/config-webservices-api-reference-guide.pdf
-
 &nbsp;
 &nbsp;
 ### Installation
