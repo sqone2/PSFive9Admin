@@ -129,6 +129,6 @@ task . Clean,
        Analyze,
        #Fail_If_Analyze_Findings,
        Set_Module_Version,
-       Push_Build_Changes_To_Repo
+       Push_Build_Changes_To_Repo,
        #Copy_Source_To_Build_Output,
        Publish_Module_To_PSGallery
