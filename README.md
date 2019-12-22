@@ -33,26 +33,19 @@ Connect to Five9 admin web service
 Get existing user(s):
 
      Get-Five9User -NamePattern "jdoe@domain.com"
-     
-     # Returns user matching username "jdoe@domain.com"
 
 &nbsp;
 Creating a new user:
 
     New-Five9User -DefaultRole Agent -UserProfileName "Agent_Profile" -FirstName "Susan" -LastName "Davis" -UserName sdavis@domain.com -Email sdavis@domain.com -Password Temp1234!
 
-    # Creates a new user with name "Susan Davis"
-
 &nbsp;
 Create a new skill:
 
     New-Five9Skill -SkillName "MultiMedia"
-    
-    # Creates a new skill named MultiMedia
     
 &nbsp;  
 Add new user to new skill:
 
     Add-Five9SkillMember -Username "sdavis@domain.com" -SkillName "Multimedia"
     
-    # Adds user jdoe@domain.com to skill Multimedia
