@@ -76,7 +76,7 @@ function Connect-Five9AdminWebService
     # test credentails
     try
     {
-        $vccConfig = $script:DefaultFive9AdminClient.getVCCConfiguration()
+        $vccConfig = $global:DefaultFive9AdminClient.getVCCConfiguration()
         Write-Verbose "Connection established to domain id $($vccConfig.domainId) ($($vccConfig.domainName))"
 
         $global:DefaultFive9AdminClient.Five9DomainName = $vccConfig.domainName
