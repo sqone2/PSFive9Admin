@@ -37,7 +37,7 @@ Get existing user(s):
 &nbsp;
 Creating a new user:
 
-    New-Five9User -DefaultRole Agent -UserProfileName "Agent_Profile" -FirstName "Susan" -LastName "Davis" -UserName sdavis@domain.com -Email sdavis@domain.com -Password Temp1234!
+    New-Five9User -DefaultRole Agent -FirstName "Susan" -LastName "Davis" -UserName sdavis@domain.com -Email sdavis@domain.com -Password 'P@ssword!'
 
 &nbsp;
 Create a new skill:
