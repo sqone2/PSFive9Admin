@@ -1,45 +1,38 @@
-﻿<#
-.SYNOPSIS
-    
-    Function used to create a web service proxy with the Five9 admin web service
-
-.PARAMETER Credential
- 
-    PSCredential object, such as one returned by the Get-Credential cmdlet.
-    If parameter is omitted, Get-Credential will be called.
-
-.PARAMETER Version
- 
-    Optional API version. See Five9 documentation for details on what is provided with each version. 
-    If omitted, most recent version will be used (recommended).
-
-.PARAMETER PassThru
- 
-    Returns an object that contains the web service proxy
-
-.EXAMPLE
-    
-    Connect-Five9AdminWebService
-    
-    # User will be prompted to enter Five9 username and password, and then be connected to Five9 admin web service
-
-.EXAMPLE
-
-    $username = "jdoe@domain.com"
-    $password = 'P@ssword!' | ConvertTo-SecureString -AsPlainText -Force
-    $cred = New-Object -TypeName PSCredential -ArgumentList $username,$password
-    Connect-Five9AdminWebService -Credential $cred
-    
-    # Create PSCredential object and connects to Five9 admin web service
-
-#>
-function Connect-Five9AdminWebService
+﻿function Connect-Five9AdminWebService
 {
-    [CmdletBinding(PositionalBinding=$true)]
+    <#
+    .SYNOPSIS
+    
+        Function used to create a web service proxy with the Five9 admin web service
+
+    .EXAMPLE
+    
+        Connect-Five9AdminWebService
+    
+        # User will be prompted to enter Five9 username and password, and then be connected to Five9 admin web service
+
+    .EXAMPLE
+
+        $username = "jdoe@domain.com"
+        $password = 'P@ssword!' | ConvertTo-SecureString -AsPlainText -Force
+        $cred = New-Object -TypeName PSCredential -ArgumentList $username,$password
+        Connect-Five9AdminWebService -Credential $cred
+    
+        # Create PSCredential object and connects to Five9 admin web service
+
+    #>
+    [CmdletBinding(PositionalBinding=$false)]
     param
     (
-        [Parameter(Mandatory=$false)][PSCredential]$Credential = (Get-Credential),
+        # PSCredential object, such as one returned by the Get-Credential cmdlet.
+        # If parameter is omitted, Get-Credential will be called.
+        [Parameter(Mandatory=$false, Position=0)][PSCredential]$Credential = (Get-Credential),
+
+        # Optional API version. See Five9 documentation for details on what is provided with each version. 
+        # If omitted, most recent version will be used (recommended).
         [Parameter(Mandatory=$false)][string]$Version = '11',
+
+        # Returns an object that contains the web service proxy
         [Parameter(Mandatory=$false)][switch]$PassThru = $false
     )
 
