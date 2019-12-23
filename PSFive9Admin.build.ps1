@@ -126,9 +126,9 @@ task . Clean,
        Test,
        Fail_If_Failed_Unit_Test,
        Upload_Test_Results_To_AppVeyor,
-       Analyze,
+       Analyze #,
        #Fail_If_Analyze_Findings,
-       Set_Module_Version,
-       Push_Build_Changes_To_Repo,
+       #Set_Module_Version,
+       #Push_Build_Changes_To_Repo,
        #Copy_Source_To_Build_Output,
-       Publish_Module_To_PSGallery
+       #Publish_Module_To_PSGallery
