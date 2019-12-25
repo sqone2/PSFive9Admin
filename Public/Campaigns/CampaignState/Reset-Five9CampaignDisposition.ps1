@@ -27,7 +27,7 @@
         [Parameter(Mandatory=$true, Position=0)][string]$Name,
 
         # Single dispostion name, or array of multiple disposition to be reset
-        [Parameter(Mandatory=$true)][string[]]$Disposition,
+        [Parameter(Mandatory=$true, Position=1)][string[]]$Disposition,
 
         # Date you would like to start resetting disposition(s) on
         [Parameter(Mandatory=$true)][datetime]$StartDateTime,
