@@ -30,22 +30,22 @@ Connect to Five9 admin web service
 ### Examples
 
 
-Get existing user(s):
+Get existing user:
 
      Get-Five9User -NamePattern "jdoe@domain.com"
 
 &nbsp;
-Creating a new user:
+Create a new user:
 
     New-Five9User -DefaultRole Agent -FirstName "Susan" -LastName "Davis" -UserName sdavis@domain.com -Email sdavis@domain.com -Password 'P@ssword!'
 
 &nbsp;
 Create a new skill:
 
-    New-Five9Skill -SkillName "MultiMedia"
+    New-Five9Skill -Name "MultiMedia"
     
 &nbsp;  
 Add new user to new skill:
 
-    Add-Five9SkillMember -Username "sdavis@domain.com" -SkillName "Multimedia"
+    Add-Five9SkillMember -Name "Multimedia" -Username "sdavis@domain.com"
     
