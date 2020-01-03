@@ -55,6 +55,8 @@
         $global:DefaultFive9AdminClient = New-WebServiceProxy -Uri $wsdl -Namespace "PSFive9Admin" -Class "PSFive9Admin" -ErrorAction: Stop
 
         $global:DefaultFive9AdminClient.Credentials = $Credential
+        $global:DefaultFive9AdminClient.Credentials.UserName = $Credential.UserName
+        $global:DefaultFive9AdminClient.Credentials.Domain = $null
 
         $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Five9DomainName -Value $null -Force
         $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Five9DomainId -Value $null -Force
