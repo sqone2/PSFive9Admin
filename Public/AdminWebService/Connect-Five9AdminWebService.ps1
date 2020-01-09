@@ -50,6 +50,7 @@
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
         $wsdl = "https://api.five9.com/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
+
         Write-Verbose "Connecting to: $($wsdl)"
 
         $global:DefaultFive9AdminClient = New-WebServiceProxy -Uri $wsdl -Namespace "PSFive9Admin" -Class "PSFive9Admin" -ErrorAction: Stop
@@ -80,7 +81,8 @@
     }
     catch
     {
-        throw "Error connecting to Five9 admin web service. Please check your credentials and try again. $($_.Exception.Message)"
+        $errorMessage = ($_.Exception.Message) -replace 'Exception calling "getVCCConfiguration" with "0" argument\(s\)\: '
+        throw "Error connecting to Five9 admin web service. Please check your credentials and try again. $errorMessage"
         return
     }
 
