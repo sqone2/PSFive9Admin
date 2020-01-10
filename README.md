@@ -6,16 +6,6 @@
 Powershell functions for working with the Five9 Admin Web Service API
 &nbsp;
 &nbsp;
-
-&nbsp;
-&nbsp;
-### Installation
-
-Install and Import module from PowerShell Gallery
-       
-    Install-Module PSFive9Admin -Force
-       
-    Import-Module PSFive9Admin
     
 &nbsp;
 &nbsp;
@@ -27,7 +17,20 @@ Install NuGet (if not already installed)
     Import-PackageProvider NuGet -Force
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
     
-Set-ExecutionPolicy -ExecutionPolicy: RemoteSigned
+    
+Set Execution Policy
+
+    Set-ExecutionPolicy -ExecutionPolicy: RemoteSigned
+    
+&nbsp;
+&nbsp;
+### Install and Connect
+
+Install and Import module from PowerShell Gallery
+       
+    Install-Module PSFive9Admin -Force
+       
+    Import-Module PSFive9Admin
 
 Connect to Five9 admin web service
 
