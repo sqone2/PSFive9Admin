@@ -21,6 +21,14 @@ Install and Import module from PowerShell Gallery
 &nbsp;
 ### Prerequisites
 
+Install NuGet (if not already installed)
+
+    Install-PackageProvider NuGet -Force
+    Import-PackageProvider NuGet -Force
+    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+    
+Set-ExecutionPolicy -ExecutionPolicy: RemoteSigned
+
 Connect to Five9 admin web service
 
     Connect-Five9AdminWebService
