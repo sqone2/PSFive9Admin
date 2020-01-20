@@ -129,7 +129,6 @@ Describe "CallVariables" -Tag "CallVariables" {
 
         }
 
-
         It "Create test call variable time_1" {
             
             $cv_date_1 = @{
@@ -171,7 +170,6 @@ Describe "CallVariables" -Tag "CallVariables" {
             $create = New-Five9CallVariable @cv_datetime_1
         }
 
-
         It "Create test call variable currency_1" {
 
             $cv_currency_1 = @{
@@ -194,7 +192,6 @@ Describe "CallVariables" -Tag "CallVariables" {
 
         }
 
-
         It "Create test call variable bool_1" {
 
             $cv_bool_1 = @{
@@ -211,7 +208,6 @@ Describe "CallVariables" -Tag "CallVariables" {
             $create = New-Five9CallVariable @cv_bool_1
 
         }
-
 
         It "Create test call variable percent_1" {
 
@@ -269,26 +265,19 @@ Describe "CallVariables" -Tag "CallVariables" {
 
     Context ": Delete all variables in group" {
 
+        $getVariables = (Get-Five9CallVariableGroup -NamePattern $module).variables
+
         It "Gets variables from group" {
 
-            $getVariables = (Get-Five9CallVariableGroup -NamePattern $module).variables
-
             $getVariables.Count | Should -BeGreaterThan 0
-
         }
 
         foreach ($var in $getVariables)
         {
-            It "Remove: ""$($var.name)""" {
-                if ($var.name -eq 'percent_1')
-                {
-                    "break"
-                }
-
-                Remove-Five9CallVariable -Name $var.name -Group $var.group
+            It "Removes: ""$($var.name)""" {
+                Remove-Five9CallVariable -Name $var.name -Group $module
             }
         }
-
 
 
     }
@@ -299,7 +288,7 @@ Describe "CallVariables" -Tag "CallVariables" {
 
         It "Delete call variable group" {
 
-            $deleteGroup = Remove-Five9CallVariable -
+            $deleteGroup = Remove-Five9CallVariableGroup -Name $module
 
         }
 
@@ -307,7 +296,7 @@ Describe "CallVariables" -Tag "CallVariables" {
 
             $deletedCvGroup = Get-Five9CallVariableGroup $module
 
-            $modifiedCvGroup | Should -BeNullOrEmpty
+            $deletedCvGroup | Should -BeNullOrEmpty
 
         }
 
