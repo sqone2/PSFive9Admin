@@ -3,22 +3,7 @@ $module = 'PSFive9Admin'
 
 
 
-$cv_num
-$cv_date
-$cv_time
-$cv_datetime
-$cv_currency
-$cv_bool
-$cv_percent
-$cv_email
-$cv_url
-$cv_phone
-$cv_duration
-
-
-
-
-Describe "AgentGroup" -Tag "AgentGroup" {
+Describe "CallVariables" -Tag "CallVariables" {
 
     Context ": Create call variable group" {
 
@@ -282,11 +267,39 @@ Describe "AgentGroup" -Tag "AgentGroup" {
 
 
 
-    Context ": Clean up call variable group" {
+    Context ": Delete all variables in group" {
+
+        It "Gets variables from group" {
+
+            $getVariables = (Get-Five9CallVariableGroup -NamePattern $module).variables
+
+            $getVariables.Count | Should -BeGreaterThan 0
+
+        }
+
+        foreach ($var in $getVariables)
+        {
+            It "Remove: ""$($var.name)""" {
+                if ($var.name -eq 'percent_1')
+                {
+                    "break"
+                }
+
+                Remove-Five9CallVariable -Name $var.name -Group $var.group
+            }
+        }
+
+
+
+    }
+
+
+
+    Context ": Delete call variable group" {
 
         It "Delete call variable group" {
 
-            $deleteGroup = Remove-Five9CallVariableGroup -Name $module
+            $deleteGroup = Remove-Five9CallVariable -
 
         }
 
