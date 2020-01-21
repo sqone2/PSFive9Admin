@@ -7,8 +7,6 @@ Powershell functions for working with the Five9 Admin Web Service API
 &nbsp;
 &nbsp;
 
-![Examples](https://github.com/sqone2/PSFive9Admin/blob/master/assets/psfive9admin-example.png)
-
 &nbsp;
 &nbsp;
 ### Prerequisites
@@ -38,9 +36,15 @@ Connect to Five9 admin web service
 
     Connect-Five9AdminWebService
 
+
 &nbsp;
 &nbsp;
 ### Examples
+
+&nbsp;
+![Examples](https://github.com/sqone2/PSFive9Admin/blob/master/assets/psfive9admin-example.png)
+&nbsp;
+
 
 Get existing user:
 
