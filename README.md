@@ -41,6 +41,9 @@ Connect to Five9 admin web service
 ### Examples
 
 
+![Examples](https://github.com/sqone2/PSFive9Admin/blob/master/assets/psfive9admin-example.png)
+
+
 Get existing user:
 
      Get-Five9User -NamePattern "jdoe@domain.com"
