@@ -38,15 +38,6 @@
 
     try
     {
-        try
-        {
-            [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
-        }
-        catch
-        {
-
-        }
-
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
         $wsdl = "https://api.five9.com/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
