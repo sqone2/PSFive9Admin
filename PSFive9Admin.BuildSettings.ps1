@@ -11,6 +11,17 @@ $Settings = @{
     TestUploadUrl = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)"
     Branch = $env:APPVEYOR_REPO_BRANCH
 
+    Version = $env:APPVEYOR_BUILD_VERSION
+    ManifestPath = "$PSScriptRoot\$(Split-Path -Leaf $PSScriptRoot).psd1"
+    VersionRegex = "ModuleVersion\s=\s'(?<ModuleVersion>\S+)'" -as [regex]
+
+    GitHubKey = $env:GitHubKey
+    GitHubEmail = $env:GitHubEmail
+    GitHubUsername = $env:GitHubUsername
+    
+    ModuleName = Split-Path -Leaf $PSScriptRoot
+    OutputModulePath = "$PSScriptRoot\BuildOutput\$($env:APPVEYOR_PROJECT_NAME)"
+
 
     PesterParams = @{
         Script = "$PSScriptRoot\$(Split-Path -Leaf $PSScriptRoot).Tests.ps1"
@@ -36,6 +47,14 @@ $Settings = @{
 
     }
 
+    PSGalleryParams = @{
+        Path        = $PSScriptRoot
+        NuGetApiKey = $env:NugetApiKey
+        Tags        = @('Five9','Five 9')
+        ProjectUri  = 'https://github.com/sqone2/PSFive9Admin'
+        LicenseUri  = 'https://github.com/sqone2/PSFive9Admin/blob/master/LICENSE'
+    }
+
 
 
     AnalyzeParams = @{
@@ -45,16 +64,5 @@ $Settings = @{
     }
 
 
-    Version = $env:APPVEYOR_BUILD_VERSION
-    ManifestPath = "$PSScriptRoot\$(Split-Path -Leaf $PSScriptRoot).psd1"
-    VersionRegex = "ModuleVersion\s=\s'(?<ModuleVersion>\S+)'" -as [regex]
 
-    GitHubKey = $env:GitHubKey
-    GitHubEmail = $env:GitHubEmail
-    GitHubUsername = $env:GitHubUsername
-    
-    ModuleName = Split-Path -Leaf $PSScriptRoot
-
-    PSGalleryKey = $env:NugetApiKey
-    OutputModulePath = "$PSScriptRoot\BuildOutput\$($env:APPVEYOR_PROJECT_NAME)"
 }

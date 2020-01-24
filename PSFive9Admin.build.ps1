@@ -117,7 +117,9 @@ task Publish_Module_To_PSGallery {
     Write-Host "OutputModulePath : $($Settings.SourceFolder)"
     #Write-Host "PSGalleryKey : $($($Settings.PSGalleryKey).Substring(0,4))**********"
     Get-PackageProvider -ListAvailable
-    Publish-Module -Path $Settings.SourceFolder -NuGetApiKey $Settings.PSGalleryKey -Verbose
+    $PSGalleryParams = $Settings.PSGalleryParams
+
+    Publish-Module @PSGalleryParams -Verbose
 }
 
 
