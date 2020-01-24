@@ -23,8 +23,16 @@ $Settings = @{
     OutputModulePath = "$PSScriptRoot\BuildOutput\$($env:APPVEYOR_PROJECT_NAME)"
 
 
-    PesterParams = @{
+    PesterParamsInitial = @{
         Script = "$PSScriptRoot\$(Split-Path -Leaf $PSScriptRoot).Tests.ps1"
+        #CodeCoverage = (Get-ChildItem -Path $here -File -Filter "*.ps1" -Recurse).FullName | Where-Object { $_ -Match "Public|Private" }
+        OutputFile = "$PSScriptRoot\BuildOutput\InitialTestsResult.xml"
+        PassThru = $True
+        Strict = $true
+    }
+
+    PesterParamsUnit = @{
+        Script = "$PSScriptRoot\Tests"
         #CodeCoverage = (Get-ChildItem -Path $here -File -Filter "*.ps1" -Recurse).FullName | Where-Object { $_ -Match "Public|Private" }
         OutputFile = "$PSScriptRoot\BuildOutput\UnitTestsResult.xml"
         PassThru = $True

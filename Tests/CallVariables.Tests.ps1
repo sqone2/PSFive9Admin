@@ -1,6 +1,4 @@
-﻿$here = $PSScriptRoot
-$module = 'PSFive9Admin'
-
+﻿$module = "PSFive9Admin"
 
 
 Describe "CallVariables" -Tag "CallVariables" {

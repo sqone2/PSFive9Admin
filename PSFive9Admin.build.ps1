@@ -33,14 +33,24 @@ task Install_Dependencies {
     Invoke-PSDepend @PSDependParams
 }
 
-task Test {
-    $PesterParams = $Settings.PesterParams
-    $Script:TestsResult = Invoke-Pester @PesterParams
+task Initial_Test {
+    $PesterParams = $Settings.PesterParamsInitial
+    $Script:InitialTestsResult = Invoke-Pester @PesterParams
+}
+
+task Fail_If_Failed_Initial_Test {
+    $FailureMessage = "$($InitalTestsResult.FailedCount) Initial test(s) failed. Aborting build."
+    assert ($InitialTestsResult.FailedCount -eq 0) $FailureMessage
+}
+
+task Unit_Test {
+    $PesterParams = $Settings.PesterParamsUnit
+    $Script:UnitTestsResult = Invoke-Pester @PesterParams
 }
 
 task Fail_If_Failed_Unit_Test {
-    $FailureMessage = "$($TestsResult.FailedCount) Unit test(s) failed. Aborting build."
-    assert ($TestsResult.FailedCount -eq 0) $FailureMessage
+    $FailureMessage = "$($UnitTestsResult.FailedCount) Unit test(s) failed. Aborting build."
+    assert ($UnitTestsResult.FailedCount -eq 0) $FailureMessage
 }
 
 task Upload_Test_Results_To_AppVeyor {
@@ -50,7 +60,14 @@ task Upload_Test_Results_To_AppVeyor {
     foreach ( $TestResultFile in $TestResultFiles ) 
     {
         "Uploading test result file : $TestResultFile"
-        (New-Object 'System.Net.WebClient').UploadFile($Settings.TestUploadUrl, $TestResultFile)
+        try
+        {
+            (New-Object 'System.Net.WebClient').UploadFile($Settings.TestUploadUrl, $TestResultFile)
+        }
+        catch
+        {
+            "Error uploading test result file ""$TestResultFile"" Message: $($Exception.Message)"
+        }
     }
 
 }
@@ -125,9 +142,14 @@ task Publish_Module_To_PSGallery {
 
 # Full Build and push to PsGallery
 task Publish Clean,
-             Install_Dependencies,
-             Test,
+             #Install_Dependencies,
+
+             Initial_Test,
+             Fail_If_Failed_Initial_Test,
+
+             Unit_Test,
              Fail_If_Failed_Unit_Test,
+
              Upload_Test_Results_To_AppVeyor,
              #Analyze,
              #Fail_If_Analyze_Findings,
@@ -139,9 +161,14 @@ task Publish Clean,
 
 # Default task does not push to PsGallery
 task . Clean,
-       Install_Dependencies,
-       Test,
+       #Install_Dependencies,
+
+       Initial_Test,
+       Fail_If_Failed_Initial_Test,
+
+       Unit_Test,
        Fail_If_Failed_Unit_Test,
+
        Upload_Test_Results_To_AppVeyor,
        #Analyze,
        #Fail_If_Analyze_Findings,
