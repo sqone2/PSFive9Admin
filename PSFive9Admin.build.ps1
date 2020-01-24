@@ -63,6 +63,7 @@ task Upload_Test_Results_To_AppVeyor {
         try
         {
             (New-Object 'System.Net.WebClient').UploadFile($Settings.TestUploadUrl, $TestResultFile)
+            Remove-Item $TestResultFile
         }
         catch
         {
@@ -124,20 +125,53 @@ task Push_Build_Changes_To_Repo {
 }
 
 task Copy_Source_To_Build_Output {
-    "Copying the source folder [$($Settings.SourceFolder)] into the build output folder : [$($Settings.BuildOutput)]"
-    Copy-Item -Path $Settings.SourceFolder -Destination $Settings.BuildOutput
+
+    "Copying the source files  into the build output folder : [$($Settings.OutputModulePath)]"
+
+    New-Item $Settings.OutputModulePath -ItemType Directory
+
+    Copy-Item -Path "$PSScriptRoot\Private" -Destination $Settings.OutputModulePath -Recurse
+    Copy-Item -Path "$PSScriptRoot\Public" -Destination $Settings.OutputModulePath -Recurse
+    Copy-Item -Path "$PSScriptRoot\en-US" -Destination $Settings.OutputModulePath -Recurse
+    Copy-Item -Path "$PSScriptRoot\LICENSE" -Destination $Settings.OutputModulePath
+    Copy-Item -Path "$PSScriptRoot\README.md" -Destination $Settings.OutputModulePath
+    Copy-Item -Path "$PSScriptRoot\PSFive9Admin.Format.ps1xml" -Destination $Settings.OutputModulePath
+    Copy-Item -Path "$PSScriptRoot\PSFive9Admin.psd1" -Destination $Settings.OutputModulePath
+    Copy-Item -Path "$PSScriptRoot\PSFive9Admin.psm1" -Destination $Settings.OutputModulePath
+
 }
 
 task Publish_Module_To_PSGallery {
     Remove-Module -Name $($Settings.ModuleName) -Force -ErrorAction SilentlyContinue
 
     Write-Host "OutputModulePath : $($Settings.SourceFolder)"
-    #Write-Host "PSGalleryKey : $($($Settings.PSGalleryKey).Substring(0,4))**********"
-    Get-PackageProvider -ListAvailable
+
+    #Get-PackageProvider -ListAvailable
     $PSGalleryParams = $Settings.PSGalleryParams
 
+    Write-Host -ForegroundColor Magenta "Publishing module to PSGallery"
     Publish-Module @PSGalleryParams -Verbose
 }
+
+# Full Build and push to PsGallery
+task Local   Clean,
+             #Install_Dependencies,
+
+             #Initial_Test,
+             #Fail_If_Failed_Initial_Test,
+
+             #Unit_Test,
+             #Fail_If_Failed_Unit_Test,
+
+             #Upload_Test_Results_To_AppVeyor,
+             #Analyze,
+             #Fail_If_Analyze_Findings,
+             #Set_Module_Version,
+             #Push_Build_Changes_To_Repo,
+
+             #Clean,
+             Copy_Source_To_Build_Output,
+             Publish_Module_To_PSGallery
 
 
 # Full Build and push to PsGallery
@@ -155,6 +189,7 @@ task Publish Clean,
              #Fail_If_Analyze_Findings,
              Set_Module_Version,
              Push_Build_Changes_To_Repo,
+
              Copy_Source_To_Build_Output,
              Publish_Module_To_PSGallery
 

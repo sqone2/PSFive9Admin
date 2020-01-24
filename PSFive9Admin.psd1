@@ -95,13 +95,13 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+         Tags = @('Five9', 'Five 9', 'PowerShell', 'PSFive9', 'PSFive9Admin', 'API')
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+         LicenseUri = 'https://github.com/sqone2/PSFive9Admin/blob/master/LICENSE'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+         ProjectUri = 'https://github.com/sqone2/PSFive9Admin'
 
         # A URL to an icon representing this module.
         # IconUri = ''
