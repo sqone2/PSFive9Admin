@@ -142,7 +142,7 @@ task Publish_Module_To_PSGallery {
 
 # Full Build and push to PsGallery
 task Publish Clean,
-             #Install_Dependencies,
+             Install_Dependencies,
 
              Initial_Test,
              Fail_If_Failed_Initial_Test,
@@ -161,7 +161,7 @@ task Publish Clean,
 
 # Default task does not push to PsGallery
 task . Clean,
-       #Install_Dependencies,
+       Install_Dependencies,
 
        Initial_Test,
        Fail_If_Failed_Initial_Test,
