@@ -132,7 +132,7 @@ task Copy_Source_To_Build_Output {
 
     Copy-Item -Path "$PSScriptRoot\Private" -Destination $Settings.OutputModulePath -Recurse
     Copy-Item -Path "$PSScriptRoot\Public" -Destination $Settings.OutputModulePath -Recurse
-    Copy-Item -Path "$PSScriptRoot\en-US" -Destination $Settings.OutputModulePath -Recurse
+    #Copy-Item -Path "$PSScriptRoot\en-US" -Destination $Settings.OutputModulePath -Recurse
     Copy-Item -Path "$PSScriptRoot\LICENSE" -Destination $Settings.OutputModulePath
     Copy-Item -Path "$PSScriptRoot\README.md" -Destination $Settings.OutputModulePath
     Copy-Item -Path "$PSScriptRoot\PSFive9Admin.Format.ps1xml" -Destination $Settings.OutputModulePath
