@@ -33,7 +33,7 @@ Copyright = '(c) 2019 sqone2. All rights reserved.'
 Description = 'Functions for working with the Five9 Admin Web Service API'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '3.1.0.58'
+PowerShellVersion = '3.1.0.53'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -95,7 +95,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-         Tags = @('Five9', 'Five 9', 'PowerShell', 'PSFive9', 'PSFive9Admin', 'API', 'Five9 API', 'Five9 PowerShell')
+         Tags = @('Five9', 'Five9', '9', 'PowerShell', 'PSFive9', 'PSFive9Admin', 'API', 'Admin', 'Web', 'Services', 'SOAP')
 
         # A URL to the license for this module.
          LicenseUri = 'https://github.com/sqone2/PSFive9Admin/blob/master/LICENSE'
