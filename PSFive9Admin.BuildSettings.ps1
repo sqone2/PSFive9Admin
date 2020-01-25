@@ -20,7 +20,7 @@ $Settings = @{
     GitHubUsername = $env:GitHubUsername
     
     ModuleName = Split-Path -Leaf $PSScriptRoot
-    OutputModulePath = "$PSScriptRoot\BuildOutput\$(Split-Path -Leaf $PSScriptRoot)"
+    OutputModulePath = "$PSScriptRoot\BuildOutput\PSFive9Admin"
 
 
     PesterParamsInitial = @{
@@ -56,7 +56,7 @@ $Settings = @{
     }
 
     PSGalleryParams = @{
-        Path        = "$PSScriptRoot\BuildOutput"
+        Path        = "$PSScriptRoot\BuildOutput\PSFive9Admin"
         NuGetApiKey = $env:NugetApiKey
         #Tags        = @('Five9','Five 9')
         #ProjectUri  = 'https://github.com/sqone2/PSFive9Admin'

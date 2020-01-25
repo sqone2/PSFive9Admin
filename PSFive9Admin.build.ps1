@@ -181,8 +181,8 @@ task Publish Clean,
              Initial_Test,
              Fail_If_Failed_Initial_Test,
 
-             Unit_Test,
-             Fail_If_Failed_Unit_Test,
+             #Unit_Test,
+             #Fail_If_Failed_Unit_Test,
 
              Upload_Test_Results_To_AppVeyor,
              #Analyze,
