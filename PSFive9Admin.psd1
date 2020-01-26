@@ -69,7 +69,7 @@ PowerShellVersion = '3.1.0.53'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = '*'
+FunctionsToExport = @('Get-Five9AdminWebService','Add-Five9AgentGroupMember','Get-Five9AgentGroup','Get-Five9AgentGroupMember','New-Five9AgentGroup','Remove-Five9AgentGroup','Remove-Five9AgentGroupMember','Set-Five9AgentGroup','Get-Five9CallVariable','Get-Five9CallVariableGroup','New-Five9CallVariable','New-Five9CallVariableGroup','Remove-Five9CallVariable','Remove-Five9CallVariableGroup','Set-Five9CallVariable','Set-Five9CallVariableGroup','Get-Five9CampaignProfile','New-Five9CampaignProfile','Remove-Five9CampaignProfile','Set-Five9CampaignProfile','Add-Five9CampaignDisposition','Remove-Five9CampaignDisposition','Add-Five9CampaignDNIS','Get-Five9CampaignDNIS','Remove-Five9CampaignDNIS','Add-Five9CampaignList','Get-Five9CampaignList','Remove-Five9CampaignList','Add-Five9CampaignSkill','Remove-Five9CampaignSkill','Reset-Five9Campaign','Reset-Five9CampaignDisposition','Reset-Five9CampaignListPosition','Start-Five9Campaign','Stop-Five9Campaign','Get-Five9Campaign','New-Five9InboundCampaign','New-Five9OutboundCampaign','Remove-Five9Campaign','Set-Five9InboundCampaign','Set-Five9OutboundCampaign','Get-Five9ContactField','New-Five9ContactField','Remove-Five9ContactField','Set-Five9ContactField','Add-Five9ContactRecord','Get-Five9ContactImportResult','Get-Five9ContactRecord','Remove-Five9ContactRecord','Get-Five9Disposition','New-Five9Disposition','Remove-Five9Disposition','Set-Five9Disposition','Get-Five9DNIS','Add-Five9ListRecord','Get-Five9List','Get-Five9ListImportResult','New-Five9List','Remove-Five9List','Remove-Five9ListRecord','Add-Five9SkillMember','Get-Five9Skill','Get-Five9SkillMember','New-Five9Skill','Remove-Five9Skill','Remove-Five9SkillMember','Set-Five9Skill','Set-Five9SkillMember','Get-Five9UserProfile','Add-Five9UserRole','Remove-Five9UserRole','Set-Five9UserAdminRole','Set-Five9UserAgentRole','Set-Five9UserReportingRole','Set-Five9UserSupervisorRole','Get-Five9User','New-Five9User','Remove-Five9User','Set-Five9User')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = '*'
@@ -95,7 +95,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-         Tags = @('Five9', 'Five9', '9', 'PowerShell', 'PSFive9', 'PSFive9Admin', 'API', 'Admin', 'Web', 'Services', 'SOAP')
+         Tags = @('Five9', 'Five', '9', 'PowerShell', 'PSFive9', 'PSFive9Admin', 'API', 'Admin', 'Web', 'Services', 'SOAP')
 
         # A URL to the license for this module.
          LicenseUri = 'https://github.com/sqone2/PSFive9Admin/blob/master/LICENSE'
