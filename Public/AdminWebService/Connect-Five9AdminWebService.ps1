@@ -32,6 +32,9 @@
         # If omitted, most recent version will be used (recommended).
         [Parameter(Mandatory=$false)][string]$Version = '11',
 
+        # Whether to connect to EU data center. If omitted, or set to $false, you will be connected to a US data center
+        [Parameter(Mandatory=$false)][string]$EuDomain = $false,
+
         # Returns an object that contains the web service proxy
         [Parameter(Mandatory=$false)][switch]$PassThru = $false
     )
@@ -40,7 +43,15 @@
     {
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-        $wsdl = "https://api.five9.com/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
+        if ($EuDomain -eq $true)
+        {
+            $wsdl = "https://api.five9.eu/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
+        }
+        else
+        {
+            $wsdl = "https://api.five9.com/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
+        }
+        
 
         Write-Verbose "Connecting to: $($wsdl)"
 
