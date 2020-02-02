@@ -12,6 +12,12 @@
         # User will be prompted to enter Five9 username and password, and then be connected to Five9 admin web service
 
     .EXAMPLE
+    
+        Connect-Five9AdminWebService -DataCenter "EU"
+    
+        # Domain being connected to is loacated in the Five9 EU data center
+
+    .EXAMPLE
 
         $username = "jdoe@domain.com"
         $password = 'P@ssword!' | ConvertTo-SecureString -AsPlainText -Force
@@ -32,8 +38,14 @@
         # If omitted, most recent version will be used (recommended).
         [Parameter(Mandatory=$false)][string]$Version = '11',
 
-        # Whether to connect to EU data center. If omitted, or set to $false, you will be connected to a US data center
-        [Parameter(Mandatory=$false)][string]$EuDomain = $false,
+        <# 
+        Data center that contains the Five9 domain you are connecting to
+
+        Options are:
+            • US (Default) - United States data center
+            • EU - European Union data center
+        #>
+        [Parameter(Mandatory=$false)][ValidateSet('US', 'EU')][string]$DataCenter = 'US',
 
         # Returns an object that contains the web service proxy
         [Parameter(Mandatory=$false)][switch]$PassThru = $false
@@ -43,7 +55,7 @@
     {
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-        if ($EuDomain -eq $true)
+        if ($DataCenter -eq 'EU')
         {
             $wsdl = "https://api.five9.eu/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
         }
