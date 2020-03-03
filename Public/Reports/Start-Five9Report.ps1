@@ -19,11 +19,6 @@
 
         # Starts the Call Log report and using the returned identifer, gets the data from the report using Get-Five9ReportResult
 
-    .LINKS
-
-        Get-Five9ReportResult
-
-
     #>
     [CmdletBinding(PositionalBinding=$false)]
     param
