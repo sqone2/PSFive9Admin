@@ -6,7 +6,7 @@
 Powershell functions for working with the Five9 Admin Web Service API
 &nbsp;
 &nbsp;
-
+#
 &nbsp;
 &nbsp;
 ### Prerequisites
@@ -23,7 +23,6 @@ Powershell functions for working with the Five9 Admin Web Service API
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 #
 
-&nbsp;
 &nbsp;
 ### Install and Connect
 
