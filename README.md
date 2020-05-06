@@ -28,7 +28,6 @@ Powershell functions for working with the Five9 Admin Web Service API
 
     # Install and Import module from PowerShell Gallery
     Install-Module PSFive9Admin -Force
-       
     Import-Module PSFive9Admin
 
     # Connect to Five9 admin web service
