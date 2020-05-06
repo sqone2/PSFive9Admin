@@ -13,6 +13,7 @@ Powershell functions for working with the Five9 Admin Web Service API
 
 Install NuGet (if not already installed)
 
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     Install-PackageProvider NuGet -Force
     Import-PackageProvider NuGet -Force
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
