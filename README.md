@@ -2,7 +2,7 @@
 &nbsp;
 
  
- # PSFive9Admin
+ #### PSFive9Admin
 Powershell functions for working with the Five9 Admin Web Service API
 &nbsp;
 &nbsp;
@@ -11,33 +11,28 @@ Powershell functions for working with the Five9 Admin Web Service API
 &nbsp;
 ### Prerequisites
 
-# Force TLS 1.2
-
+    # Force TLS 1.2
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     
-# Set Execution Policy
-
+    # Set Execution Policy
     Set-ExecutionPolicy -ExecutionPolicy: RemoteSigned
 
-# Install NuGet
-
+    # Install NuGet
     Install-PackageProvider NuGet -Force
     Import-PackageProvider NuGet -Force
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
     
 &nbsp;
 &nbsp;
-### #Install and Connect
+### Install and Connect
 
-# Install and Import module from PowerShell Gallery
-       
+    # Install and Import module from PowerShell Gallery
     Install-Module PSFive9Admin -Force
        
     Import-Module PSFive9Admin
 
-# Connect to Five9 admin web service
-
-    Connect-Five9AdminWebService
+    # Connect to Five9 admin web service
+    Connect-Five9AdminWebService -Verbose
 
 
 &nbsp;
