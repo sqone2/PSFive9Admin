@@ -19,6 +19,9 @@ Powershell functions for working with the Five9 Admin Web Service API
     Install-PackageProvider NuGet -Scope: CurrentUser -Force
     Import-PackageProvider NuGet -Force
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+    
+    # Set Execution Policy
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope: CurrentUser -Force
 
 
     #### Install and Connect
