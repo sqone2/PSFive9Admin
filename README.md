@@ -7,7 +7,6 @@ Powershell functions for working with the Five9 Admin Web Service API
 &nbsp;
 &nbsp;
 #
-&nbsp;
 
 ### Prerequisites
 
