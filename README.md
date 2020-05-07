@@ -20,7 +20,6 @@ Powershell functions for working with the Five9 Admin Web Service API
     Import-PackageProvider NuGet -Force
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
-#
 
 &nbsp;
 ### Install and Connect
