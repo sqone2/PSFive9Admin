@@ -14,7 +14,6 @@ Powershell functions for working with the Five9 Admin Web Service API
     # Force TLS 1.2
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-
     # Install NuGet
     Install-PackageProvider NuGet -Scope: CurrentUser -Force
     Import-PackageProvider NuGet -Force
