@@ -8,7 +8,7 @@ Powershell functions for working with the Five9 Admin Web Service API
 &nbsp;
 #
 &nbsp;
-&nbsp;
+
 ### Prerequisites
 
     # Force TLS 1.2
@@ -20,8 +20,6 @@ Powershell functions for working with the Five9 Admin Web Service API
     Import-PackageProvider NuGet -Force
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
-
-&nbsp;
 ### Install and Connect
 
     # Install PSFive9Admin module
