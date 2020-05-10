@@ -1,8 +1,23 @@
 ﻿function Get-FileMetadata
 {
+    <#
+    .SYNOPSIS
+    
+        Function used to get a file's metadata
+
+    .EXAMPLE
+
+        Get-FileMetadata -FilePath 'C:\recordings\my_greeting.wav'
+
+        # Retuns metadata for file
+
+    #>
+
+    [CmdletBinding(PositionalBinding=$true)]
     param
     (
-        $FilePath
+        # File path
+        [Parameter(Mandatory=$true)][string]$FilePath
     )
 
     $objShell = New-Object -ComObject Shell.Application

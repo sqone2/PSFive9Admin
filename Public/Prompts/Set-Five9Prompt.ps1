@@ -42,13 +42,63 @@
         # Note: You can only use this parameter if prompt is already a TTS prompt
         [Parameter(Mandatory=$false)][string]$Text,
 
-        # Voice used to pronounce the TTS prompt
+        # Voice used to pronounce the TTS prompt. Only used for TTS prompts.
         [Parameter(Mandatory=$false)][ValidateSet('Samantha','Donna','Jennifer','Jill','Tom')][string]$Voice,
 
-        # Describes how letters, numbers, and symbols are pronounced
+        <# 
+        Describes how letters, numbers, and symbols are pronounced. Only used for TTS prompts.
+
+        Options are :
+            • Default
+            • Words
+            • Acronym
+            • Address
+            • Cardinal
+            • Currency
+            • Date
+            • Decimal
+            • Digits
+            • Duration
+            • Fraction
+            • Letters
+            • Measure
+            • Name
+            • Net
+            • Telephone
+            • Ordinal
+            • Spell
+            • Time
+        #>
         [Parameter(Mandatory=$false)][ValidateSet('Default','Words','Acronym','Address','Cardinal','Currency','Date','Decimal','Digits','Duration','Fraction','Letters','Measure','Name','Net','Telephone','Ordinal','Spell','Time')][string]$SayAs,
 
-        # Date and time format of the prompt
+        <#
+        Date and time format of the prompt. Only used for TTS prompts.
+
+        Options are:
+            • NoFormat
+            • Default
+            • Date_MDY
+            • Date_DMY
+            • Date_YMD
+            • Date_YM
+            • Date_MY
+            • Date_DM
+            • Date_MD
+            • Date_Y
+            • Date_M
+            • Date_D
+            • Duration_HMS
+            • Duration_HM
+            • Duration_MS
+            • Duration_H
+            • Duration_M
+            • Duration_S
+            • Net_URI
+            • Net_EMAIL
+            • Time_HMS
+            • Time_HM
+            • Time_H
+        #>
         [Parameter(Mandatory=$false)][ValidateSet('NoFormat','Default','Date_MDY','Date_DMY','Date_YMD','Date_YM','Date_MY','Date_DM','Date_MD','Date_Y','Date_M','Date_D','Duration_HMS','Duration_HM','Duration_MS','Duration_H','Duration_M','Duration_S','Net_URI','Net_EMAIL','Time_HMS','Time_HM','Time_H')][string]$SayAsFormat
 
     )
