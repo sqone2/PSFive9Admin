@@ -14,11 +14,11 @@
     [CmdletBinding(PositionalBinding=$true)]
     param
     (
-        # Code assigned to the speed dial number
+        # Code assigned to the telephone number to speed dial
         [Parameter(Mandatory=$true)][string]$Code,
-        # Code assigned to the speed dial number
+        # Telephone number to dial
         [Parameter(Mandatory=$true)][string]$Number,
-        # Code assigned to the speed dial number
+        # Description for the number
         [Parameter(Mandatory=$false)][string]$Description
     )
     
@@ -26,7 +26,7 @@
     {
         Test-Five9Connection -ErrorAction: Stop
 
-        Write-Verbose "$($MyInvocation.MyCommand.Name): Creating new speed dial number. Code: '$Code' Number: '$Number'" 
+        Write-Verbose "$($MyInvocation.MyCommand.Name): Creating new speed dial number. Code: '$Code' Number: '$Number'." 
         return $global:DefaultFive9AdminClient.createSpeedDialNumber($Code,$Number,$Description)
 
     }
