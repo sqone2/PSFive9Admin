@@ -17,7 +17,7 @@
         $id = Start-Five9Report -FolderName "Call Log Reports" -ReportName 'Call Log'
         $result = Get-Five9ReportResult -Identifier $id
 
-        # Starts the Call Log report and using the returned identifer, gets the data from the report using Get-Five9ReportResult
+        # Starts the Call Log report and using the returned identifier, gets the data from the report using Get-Five9ReportResult
 
     #>
     [CmdletBinding(PositionalBinding=$false)]
