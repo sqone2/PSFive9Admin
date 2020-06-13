@@ -38,7 +38,7 @@
         else
         {
             Write-Verbose "$($MyInvocation.MyCommand.Name): Returning all prompts." 
-            return $global:DefaultFive9AdminClient.getPrompts()
+            return $global:DefaultFive9AdminClient.getPrompts() | sort name
         }
 
     }
