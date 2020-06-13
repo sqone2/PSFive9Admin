@@ -43,7 +43,7 @@ $Settings = @{
 
         InputObject = @{
             PSDeploy = 'latest'
-            Pester = 'latest'
+            Pester = '4.9.0'
             PSScriptAnalyzer = 'latest'
         }
 
