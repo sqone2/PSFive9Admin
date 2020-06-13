@@ -12,7 +12,7 @@
 RootModule = 'PSFive9Admin.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.75'
+ModuleVersion = '1.0.77'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
