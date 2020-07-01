@@ -442,7 +442,6 @@
             </TableControl>
         </View>
 
-
         <!--userSkill-->
         <View>
             <Name>Default</Name>
@@ -570,6 +569,75 @@
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>roles</PropertyName>
+                            </TableColumnItem>
+
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
+        <!--callVariable-->
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>PSFive9Admin.callVariable</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader> <!--category-->
+                        <Width>10</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--group-->
+                        <Width>20</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--name-->
+                        <Width>25</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--type-->
+                        <Width>15</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--reporting-->
+                        <Width>10</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--applyToAllDispositions-->
+                        <Width>22</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--description-->
+                        <Width>50</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>category</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>group</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>name</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>type</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>reporting</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>applyToAllDispositions</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>description</PropertyName>
                             </TableColumnItem>
 
                         </TableColumnItems>
