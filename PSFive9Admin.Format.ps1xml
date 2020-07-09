@@ -646,6 +646,54 @@
             </TableControl>
         </View>
 
+        <!--agentState-->
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>agentState</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader> <!--time-->
+                        <Width>15</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--agent-->
+                        <Width>40</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--state-->
+                        <Width>13</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--skillAvailability-->
+                        <Width>100</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>time</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>agent</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>state</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>skillAvailability</PropertyName>
+                            </TableColumnItem>
+                            
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
 
 
     </ViewDefinitions>
