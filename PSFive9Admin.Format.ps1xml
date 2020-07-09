@@ -663,7 +663,7 @@
                         <Alignment>left</Alignment>
                     </TableColumnHeader>
                     <TableColumnHeader> <!--state-->
-                        <Width>13</Width>
+                        <Width>18</Width>
                         <Alignment>left</Alignment>
                     </TableColumnHeader>
                     <TableColumnHeader> <!--skillAvailability-->

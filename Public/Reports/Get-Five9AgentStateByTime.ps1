@@ -14,7 +14,7 @@
     
     .EXAMPLE
     
-        Get-Five9AgentStateByTime -Date '2020/06/10' -Time '9:57:40am' -TimeZone EST -SkillName "MultiMedia"
+        Get-Five9AgentStateByTime -Date '2020/06/10' -Time '9:57:40am' -TimeZone EST -SkillName 'MultiMedia'
     
         # Returns agent's state at a given time who are skilled for "MultiMedia" at that time
     #>
@@ -189,12 +189,12 @@ public struct agentState {
 
         if ($PSBoundParameters.Keys -contains "SkillName")
         {
-            Write-Verbose "$($MyInvocation.MyCommand.Name): Returning agent states at '$timeInQuestion' skilled for '$SkillName'" 
+            Write-Verbose "$($MyInvocation.MyCommand.Name): Returning '$SkillName' agent states at '$timeInQuestion $TimeZone'." 
             return $final | ? {$_.state -notmatch 'Logout' -and $_.skillAvailability -match $SkillName} | sort state
         }
         else
         {
-            Write-Verbose "$($MyInvocation.MyCommand.Name): Returning all agent states at $timeInQuestion" 
+            Write-Verbose "$($MyInvocation.MyCommand.Name): Returning all agent states at '$timeInQuestion $TimeZone'." 
             return $final | ? {$_.state -notmatch 'Logout'} | sort state
         }
 
