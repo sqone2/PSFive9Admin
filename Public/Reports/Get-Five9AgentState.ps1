@@ -1,4 +1,4 @@
-﻿function Get-Five9AgentStateByTime
+﻿function Get-Five9AgentState
 {
     <#
     .SYNOPSIS
@@ -8,13 +8,13 @@
    
     .EXAMPLE
     
-        Get-Five9AgentStateByTime -Date '7/6/2020' -Time '2:52pm' -TimeZone CST
+        Get-Five9AgentState -Date '7/6/2020' -Time '2:52pm' -TimeZone CST
     
         # Returns all agent's state at the given date and time converted to the timezone specified
     
     .EXAMPLE
     
-        Get-Five9AgentStateByTime -Date '2020/06/10' -Time '9:57:40am' -TimeZone EST -SkillName 'MultiMedia'
+        Get-Five9AgentState -Date '2020/06/10' -Time '9:57:40am' -TimeZone EST -SkillName 'MultiMedia'
     
         # Returns agent's state at a given time who are skilled for "MultiMedia" at that time
     #>
