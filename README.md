@@ -10,7 +10,7 @@ Powershell functions for working with the Five9 Admin Web Service API
 
 ### Getting Started
 
-    #### Prerequisites
+    #### Prerequisites ( Run these commands once only )
 
     # Force TLS 1.2
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -23,12 +23,10 @@ Powershell functions for working with the Five9 Admin Web Service API
     # Set Execution Policy
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope: CurrentUser -Force
 
-
-    #### Install and Connect
-
     # Install PSFive9Admin module
     Install-Module PSFive9Admin -Scope: CurrentUser -Force
     Import-Module PSFive9Admin
+    
 
 ### Connect to a Five9 domain
     Connect-Five9AdminWebService -Verbose
