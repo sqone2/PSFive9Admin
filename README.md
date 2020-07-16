@@ -30,7 +30,7 @@ Powershell functions for working with the Five9 Admin Web Service API
     Install-Module PSFive9Admin -Scope: CurrentUser -Force
     Import-Module PSFive9Admin
 
-    # Connect to a Five9 domain
+### Connect to a Five9 domain
     Connect-Five9AdminWebService -Verbose
 
 # 
