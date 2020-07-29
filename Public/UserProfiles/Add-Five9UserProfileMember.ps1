@@ -27,7 +27,7 @@
         Test-Five9Connection -ErrorAction: Stop
 
         Write-Verbose "$($MyInvocation.MyCommand.Name): Adding user '$Username' to user profile '$Name'." 
-        $response = $global:DefaultFive9AdminClient.modifyUserProfileUserList($Name, $SkillName, $null)
+        $response = $global:DefaultFive9AdminClient.modifyUserProfileUserList($Name, $Username, $null)
 
         return $response
 
