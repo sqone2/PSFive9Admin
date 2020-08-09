@@ -322,6 +322,48 @@
             </TableControl>
         </View>
 
+        <!--campaignDNIS-->
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>campaignDNIS</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader> <!--dnis-->
+                        <Width>20</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--campaignName-->
+                        <Width>40</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--campaignState-->
+                        <Width>14</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>dnis</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>campaignName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>campaignState</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
+
+
         <!--disposition-->
         <View>
             <Name>Default</Name>
