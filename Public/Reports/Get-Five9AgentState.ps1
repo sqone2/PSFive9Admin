@@ -71,29 +71,7 @@ public struct agentState {
         $timeInQuestion_PST = $timeInQuestion.AddHours(-$timeZoneTable[$TimeZone])
 
         $id = Start-Five9Report -FolderName 'Agent Reports' -ReportName 'Agent State Details' -StartDateTime $Date -EndDateTime $timeInQuestion_PST
-
-
-        $done = $false
-
-        while ($done -ne $true)
-        {
-            try
-            {
-                Start-Sleep -Seconds 3
-                $records = Get-Five9ReportResult -Identifier $id
-                $done = $true
-
-            }
-            catch
-            {
-                if ($_.Exception.Message -match 'Report is not yet finishing running')
-                {
-                    Start-Sleep -Seconds 3
-                }
-
-            }
-        }
-
+        $records = Get-Five9ReportResult -Identifier $id -WaitSeconds 5
 
         if ($records.Count -lt 1)
         {

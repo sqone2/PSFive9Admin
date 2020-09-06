@@ -17,7 +17,10 @@
     param
     (
         # Unique identifier returned by Start-Five9Report
-        [Parameter(Mandatory=$true)][string]$Identifier
+        [Parameter(Mandatory=$true)][string]$Identifier,
+
+         # Seconds to retry report retrieval, defaults to 5 if not specified
+        [Parameter(Mandatory=$false)][int]$WaitSeconds = 5
     )
 
     try
@@ -25,6 +28,24 @@
 
         Test-Five9Connection -ErrorAction: Stop
 
+        $reportIsRunning = $true
+
+        while ($reportIsRunning -eq $true) 
+        {
+            $reportStatus = $null
+            $reportStatus = $DefaultFive9AdminClient.isReportRunning($Identifier, "")
+
+            if ($reportStatus -eq $false) 
+            {
+                $reportIsRunning = $false
+            }
+            else
+            {
+                Write-Verbose "$($MyInvocation.MyCommand.Name): Report is still running. Waiting $WaitSeconds seconds..."
+                Start-Sleep -Seconds $WaitSeconds
+            }
+        }
+    
         $data = $global:DefaultFive9AdminClient.getReportResultCsv($Identifier)
 
         $objects = $data | ConvertFrom-Csv -ErrorAction: SilentlyContinue
@@ -40,19 +61,9 @@
             return $objects
         }
 
-
     }
     catch
     {
-        if ($_.Exception.Message -match 'Result is not ready due to process is not complete')
-        {
-            throw "Report is not yet finishing running. Please wait and try again."
-        }
-        else
-        {
-            throw $_
-        }
-
-        
+        throw $_
     }
 }
