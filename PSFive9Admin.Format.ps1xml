@@ -736,6 +736,40 @@
             </TableControl>
         </View>
 
+        <!--dncNumber-->
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>dncNumber</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader> <!--number-->
+                        <Width>13</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--DNC-->
+                        <Width>6</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>number</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>DNC</PropertyName>
+                            </TableColumnItem>
+                            
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
 
 
     </ViewDefinitions>
