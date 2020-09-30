@@ -10,7 +10,7 @@ Powershell functions for working with the Five9 Admin Web Service API
 
 ### Getting Started
 
-    #### Prerequisites ( Run these commands once only )
+    #### Prerequisites (Run these commands once only)
 
     # Force TLS 1.2
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
