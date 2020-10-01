@@ -32,11 +32,11 @@
     (
         # PSCredential object, such as one returned by the Get-Credential cmdlet.
         # If parameter is omitted, Get-Credential will be called.
-        [Parameter(Mandatory=$false, Position=0)][PSCredential]$Credential = (Get-Credential),
+        [Parameter(Mandatory=$false, Position=0)][PSCredential]$Credential = (Get-Credential -Message "Please enter your Five9 admin credentials"),
 
         # Optional API version. See Five9 documentation for details on what is provided with each version. 
         # If omitted, most recent version will be used (recommended).
-        [Parameter(Mandatory=$false)][string]$Version = '11',
+        [Parameter(Mandatory=$false)][string]$Version = '12',
 
         <# 
         Data center that contains the Five9 domain you are connecting to
