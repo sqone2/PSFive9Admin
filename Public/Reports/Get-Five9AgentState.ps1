@@ -66,11 +66,14 @@ public struct agentState {
             EST = 3
         }
 
+        [datetime]$startDate = $Date.ToShortDateString()
+        [datetime]$startDateAdjusted = $startDate.AddHours(-$timeZoneTable[$TimeZone]).ToShortDateString()
+
         [datetime]$timeInQuestion = "$($Date.ToShortDateString()) $($Time.ToLongTimeString())"
 
         $timeInQuestion_PST = $timeInQuestion.AddHours(-$timeZoneTable[$TimeZone])
 
-        $id = Start-Five9Report -FolderName 'Agent Reports' -ReportName 'Agent State Details' -StartDateTime $Date -EndDateTime $timeInQuestion_PST
+        $id = Start-Five9Report -FolderName 'Agent Reports' -ReportName 'Agent State Details' -StartDateTime $startDateAdjusted -EndDateTime $timeInQuestion_PST
         $records = Get-Five9ReportResult -Identifier $id -WaitSeconds 5
 
         if ($records.Count -lt 1)
