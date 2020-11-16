@@ -22,7 +22,7 @@
     {
         Test-Five9Connection
 
-        return $DefaultFive9AdminClient | select Five9DomainName,Five9DomainId,Url,@{n="Username";e={$DefaultFive9AdminClient.Credentials.UserName}}
+        return $DefaultFive9AdminClient | select Five9DomainName,Five9DomainId,Url,@{n="Username";e={$DefaultFive9AdminClient.Credentials.UserName}},Version,DataCenter
 
     }
     catch

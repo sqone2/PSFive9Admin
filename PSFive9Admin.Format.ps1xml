@@ -770,6 +770,47 @@
             </TableControl>
         </View>
 
+        <!--statisticOutput-->
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>statisticOutput</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader> <!--type-->
+                        <Width>25</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--timestamp-->
+                        <Width>20</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--data-->
+                        <Width>75</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>type</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>timestamp</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>data</PropertyName>
+                            </TableColumnItem>
+                            
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
 
 
     </ViewDefinitions>

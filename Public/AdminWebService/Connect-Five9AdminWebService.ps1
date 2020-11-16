@@ -19,7 +19,7 @@
 
     .EXAMPLE
 
-        $username = "jdoe@domain.com"
+        $username = 'jdoe@domain.com'
         $password = 'P@ssword!' | ConvertTo-SecureString -AsPlainText -Force
         $cred = New-Object -TypeName PSCredential -ArgumentList $username,$password
         Connect-Five9AdminWebService -Credential $cred
@@ -75,11 +75,15 @@
 
         $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Five9DomainName -Value $null -Force
         $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Five9DomainId -Value $null -Force
+        $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Version -Value $null -Force
+        $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name DataCenter -Value $null -Force
+
+        $global:DefaultFive9AdminClient.Timeout = 1000000
 
     }
     catch
     {
-        throw "Error creating web service proxy to Five9 admin web service. $($_.Exception.Message)"
+        throw "Error creating web service proxy to Five9 Admin Web Service. $($_.Exception.Message)"
         return
     }
     
@@ -91,6 +95,8 @@
 
         $global:DefaultFive9AdminClient.Five9DomainName = $vccConfig.domainName
         $global:DefaultFive9AdminClient.Five9DomainId = $vccConfig.domainId
+        $global:DefaultFive9AdminClient.Version = $Version
+        $global:DefaultFive9AdminClient.DataCenter = $DataCenter
 
     }
     catch

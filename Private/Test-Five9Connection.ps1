@@ -1,21 +1,18 @@
-﻿<#
-.SYNOPSIS
-    
-    Function used to test AdminClient type
-
-.PARAMETER AdminClient
- 
-    Optional parameter containing web service proxy object returned by calling Connect-Five9AdminWebService -PassThru
-
-.EXAMPLE
-    
-    Test-Five9Connection -AdminClient $AdminClient
-    
-    # Will return AdminClient if it's valid. Or will throw exception
-    
-#>
-function Test-Five9Connection
+﻿function Test-Five9Connection
 {
+    <#
+    .SYNOPSIS
+    
+        Function used to test connection to Five9 admin web service
+
+
+    .EXAMPLE
+    
+        Test-Five9Connection
+    
+        # Will throw expection if not connected to Five9 admin web service
+    
+    #>
     [CmdletBinding(PositionalBinding=$false)]
     param
     (
@@ -27,7 +24,7 @@ function Test-Five9Connection
         return
     }
 
-    throw "You are not currently connected to the Five9 admin web service. You must first connect using Connect-Five9AdminWebService."
+    throw "You are not currently connected to the Five9 Admin Web Service. You must first connect using Connect-Five9AdminWebService."
     return
 
 }
