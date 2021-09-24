@@ -66,7 +66,7 @@ Describe "Module: $module" -Tag Unit {
             (Get-ChildItem $here -Recurse  | ? {$_.Name -match '\.ps1$'}).Count | Should -BeGreaterThan 0
         }
 
-        $functions = Get-ChildItem $here -Recurse -ErrorAction SilentlyContinue | ? {$_.Name -match '\.ps1$' -and $_.Name -notmatch '\.Tests\.ps1|build\.ps1|BuildSettings'}
+        $functions = Get-ChildItem $here -Recurse -ErrorAction SilentlyContinue | ? {$_.Name -match '\.ps1$' -and $_.Name -notmatch '\.Tests\.ps1|build\.ps1|BuildSettings' -and $_.FullName -notmatch 'assets'}
 
         foreach ($function in $functions)
         {
