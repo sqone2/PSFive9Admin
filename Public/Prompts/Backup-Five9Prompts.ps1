@@ -27,7 +27,7 @@
     [CmdletBinding(PositionalBinding=$false)]
     param
     (
-        # Optional regex parameter. If used, function will return only users matching regex string
+        # Optional name of new IVR script which will contain a backup of all Prompts
         [Parameter(Mandatory=$false, Position=0)][string]$BackupIvrScriptName = '_prompt_backup'
     )
 
