@@ -44,8 +44,9 @@
         Options are:
             • US (Default) - United States data center
             • EU - European Union data center
+            • Canada - Canada Data center
         #>
-        [Parameter(Mandatory=$false)][ValidateSet('US', 'EU')][string]$DataCenter = 'US',
+        [Parameter(Mandatory=$false)][ValidateSet('US', 'EU', 'Canada')][string]$DataCenter = 'US',
 
         # Returns an object that contains the web service proxy
         [Parameter(Mandatory=$false)][switch]$PassThru = $false
@@ -59,11 +60,14 @@
         {
             $wsdl = "https://api.five9.eu/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
         }
+        elseif ($DataCenter -eq 'Canada')
+        {
+            $wsdl = "https://api.five9.ca/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
+        }
         else
         {
             $wsdl = "https://api.five9.com/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
         }
-        
 
         Write-Verbose "Connecting to: $($wsdl)"
 
