@@ -363,6 +363,99 @@
         </View>
 
 
+        <!--campaignProfileFilterConfig-->
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>campaignProfileFilterConfig</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader> <!--groupingType-->
+                        <Width>20</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--expression-->
+                        <Width>30</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--filters-->
+                        <Width>55</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--orderByFields-->
+                        <Width>55</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>groupingType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>expression</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>filters</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>orderByFields</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
+
+        <!--campaignProfileFilterConfig-->
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>campaignProfileFilterConfig</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader> <!--id-->
+                        <Width>5</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--leftValue-->
+                        <Width>15</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--compareOperator-->
+                        <Width>15</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader> <!--rightValue-->
+                        <Width>15</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>leftValue</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>compareOperator</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>rightValue</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
 
         <!--disposition-->
         <View>
