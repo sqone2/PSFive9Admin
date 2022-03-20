@@ -3,28 +3,28 @@
     <#
     .SYNOPSIS
     
-        Function used to get the detailed outcome of using the Add-Five9ListRecord cmdlet
+        Function used to get the detailed outcome of using the Update-Five9CampaignDisposition cmdlet
  
     .EXAMPLE
     
-        $importId = Add-Five9ListRecord -CsvPath 'c:\files\contacts.csv'
+        $udpateId = Update-Five9CampaignDisposition -CampaignName 'Hot-Leads' -CsvPath 'C:\files\dispo-update-records.csv' -CommonDispositionValue 'No Answer'
 
         #
-        #    Add-Five9ListRecord will return:
+        #    Update-Five9CampaignDisposition will return:
         #
         #    identifier                          
         #    ----------                          
         #    4833baab-9ded-4ade-b131-5263b269bdb9
         #
 
-        Get-Five9ListImportResult -Identifier $importId
+        Get-Five9DispositionUpdateResult -Identifier $udpateId
 
-        # Returns the result of the contact records import process
+        # Returns the result of the disposition update
     #>
     [CmdletBinding(PositionalBinding=$true)]
     param
     ( 
-        # String returned from Add-Five9ContactRecord. See example.
+        # String returned from Update-Five9CampaignDisposition. See example.
         [Parameter(Mandatory=$true)][guid]$Identifier
     )
 
