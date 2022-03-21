@@ -108,7 +108,7 @@
             Set-Five9CampaignProfileFilter -ProfileName 'Fresh-Leads' -AddOrderByObject $orderByObj
 
         #>
-        [Parameter(Mandatory=$false)][PSFive9Admin.orderByField[]]$AddOrderByObject,
+        [Parameter(Mandatory=$false)][object[]]$AddOrderByObject,
 
 
         # One or more Order By field names to be removed from Order By list
