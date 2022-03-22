@@ -53,6 +53,7 @@
         [Parameter(Mandatory=$false)][switch]$PassThru = $false
     )
 
+
     try
     {
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
