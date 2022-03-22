@@ -42,11 +42,12 @@
         Data center that contains the Five9 domain you are connecting to
 
         Options are:
-            • US (Default) - United States data center
-            • EU - European Union data center
-            • Canada - Canada Data center
+            • US (Default) - United States data center - api.five9.eu
+            • EU - European Union data center (UK) - api.five9.eu
+            • EU_Frankfurt - European Union data center (Frankfurt) - api.eu.five9.com
+            • Canada - Canada Data center - api.five9.ca
         #>
-        [Parameter(Mandatory=$false)][ValidateSet('US', 'EU', 'Canada')][string]$DataCenter = 'US',
+        [Parameter(Mandatory=$false)][ValidateSet('US', 'EU', 'EU_Frankfurt', 'Canada')][string]$DataCenter = 'US',
 
         # Returns an object that contains the web service proxy
         [Parameter(Mandatory=$false)][switch]$PassThru = $false
@@ -56,18 +57,37 @@
     {
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+        if ($Credential.UserName.Length -lt 1 -or $Credential.GetNetworkCredential().password.Length -lt 1)
+        {
+            throw "Error connecting to Five9 admin web service. Username or password was null."
+            return
+        }
+
+        
+        if ($DataCenter -eq 'US')
+        {
+            $baseUrl = 'api.five9.com'
+        }
         if ($DataCenter -eq 'EU')
         {
-            $wsdl = "https://api.five9.eu/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
+            $baseUrl = "api.five9.eu"            
+        }
+        elseif ($DataCenter -eq 'EU_Frankfurt')
+        {
+            $baseUrl = "api.eu.five9.com"
         }
         elseif ($DataCenter -eq 'Canada')
         {
-            $wsdl = "https://api.five9.ca/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
+            $baseUrl = "api.five9.ca"
         }
         else
         {
-            $wsdl = "https://api.five9.com/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
+            $baseUrl = 'api.five9.com'
         }
+
+
+        $wsdl = "https://$baseUrl/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
+
 
         Write-Verbose "Connecting to: $($wsdl)"
 
