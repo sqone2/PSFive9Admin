@@ -18,7 +18,7 @@
         # Domain being connected to is loacated in the Five9 EU data center
 
     .EXAMPLE
-
+        #
         $username = 'jdoe@domain.com'
         $password = 'P@ssword!' | ConvertTo-SecureString -AsPlainText -Force
         $cred = New-Object -TypeName PSCredential -ArgumentList $username,$password
