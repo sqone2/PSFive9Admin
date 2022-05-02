@@ -1,4 +1,4 @@
-﻿ function ConvertTo-EpochTime
+﻿function ConvertTo-EpochDateTime
 {
     <#
     .SYNOPSIS
@@ -7,7 +7,7 @@
 
     .EXAMPLE
 
-        ConvertTo-EpochTime -DateTimeInput '5/2/2022 3:15pm'
+        ConvertTo-EpochDateTime -DateTimeInput '5/2/2022 3:15pm'
 
         # returns 1651518900000
 
