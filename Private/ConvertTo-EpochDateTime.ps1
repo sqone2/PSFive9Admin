@@ -13,6 +13,7 @@
 
     #>
 
+    [CmdletBinding(PositionalBinding=$true)]
     param
     (
         [datetime]$DateTimeInput
