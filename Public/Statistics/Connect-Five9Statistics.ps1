@@ -43,10 +43,12 @@
         Data center that contains the Five9 domain you are connecting to
 
         Options are:
-            • US (Default) - United States data center
-            • EU - European Union data center
+            • US (Default) - United States data center - api.five9.eu
+            • EU - European Union data center (UK) - api.five9.eu
+            • EU_Frankfurt - European Union data center (Frankfurt) - api.eu.five9.com
+            • Canada - Canada Data center - api.five9.ca
         #>
-        [Parameter(Mandatory=$false)][ValidateSet('US', 'EU')][string]$DataCenter = 'US',
+        [Parameter(Mandatory=$false)][ValidateSet('US', 'EU', 'EU_Frankfurt', 'Canada')][string]$DataCenter = 'US',
 
         # Maximum inactivity allowed for the supervisor session from 60 – 1800seconds (30min). 
         # If omitted, the default value is 600 seconds (10 min)
