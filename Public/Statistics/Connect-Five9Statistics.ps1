@@ -130,14 +130,31 @@
             $statsCred = Get-Credential -Message "Please enter your Five9 admin credentials"
         }
 
+
+        if ($DataCenter -eq 'US')
+        {
+            $baseUrl = 'api.five9.com'
+        }
         if ($DataCenter -eq 'EU')
         {
-            $wsdl = "https://api.five9.eu/wssupervisor/v$Version/SupervisorWebService?wsdl&user=$($statsCred.UserName)"
+            $baseUrl = "api.five9.eu"            
+        }
+        elseif ($DataCenter -eq 'EU_Frankfurt')
+        {
+            $baseUrl = "api.eu.five9.com"
+        }
+        elseif ($DataCenter -eq 'Canada')
+        {
+            $baseUrl = "api.five9.ca"
         }
         else
         {
-            $wsdl = "https://api.five9.com/wssupervisor/v$Version/SupervisorWebService?wsdl&user=$($statsCred.UserName)"
+            $baseUrl = 'api.five9.com'
         }
+
+
+        $wsdl = "https://$baseUrl/wssupervisor/v$($Version)/SupervisorWebService?wsdl&user=$($statsCred.Username)"
+
 
         Write-Verbose "Connecting to: $($wsdl)"
 
