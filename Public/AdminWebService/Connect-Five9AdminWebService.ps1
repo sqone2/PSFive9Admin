@@ -149,8 +149,8 @@
             $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Five9DomainId -Value $null -Force
             $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Version -Value $null -Force
             $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name DataCenter -Value $null -Force
-            $global:DefaultFive9AdminClient | Add-Member -MemberType BaseUrl -Name DataCenter -Value $baseUrl -Force
-            $global:DefaultFive9AdminClient | Add-Member -MemberType API -Name DataCenter -Value 'Five9 Admin SOAP' -Force
+            $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name BaseUrl -Value $baseUrl -Force
+            $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name API -Value 'Five9 Admin SOAP' -Force
 
             $global:DefaultFive9AdminClient.Timeout = 1000000
 
