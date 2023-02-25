@@ -64,7 +64,7 @@
     {
         $baseUrl = 'https://api.five9.com'
     }
-    if ($DataCenter -eq 'EU')
+    elseif ($DataCenter -eq 'EU')
     {
         $baseUrl = "https://api.five9.eu"
     }
@@ -83,7 +83,7 @@
 
 
     # need to determine if user is using powershell core
-    if ($PSVersionTable.PSVersion -gt 7 -or $null -eq $commandCheck)
+    if ($PSVersionTable.PSVersion.Major -gt 7 -or $null -eq $commandCheck)
     {
         # REST API
 
