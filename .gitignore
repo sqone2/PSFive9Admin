@@ -1,3 +1,7 @@
 *.txt
 /Public/_not_used/
 BuildOutput/
+.DSSTORE
+test.ps1
+.DS_Store
+**/.vscode
