@@ -35,5 +35,3 @@ function Get-Five9SystemSettings
     }
 }
 
-
-
