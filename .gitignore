@@ -5,3 +5,4 @@ BuildOutput/
 test.ps1
 .DS_Store
 **/.vscode
+/ignore
