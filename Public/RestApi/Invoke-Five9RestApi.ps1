@@ -47,7 +47,12 @@ function Invoke-Five9RestApi
 
         if ($PSBoundParameters.Keys -notcontains 'Credential')
         {
-            $Credential = $DefaultFive9AdminClient.Credentials
+            if ($DefaultFive9AdminClient.Credentials.UserName.Length -lt 1)
+            {
+                throw "Invalid credentials"
+            }
+
+            $Credential = New-Object pscredential -ArgumentList $($DefaultFive9AdminClient.Credentials.UserName), $($DefaultFive9AdminClient.Credentials.SecurePassword)
         }
 
         if ($PSBoundParameters.Keys -notcontains 'BaseUrl')
@@ -60,11 +65,6 @@ function Invoke-Five9RestApi
             {
                 throw "Invalid BaseUrl"
             }
-        }
-
-        if ($Credential.UserName.Length -lt 1)
-        {
-            throw "Invalid credentials."
         }
 
         $headers = @{}
@@ -83,7 +83,7 @@ function Invoke-Five9RestApi
                 {
                     # already JSON (string)
                     # convert to compress
-                    $jsonBody = $Body | ConvertFrom-Json -Depth 20 | ConvertTo-Json -Depth 20 -Compress
+                    $jsonBody = $Body | ConvertFrom-Json | ConvertTo-Json -Depth 20 -Compress
                 }
                 else
                 {
@@ -158,7 +158,7 @@ function Invoke-Five9RestApi
 
             if ($response.Content.Length -gt 0)
             {
-                $respContent = $response | ConvertFrom-Json -Depth 50
+                $respContent = $response | ConvertFrom-Json
             }
 
             if ($null -eq $respContent.entities -or $Method -ne 'GET')
