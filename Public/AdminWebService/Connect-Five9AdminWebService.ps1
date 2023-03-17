@@ -113,7 +113,7 @@
             Five9DomainName = $getDomainResp.domainName
             Five9DomainId = $getDomainResp.domainId
             Version = $Version
-            DataCenter = $null
+            DataCenter = $DataCenter
             BaseUrl = $baseUrl
         }
 

@@ -47,12 +47,12 @@ function Invoke-Five9RestApi
 
         if ($PSBoundParameters.Keys -notcontains 'Credential')
         {
-            if ($DefaultFive9AdminClient.Credentials.UserName.Length -lt 1)
+            if ($DefaultFive9AdminClient.Credential.UserName.Length -lt 1)
             {
                 throw "Invalid credentials"
             }
 
-            $Credential = New-Object pscredential -ArgumentList $($DefaultFive9AdminClient.Credentials.UserName), $($DefaultFive9AdminClient.Credentials.SecurePassword)
+            $Credential = New-Object pscredential -ArgumentList $($DefaultFive9AdminClient.Credential.UserName), $($DefaultFive9AdminClient.Credential.Password)
         }
 
         if ($PSBoundParameters.Keys -notcontains 'BaseUrl')
