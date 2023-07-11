@@ -1,3 +1,4 @@
 *.txt
 /Public/_not_used/
 BuildOutput/
+.DS_Store
