@@ -98,7 +98,8 @@
         }
         catch
         {
-            $global:DefaultFive9AdminClient = New-WebServiceProxy "$PSScriptRoot/Public/assets/WSDL/Five9Admin.wsdl" -Namespace "PSFive9Admin" -Class "PSFive9Admin" -ErrorAction: Stop
+            Write-Verbose "Failed to download WSDL file. Using local file: $("$PSScriptRoot/Five9Admin.wsdl")"
+            $global:DefaultFive9AdminClient = New-WebServiceProxy "$PSScriptRoot/Five9Admin.wsdl" -Namespace "PSFive9Admin" -Class "PSFive9Admin" -ErrorAction: Stop
         }
 
         $global:DefaultFive9AdminClient.Credentials = $Credential
