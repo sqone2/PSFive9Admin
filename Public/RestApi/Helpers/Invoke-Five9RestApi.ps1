@@ -33,6 +33,10 @@ function Invoke-Five9RestApi
         # If omitted, -Version value captured using Connect-Five9AdminWebService will be used
         [Parameter(Mandatory = $false)][string]$Version = '1',
 
+        # Numerical Five9 domain id
+        # If omitted, -DataCenter value captured using Connect-Five9AdminWebService will be used
+        [Parameter(Mandatory = $false)][ValidatePattern('\d+')][string]$DomainId,
+
         # Hashtable or Json string to be sent in API call
         # Parameter is ignored if request is 'GET'
         [Parameter(Mandatory = $false)][object]$Body,
@@ -64,6 +68,18 @@ function Invoke-Five9RestApi
             else
             {
                 throw "Invalid BaseUrl"
+            }
+        }
+
+        if ($PSBoundParameters.Keys -notcontains 'DomainId')
+        {
+            if ($DefaultFive9AdminClient.Five9DomainId -match '\d')
+            {
+                $DomainId = $DefaultFive9AdminClient.Five9DomainId
+            }
+            else
+            {
+                throw "Invalid DomainId"
             }
         }
 
@@ -140,7 +156,7 @@ function Invoke-Five9RestApi
         }
 
         $request = [System.UriBuilder]$BaseUrl
-        $request.Path = "/restadmin/api/v$Version/domains/me/$Path"
+        $request.Path = "/restadmin/api/v$Version/domains/$DomainId/$Path"
         $request.Query = Get-QueryParamString $QueryParams
 
 
